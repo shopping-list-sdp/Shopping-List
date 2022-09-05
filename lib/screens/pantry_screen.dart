@@ -5,18 +5,17 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/model/family_model.dart';
 import 'package:shopping_list/model/user_model.dart';
 import 'package:shopping_list/classes/body_layout.dart';
-import 'package:shopping_list/screens/pantry_screen.dart';
 
 import 'login_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class PantryScreen extends StatefulWidget {
+  const PantryScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<PantryScreen> createState() => _PantryScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _PantryScreenState extends State<PantryScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
@@ -50,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => PantryScreen()),
         (route) => false);
   }
 
@@ -87,51 +86,51 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(
-                height: 10,
+                height: 30,
               ),
-              const Image(image: AssetImage('assets/homeText.png')),
+              const Image(image: AssetImage('assets/pantryScreen/Pantry.png')),
               const SizedBox(
-                height: 60,
+                height: 5,
+              ),
+              const Image(image: AssetImage('assets/pantryScreen/Group.png')),
+              const SizedBox(
+                height: 30,
+              ),
+              const Image(
+                  image: AssetImage('assets/pantryScreen/Rectangle 5.png')),
+              const SizedBox(
+                height: 30,
               ),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  InkWell(
-                    onTap: () {}, // Image tapped
-                    splashColor: Colors.white10, // Splash color over image
-                    child: Ink.image(
-                      fit: BoxFit.cover, // Fixes border issues
-                      width: 80,
-                      height: 80,
-                      image: const AssetImage(
-                        'assets/List.jpg',
-                      ),
-                    ),
-                  ),
+                  Image.asset('assets/pantryScreen/Rectangle 6.png'),
                   const SizedBox(
                     height: 10,
                   ),
-                  const Image(image: AssetImage('assets/mylist.png'))
+                  const Image(
+                      image: AssetImage('assets/pantryScreen/vegetables.png'))
                 ]),
                 const SizedBox(
-                  width: 100,
+                  width: 25,
                 ),
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  InkWell(
-                    onTap: () {}, // Image tapped
-                    splashColor: Colors.white10, // Splash color over image
-                    child: Ink.image(
-                      fit: BoxFit.cover, // Fixes border issues
-                      width: 80,
-                      height: 80,
-                      image: const AssetImage(
-                        'assets/Family.png',
-                      ),
-                    ),
-                  ),
+                  Image.asset('assets/pantryScreen/Rectangle 8.png'),
                   const SizedBox(
                     height: 10,
                   ),
-                  const Image(image: AssetImage('assets/familylist.png'))
+                  const Image(
+                      image: AssetImage('assets/pantryScreen/fruit.png'))
+                ]),
+                const SizedBox(
+                  width: 25,
+                ),
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Image.asset('assets/pantryScreen/Rectangle 7.png'),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Image(
+                      image: AssetImage('assets/pantryScreen/dairy.png'))
                 ])
               ]),
               const SizedBox(
@@ -139,94 +138,39 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  InkWell(
-                    onTap: () {}, // Image tapped
-                    splashColor: Colors.white10, // Splash color over image
-                    child: Ink.image(
-                      fit: BoxFit.cover, // Fixes border issues
-                      width: 80,
-                      height: 80,
-                      image: const AssetImage(
-                        'assets/Concept_List.png',
-                      ),
-                    ),
-                  ),
+                  Image.asset('assets/pantryScreen/Rectangle 9.png'),
                   const SizedBox(
                     height: 10,
                   ),
-                  const Image(image: AssetImage('assets/conceptlist.png'))
+                  const Image(
+                      image: AssetImage('assets/pantryScreen/canned.png'))
                 ]),
                 const SizedBox(
-                  width: 99,
+                  width: 25,
                 ),
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const PantryScreen()));
-                    }, // Image tapped
-                    splashColor: Colors.white10, // Splash color over image
-                    child: Ink.image(
-                      fit: BoxFit.cover, // Fixes border issues
-                      width: 80,
-                      height: 80,
-                      image: const AssetImage(
-                        'assets/Pantry1.png',
-                      ),
-                    ),
-                  ),
+                  Image.asset('assets/pantryScreen/Rectangle 11.png'),
                   const SizedBox(
                     height: 10,
                   ),
-                  const Image(image: AssetImage('assets/pantry.png'))
+                  const Image(
+                      image: AssetImage('assets/pantryScreen/drinks.png'))
+                ]),
+                const SizedBox(
+                  width: 25,
+                ),
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Image.asset('assets/pantryScreen/Rectangle 10.png'),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Image(
+                      image: AssetImage('assets/pantryScreen/toiletries.png'))
                 ])
               ]),
               const SizedBox(
                 height: 50,
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  InkWell(
-                    onTap: () {}, // Image tapped
-                    splashColor: Colors.white10, // Splash color over image
-                    child: Ink.image(
-                      fit: BoxFit.cover, // Fixes border issues
-                      width: 80,
-                      height: 80,
-                      image: const AssetImage(
-                        'assets/Expenses1.png',
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Image(image: AssetImage('assets/expenses.png'))
-                ]),
-                const SizedBox(
-                  width: 100,
-                ),
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  InkWell(
-                    onTap: () {}, // Image tapped
-                    splashColor: Colors.white10, // Splash color over image
-                    child: Ink.image(
-                      fit: BoxFit.cover, // Fixes border issues
-                      width: 80,
-                      height: 80,
-                      image: const AssetImage(
-                        'assets/Scheduled1.png',
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Image(image: AssetImage('assets/scheduled.png'))
-                ])
-              ]),
             ],
           ),
         ), //BodyLayout(context, elements),
@@ -384,11 +328,5 @@ class _HomeScreenState extends State<HomeScreen> {
       elements = temp;
       BodyLayout(context, elements);
     });
-  }
-
-  Future<void> logout(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 }

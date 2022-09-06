@@ -25,6 +25,8 @@ jobs:
       JAVA_VERSION: "11.0"
       FLUTTER_VERSION: "2.5.3"
     steps:
+    - name: Codecov
+      uses: codecov/codecov-action@v3.1.0
     - uses: actions/checkout@v3
     - uses: actions/setup-java@v2
       with:

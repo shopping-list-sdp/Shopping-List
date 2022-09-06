@@ -152,58 +152,74 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         child: Scaffold(
-          backgroundColor: Colors.transparent,
-          resizeToAvoidBottomInset: false,
-          body: Center(
-            child: SingleChildScrollView(
-              child: Container(
-                //color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(36.0),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Image.asset("assets/logo.png",
-                            fit: BoxFit.fitWidth, width: 250, height: 50),
-                        const SizedBox(height: 45),
-                        emailField,
-                        const SizedBox(height: 25),
-                        passwordField,
-                        const SizedBox(height: 35),
-                        loginButton,
-                        const SizedBox(height: 15),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              const Text("Don't have an account? "),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const RegistrationScreen()));
-                                },
-                                child: const Text(
-                                  "SignUp",
-                                  style: TextStyle(
-                                      color: Colors.blueAccent,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15),
+            backgroundColor: Colors.transparent,
+            resizeToAvoidBottomInset: false,
+            body: Center(
+              child: SingleChildScrollView(
+                child: Container(
+                  //color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(36.0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                Text("Welcome",
+                                    style: TextStyle(
+                                        color: myColors("Purple"),
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w500)),
+                                const SizedBox(
+                                  height: 25,
                                 ),
-                              )
-                            ])
-                      ],
+                                Image.asset("assets/logo.png",
+                                    fit: BoxFit.fitWidth,
+                                    width: 250,
+                                    height: 50),
+                                const SizedBox(height: 45),
+                                emailField,
+                                const SizedBox(height: 25),
+                                passwordField,
+                                const SizedBox(height: 35),
+                                loginButton,
+                                signUpOption()
+                              ],
+                            ),
+                          ]),
                     ),
                   ),
                 ),
               ),
-            ),
+            )));
+  }
+
+  Row signUpOption() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("Don't have an account? ",
+            style: TextStyle(color: myColors("Purple"), fontSize: 12)),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const RegistrationScreen()));
+          },
+          child: Text(
+            "Sign Up",
+            style: TextStyle(
+                color: myColors("Purple"),
+                fontWeight: FontWeight.bold,
+                fontSize: 12),
           ),
-        ));
+        )
+      ],
+    );
   }
 
   // login function

@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "lcov-total": "^2.1.0"
+  }
+}

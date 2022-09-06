@@ -156,41 +156,37 @@ class _LoginScreenState extends State<LoginScreen> {
             resizeToAvoidBottomInset: false,
             body: Center(
               child: SingleChildScrollView(
-                child: Container(
-                  //color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(36.0),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Column(
-                              children: <Widget>[
-                                Text("Welcome",
-                                    style: TextStyle(
-                                        color: myColors("Purple"),
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w500)),
-                                const SizedBox(
-                                  height: 25,
-                                ),
-                                Image.asset("assets/logo.png",
-                                    fit: BoxFit.fitWidth,
-                                    width: 250,
-                                    height: 50),
-                                const SizedBox(height: 45),
-                                emailField,
-                                const SizedBox(height: 25),
-                                passwordField,
-                                const SizedBox(height: 35),
-                                loginButton,
-                                signUpOption()
-                              ],
-                            ),
-                          ]),
-                    ),
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(
+                      30, MediaQuery.of(context).size.height * 0.02, 30, 0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              Text("Welcome",
+                                  style: TextStyle(
+                                      color: myColors("Purple"),
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w500)),
+                              const SizedBox(
+                                height: 25,
+                              ),
+                              Image.asset("assets/logo.png",
+                                  fit: BoxFit.fitWidth, width: 250, height: 50),
+                              const SizedBox(height: 45),
+                              emailField,
+                              const SizedBox(height: 25),
+                              passwordField,
+                              const SizedBox(height: 35),
+                              loginButton,
+                              signUpOption()
+                            ],
+                          ),
+                        ]),
                   ),
                 ),
               ),

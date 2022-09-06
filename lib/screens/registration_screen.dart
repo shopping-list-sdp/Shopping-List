@@ -56,7 +56,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           color: myColors("Purple"), fontWeight: FontWeight.w500, fontSize: 18),
       decoration: InputDecoration(
         prefixIcon: Icon(
-          Icons.mail_rounded,
+          Icons.person_rounded,
           color: myColors("EightyWhite"),
         ),
         labelText: "Name",
@@ -93,7 +93,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           color: myColors("Purple"), fontWeight: FontWeight.w500, fontSize: 18),
       decoration: InputDecoration(
         prefixIcon: Icon(
-          Icons.mail_rounded,
+          Icons.person_rounded,
           color: myColors("EightyWhite"),
         ),
         labelText: "Surname",
@@ -175,7 +175,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           color: myColors("Purple"), fontWeight: FontWeight.w500, fontSize: 18),
       decoration: InputDecoration(
         prefixIcon: Icon(
-          Icons.mail_rounded,
+          Icons.key_rounded,
           color: myColors("EightyWhite"),
         ),
         labelText: "Password",
@@ -213,7 +213,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           color: myColors("Purple"), fontWeight: FontWeight.w500, fontSize: 18),
       decoration: InputDecoration(
         prefixIcon: Icon(
-          Icons.mail_rounded,
+          Icons.key_rounded,
           color: myColors("EightyWhite"),
         ),
         labelText: "Confirm Password",

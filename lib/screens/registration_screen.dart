@@ -40,10 +40,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       validator: (value) {
         RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
-          return ("First Name cannot be Empty");
+          return ("First name cannot be empty");
         }
         if (!regex.hasMatch(value)) {
-          return ("Enter Valid name(Min. 3 Character)");
+          return ("Invalid name");
         }
         return null;
       },
@@ -80,7 +80,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       keyboardType: TextInputType.name,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Second Name cannot be Empty");
+          return ("Surname cannot be empty");
         }
         return null;
       },
@@ -231,22 +231,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
 
     //signup button
-    final signUpButton = Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(30),
-      color: Colors.blueAccent,
-      child: MaterialButton(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          minWidth: MediaQuery.of(context).size.width,
-          onPressed: () {
-            signUp(emailEditingController.text, passwordEditingController.text);
-          },
-          child: const Text(
-            "SignUp",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-          )),
+    final signUpButton = Container(
+      width: MediaQuery.of(context).size.width,
+      height: 60,
+      margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
+      child: ElevatedButton(
+        onPressed: () {
+          signUp(emailEditingController.text, passwordEditingController.text);
+        },
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.resolveWith((states) {
+              if (states.contains(MaterialState.pressed)) {
+                return myColors("Red");
+              }
+              return myColors("Purple");
+            }),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)))),
+        child: Text(
+          'SIGN UP',
+          style: TextStyle(
+              color: myColors("White"),
+              fontWeight: FontWeight.w600,
+              fontSize: 18),
+        ),
+      ),
     );
 
     return Scaffold(

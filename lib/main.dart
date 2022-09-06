@@ -16,12 +16,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'shopping_list',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        debugShowCheckedModeBanner: false,
-        home: HomeScreen() //LoginScreen(),
-        );
+      title: 'shopping_list',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      debugShowCheckedModeBanner: false,
+      home: LoginScreen(),
+    );
   }
 }

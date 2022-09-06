@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
       onSaved: (value) {
         emailController.text = value!;
       },
-      textInputAction: TextInputAction.done,
+      textInputAction: TextInputAction.next,
       cursorColor: myColors("White"),
       style: TextStyle(
           color: myColors("Purple"), fontWeight: FontWeight.w500, fontSize: 18),
@@ -177,11 +177,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               Image.asset("assets/logo.png",
                                   fit: BoxFit.fitWidth, width: 250, height: 50),
-                              const SizedBox(height: 45),
+                              const SizedBox(height: 40),
                               emailField,
-                              const SizedBox(height: 25),
+                              const SizedBox(height: 15),
                               passwordField,
-                              const SizedBox(height: 35),
+                              const SizedBox(height: 25),
                               loginButton,
                               signUpOption()
                             ],

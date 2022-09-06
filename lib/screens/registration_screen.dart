@@ -4,6 +4,7 @@ import 'package:shopping_list/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shopping_list/screens/login_screen.dart';
 
 import '../utils/color_utils.dart';
 
@@ -50,7 +51,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       onSaved: (value) {
         firstNameEditingController.text = value!;
       },
-      textInputAction: TextInputAction.done,
+      textInputAction: TextInputAction.next,
       cursorColor: myColors("White"),
       style: TextStyle(
           color: myColors("Purple"), fontWeight: FontWeight.w500, fontSize: 18),
@@ -260,58 +261,59 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
     );
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.blue),
-          onPressed: () {
-            // passing this to our root
-            Navigator.of(context).pop();
-          },
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/background.png"),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                        height: 180,
-                        child: Image.asset(
-                          "assets/logo.jpg",
-                          fit: BoxFit.contain,
-                        )),
-                    const SizedBox(height: 45),
-                    firstNameField,
-                    const SizedBox(height: 20),
-                    secondNameField,
-                    const SizedBox(height: 20),
-                    emailField,
-                    const SizedBox(height: 20),
-                    passwordField,
-                    const SizedBox(height: 20),
-                    confirmPasswordField,
-                    const SizedBox(height: 20),
-                    signUpButton,
-                    const SizedBox(height: 15),
-                  ],
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          resizeToAvoidBottomInset: false,
+          body: Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                    30, MediaQuery.of(context).size.height * 0.02, 30, 0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text("Welcome",
+                          style: TextStyle(
+                              color: myColors("Purple"),
+                              fontSize: 30,
+                              fontWeight: FontWeight.w500)),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      Image.asset("assets/logo.png",
+                          fit: BoxFit.fitWidth, width: 250, height: 50),
+                      const SizedBox(height: 45),
+                      firstNameField,
+                      const SizedBox(height: 15),
+                      secondNameField,
+                      const SizedBox(height: 15),
+                      emailField,
+                      const SizedBox(height: 15),
+                      passwordField,
+                      const SizedBox(height: 15),
+                      confirmPasswordField,
+                      const SizedBox(height: 25),
+                      signUpButton,
+                      signInOption()
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   void signUp(String email, String password) async {
@@ -379,5 +381,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         (context),
         MaterialPageRoute(builder: (context) => const HomeScreen()),
         (route) => false);
+  }
+
+  Row signInOption() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("Already have an account? ",
+            style: TextStyle(color: myColors("Purple"), fontSize: 12)),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const LoginScreen()));
+          },
+          child: Text(
+            "Log In",
+            style: TextStyle(
+                color: myColors("Purple"),
+                fontWeight: FontWeight.bold,
+                fontSize: 12),
+          ),
+        )
+      ],
+    );
   }
 }

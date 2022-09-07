@@ -25,6 +25,18 @@ jobs:
       JAVA_VERSION: "11.0"
       FLUTTER_VERSION: "2.5.3"
     steps:
+    - uses: actions/checkout@v3
+    - name: Install requirements
+      run: pip install -r requirements.txt
+    - name: Run tests and collect coverage
+      run: pytest --cov .
+    - name: Upload coverage reports to Codecov
+      run: |
+        # Replace `linux` below with the appropriate OS
+        # Options are `alpine`, `linux`, `macos`, `windows`
+        curl -Os https://uploader.codecov.io/latest/linux/codecov
+        chmod +x codecov
+        ./codecov -t ${CODECOV_TOKEN}
     - name: Codecov
       uses: codecov/codecov-action@v3.1.0
     - name: Code Coverage Report

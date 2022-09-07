@@ -26,6 +26,8 @@ jobs:
       FLUTTER_VERSION: "2.5.3"
     steps:
     - uses: actions/checkout@v3
+    - name: Install requirements
+      run: pip install pytest
     - name: Run tests and collect coverage
       run: pytest --cov .
     - name: Upload coverage reports to Codecov

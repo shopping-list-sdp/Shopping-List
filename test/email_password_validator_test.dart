@@ -21,4 +21,9 @@ void main() {
     final result = PasswordFieldValidator.validate('password');
     expect(result, null);
   });
+
+  test('invalid-email', () {
+    final result = EmailFieldValidator.validate('email');
+    expect(result, null);
+  });
 }

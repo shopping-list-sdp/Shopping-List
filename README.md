@@ -1,3 +1,5 @@
++ **Test/Code Coverage** -  | ![Coverage 80.0%](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/cicirello/jacoco-badge-generator/main/tests/80.json) | - coverage is the measure of how much of the code in a project is tested. 
+
 # shopping_list
 
 A new Flutter project.

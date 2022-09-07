@@ -32,7 +32,7 @@ jobs:
     - name: Upload code coverage to codecov
       uses: codecov/codecov-action@3.1.0
       with:
-        token: ${{fa6eb97f-f3a1-4d9d-a194-ece1bdf372cb}}
+        token: ${{secrets.CODECOV_TOKEN}}
         files: coverage/lcov.info
         flags: js_open_source
         name: memoria

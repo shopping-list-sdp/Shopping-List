@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+C:\Users\user\Desktop\master-repo\.circleci
 
 # IntelliJ related
 *.iml
@@ -34,6 +35,9 @@ migrate_working_dir/
 home_screen.dart
 pantry_screen.dart
 registration_screen.dart
+body_layout.dart
+family_model.dart
+user_model.dart
 
 # Web related
 lib/generated_plugin_registrant.dart

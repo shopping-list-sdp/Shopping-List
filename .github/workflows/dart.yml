@@ -32,8 +32,8 @@ jobs:
       #run: pytest --coverage .
     - name: Codecov
       uses: codecov/codecov-action@v3.1.0
-    - name: Code Coverage Report
-      uses: romeovs/lcov-reporter-action@v0.2.16
+    #- name: Code Coverage Report
+      #uses: romeovs/lcov-reporter-action@v0.2.16
     #- name: Upload code coverage to codecov
       #uses: codecov/codecov-action@v3.1.0
       #with:

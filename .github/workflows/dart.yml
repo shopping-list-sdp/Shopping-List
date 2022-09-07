@@ -34,15 +34,15 @@ jobs:
       uses: codecov/codecov-action@v3.1.0
     - name: Code Coverage Report
       uses: romeovs/lcov-reporter-action@v0.2.16
-    - name: Upload code coverage to codecov
-      uses: codecov/codecov-action@v3.1.0
-      with:
-        token: ${{secrets.CODECOV_TOKEN}}
-        version: "v0.1.15"
-        files: coverage/lcov.info
-        flags: js_open_source
-        name: memoria
-        verbose: true
+    #- name: Upload code coverage to codecov
+      #uses: codecov/codecov-action@v3.1.0
+      #with:
+        #token: ${{secrets.CODECOV_TOKEN}}
+        #version: "v0.1.15"
+        #files: coverage/lcov.info
+        #flags: js_open_source
+        #name: memoria
+        #verbose: true
         #lcov-file: ./coverage/lcov.info
     - name: Upload coverage reports to Codecov
       run: |

@@ -31,13 +31,12 @@ jobs:
       uses: romeovs/lcov-reporter-action@v0.2.16
     - name: Upload code coverage to codecov
       uses: codecov/codecov-action@3.1.0
-        with:
-          token: ${{fa6eb97f-f3a1-4d9d-a194-ece1bdf372cb}}
-          files: coverage/lcov.info
-          flags: js_open_source
-          name: memoria
-          verbose: true
       with:
+        token: ${{fa6eb97f-f3a1-4d9d-a194-ece1bdf372cb}}
+        files: coverage/lcov.info
+        flags: js_open_source
+        name: memoria
+        verbose: true
         lcov-file: ./coverage/lcov.info
     - uses: actions/checkout@v3
     - uses: actions/setup-java@v2

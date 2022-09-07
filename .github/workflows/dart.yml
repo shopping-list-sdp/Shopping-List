@@ -27,7 +27,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install requirements
-      run: pip install pytest coverage
+      run: pip install pytest coverage pytest-cov
     - name: Run tests and collect coverage
       run: pytest --coverage .
     - name: Upload coverage reports to Codecov

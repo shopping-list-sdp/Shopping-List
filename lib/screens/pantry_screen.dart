@@ -97,13 +97,13 @@ class _PantryScreenState extends State<PantryScreen> {
                 height: 30,
               ),
               const Image(
-                  image: AssetImage('assets/pantryScreen/Rectangle 5.png')),
+                  image: AssetImage('assets/pantryScreen/Rectangle_5.png')),
               const SizedBox(
                 height: 30,
               ),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Image.asset('assets/pantryScreen/Rectangle 6.png'),
+                  Image.asset('assets/pantryScreen/Rectangle_6.png'),
                   const SizedBox(
                     height: 10,
                   ),
@@ -114,7 +114,7 @@ class _PantryScreenState extends State<PantryScreen> {
                   width: 25,
                 ),
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Image.asset('assets/pantryScreen/Rectangle 8.png'),
+                  Image.asset('assets/pantryScreen/Rectangle_8.png'),
                   const SizedBox(
                     height: 10,
                   ),
@@ -125,7 +125,7 @@ class _PantryScreenState extends State<PantryScreen> {
                   width: 25,
                 ),
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Image.asset('assets/pantryScreen/Rectangle 7.png'),
+                  Image.asset('assets/pantryScreen/Rectangle_7.png'),
                   const SizedBox(
                     height: 10,
                   ),
@@ -138,7 +138,7 @@ class _PantryScreenState extends State<PantryScreen> {
               ),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Image.asset('assets/pantryScreen/Rectangle 9.png'),
+                  Image.asset('assets/pantryScreen/Rectangle_9.png'),
                   const SizedBox(
                     height: 10,
                   ),
@@ -149,7 +149,7 @@ class _PantryScreenState extends State<PantryScreen> {
                   width: 25,
                 ),
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Image.asset('assets/pantryScreen/Rectangle 11.png'),
+                  Image.asset('assets/pantryScreen/Rectangle_11.png'),
                   const SizedBox(
                     height: 10,
                   ),
@@ -160,7 +160,7 @@ class _PantryScreenState extends State<PantryScreen> {
                   width: 25,
                 ),
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Image.asset('assets/pantryScreen/Rectangle 10.png'),
+                  Image.asset('assets/pantryScreen/Rectangle_10.png'),
                   const SizedBox(
                     height: 10,
                   ),

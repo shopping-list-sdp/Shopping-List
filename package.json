@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "codecov": "^3.8.3",
     "lcov-total": "^2.1.0"
   }
 }

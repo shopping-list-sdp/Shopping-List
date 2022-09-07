@@ -33,6 +33,7 @@ jobs:
       uses: codecov/codecov-action@v3.1.0
       with:
         token: ${{secrets.CODECOV_TOKEN}}
+        version: "v0.1.15"
         files: coverage/lcov.info
         flags: js_open_source
         name: memoria

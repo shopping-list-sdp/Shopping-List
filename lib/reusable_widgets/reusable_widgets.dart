@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shopping_list/custom_icons_icons.dart';
 import 'package:shopping_list/screens/dashboard_screen.dart';
 import 'package:shopping_list/screens/login_screen.dart';
+import 'package:shopping_list/screens/pantry_catagory_screen.dart';
 import 'package:shopping_list/screens/pantry_screen.dart';
 import 'package:shopping_list/utils/color_utils.dart';
 
@@ -148,7 +149,8 @@ Column dashboardButtons(BuildContext context, String colour, String iconName) {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const PantryScreen()),
+                MaterialPageRoute(
+                    builder: (context) => PantryScreen(text: iconName)),
               );
             },
           ),
@@ -174,7 +176,13 @@ Column catagoryButton(BuildContext context, String catagoryName) {
       height: 80,
       margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PantryCatagoryScreen(text: catagoryName)),
+          );
+        },
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.resolveWith((states) {
               if (states.contains(MaterialState.pressed)) {
@@ -198,7 +206,7 @@ Column catagoryButton(BuildContext context, String catagoryName) {
   ]);
 }
 
-Container navBar() {
+Container navBar(BuildContext context) {
   return Container(
     height: 70,
     decoration: BoxDecoration(
@@ -231,7 +239,12 @@ Container navBar() {
         ),
         IconButton(
           enableFeedback: false,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const DashboardScreen()),
+            );
+          },
           icon: const Icon(Icons.home_rounded),
           iconSize: 40,
           color: myColors("FiftyGrey"),

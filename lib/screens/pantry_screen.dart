@@ -4,7 +4,7 @@ import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
 
 class PantryScreen extends StatefulWidget {
-  const PantryScreen({super.key});
+  const PantryScreen({super.key, required String text});
 
   @override
   State<PantryScreen> createState() => _PantryScreenState();
@@ -103,6 +103,6 @@ class _PantryScreenState extends State<PantryScreen> {
               )),
             ]),
             appBar: appBar(context),
-            bottomNavigationBar: navBar()));
+            bottomNavigationBar: navBar(context)));
   }
 }

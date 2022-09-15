@@ -165,7 +165,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const PantryScreen()));
+                              builder: (context) =>
+                                  const PantryScreen(text: "")));
                     }, // Image tapped
                     splashColor: Colors.white10, // Splash color over image
                     child: Ink.image(

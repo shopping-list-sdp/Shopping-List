@@ -1,20 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import '../custom_icons_icons.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
 
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+class PantryCatagoryScreen extends StatefulWidget {
+  final String text;
+  const PantryCatagoryScreen({super.key, required this.text});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  State<PantryCatagoryScreen> createState() =>
+      _PantryCatagoryScreenState(this.text);
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
+  final searchTextEditingController = TextEditingController();
+  String text;
+  _PantryCatagoryScreenState(this.text);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,32 +30,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 padding: EdgeInsets.fromLTRB(
                     35, MediaQuery.of(context).size.height * 0.05, 35, 0),
                 child: Column(children: <Widget>[
-                  Text("Home",
+                  Text("Pantry",
                       style: TextStyle(
                           color: myColors("Purple"),
                           fontSize: 30,
                           fontWeight: FontWeight.w500)),
                   const SizedBox(
-                    height: 50,
+                    height: 10,
                   ),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(context, "Blue", "My List"),
-                    dashboardButtons(context, "Red", "Family List"),
-                  ]),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      const Image(
+                          image: AssetImage('assets/pantryScreen/stall.png')),
+                      Text(text,
+                          style: TextStyle(
+                              color: myColors("White"),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600)),
+                    ],
+                  ),
                   const SizedBox(
                     height: 30,
                   ),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(context, "Pink", "Concept List"),
-                    dashboardButtons(context, "Purple", "Pantry"),
-                  ]),
+                  searchField("Search Items", CustomIcons.search,
+                      searchTextEditingController),
                   const SizedBox(
                     height: 30,
                   ),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(context, "Green", "Expenses"),
-                    dashboardButtons(context, "Yellow", "Scheduled"),
-                  ]),
                 ]),
               )),
             ]),

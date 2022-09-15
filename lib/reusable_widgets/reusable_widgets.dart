@@ -4,8 +4,6 @@ import 'package:shopping_list/custom_icons_icons.dart';
 import 'package:shopping_list/screens/login_screen.dart';
 import 'package:shopping_list/utils/color_utils.dart';
 
-import '../classes/catagories.dart';
-
 Image logoWidget(String imageName) {
   return Image.asset(imageName, fit: BoxFit.fitWidth, width: 250, height: 50);
 }

@@ -3,7 +3,6 @@ import 'package:shopping_list/screens/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../utils/color_utils.dart';
 
 class EmailFieldValidator {
@@ -160,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/background.png"),
+            image: AssetImage("assets/essentials/background.png"),
             fit: BoxFit.cover,
           ),
         ),
@@ -188,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(
                                 height: 25,
                               ),
-                              Image.asset("assets/logo.png",
+                              Image.asset("assets/essentials/logo.png",
                                   fit: BoxFit.fitWidth, width: 250, height: 50),
                               const SizedBox(height: 40),
                               emailField,

@@ -21,5 +21,11 @@ myColors(String Colour) {
     return Color.fromARGB(255, 255, 255, 255);
   } else if (Colour == "Red") {
     return Color.fromARGB(255, 249, 129, 129);
+  } else if (Colour == "FiftyRed") {
+    return Color.fromARGB(125, 249, 129, 129);
+  } else if (Colour == "TwentyGrey") {
+    return Color.fromARGB(51, 174, 174, 175);
+  } else if (Colour == "TenGrey") {
+    return Color.fromARGB(255, 239, 239, 239);
   }
 }

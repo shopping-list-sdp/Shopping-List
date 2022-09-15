@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shopping_list/custom_icons_icons.dart';
 import 'package:shopping_list/model/family_model.dart';
 import 'package:shopping_list/model/user_model.dart';
 import 'package:shopping_list/classes/body_layout.dart';
+import 'package:shopping_list/reusable_widgets/reusable_widgets.dart';
 
-import 'login_screen.dart';
+import '../utils/color_utils.dart';
 
 class PantryScreen extends StatefulWidget {
   const PantryScreen({super.key});
@@ -49,7 +51,7 @@ class _PantryScreenState extends State<PantryScreen> {
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => PantryScreen()),
+        MaterialPageRoute(builder: (context) => const PantryScreen()),
         (route) => false);
   }
 
@@ -62,7 +64,7 @@ class _PantryScreenState extends State<PantryScreen> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
 
@@ -76,26 +78,35 @@ class _PantryScreenState extends State<PantryScreen> {
     super.dispose();
   }
 
+  final searchTextEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+        backgroundColor: myColors("White"),
+        body: SingleChildScrollView(
+          //width: MediaQuery.of(context).size.width,
+          //height: MediaQuery.of(context).size.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(
-                height: 30,
+                height: 40,
               ),
-              const Image(image: AssetImage('assets/pantryScreen/Pantry.png')),
+              Text("Pantry",
+                  style: TextStyle(
+                      color: myColors("Purple"),
+                      fontSize: 30,
+                      fontWeight: FontWeight.w500)),
               const SizedBox(
                 height: 5,
               ),
-              const Image(image: AssetImage('assets/pantryScreen/Group.png')),
+              const Image(image: AssetImage('assets/pantryScreen/stall.png')),
               const SizedBox(
                 height: 30,
               ),
+              searchField("Search Catagories", CustomIcons.search,
+                  searchTextEditingController),
               const Image(
                   image: AssetImage('assets/pantryScreen/Rectangle_5.png')),
               const SizedBox(
@@ -174,97 +185,8 @@ class _PantryScreenState extends State<PantryScreen> {
             ],
           ),
         ), //BodyLayout(context, elements),
-        appBar: AppBar(
-          title: Column(children: [
-            const SizedBox(height: 40),
-            SizedBox(
-              height: 20,
-              width: 100,
-              child: Image.asset('assets/The_Pantry.png', fit: BoxFit.fill),
-            )
-          ]), //Image.asset('assets/The_Pantry.png'),
-          toolbarHeight: 80,
-          centerTitle: false,
-          shadowColor: Colors.black, //Color.fromARGB(255, 102, 102, 102),
-          elevation: 1.0,
-          bottomOpacity: 0.0,
-          backgroundColor: Colors.white,
-          actions: [
-            PopupMenuButton<int>(
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                    value: 1,
-                    child: Row(
-                      children: const [
-                        Icon(Icons.list_alt),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text("Create a List")
-                      ],
-                    )),
-                PopupMenuItem(
-                    value: 2,
-                    child: Row(
-                      children: const [
-                        Icon(Icons.folder),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text("Create a Folder")
-                      ],
-                    )),
-              ],
-              icon: Column(children: [
-                const SizedBox(height: 30),
-                SizedBox(
-                  child: Image.asset('assets/Setting.png'),
-                )
-              ]),
-              onSelected: (value) async {
-                final name;
-
-                if (value == 1) {
-                  name = await openDialogList();
-                  postDetailsToFirestore(name);
-                  if (name == null || name.isEmpty()) return;
-                } else if (value == 2) {
-                  name = await openDialogFolder();
-                  add(name);
-                  if (name == null || name.isEmpty()) return;
-                }
-              },
-              offset: const Offset(0, 100),
-              color: const Color.fromARGB(176, 42, 159, 255),
-              elevation: 2,
-            )
-          ],
-        ),
-        bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black,
-              ),
-            ],
-          ),
-          child: BottomNavigationBar(
-            items: <BottomNavigationBarItem>[
-              //backgroundColor: Colors.white),
-              BottomNavigationBarItem(
-                  icon: Image.asset('assets/bottomBar/Frame.png'), label: ''),
-              //backgroundColor: Colors.white),
-              BottomNavigationBarItem(
-                  icon: Image.asset('assets/bottomBar/Frame-1.png'), label: ''),
-              //backgroundColor: Colors.white),
-              BottomNavigationBarItem(
-                  icon: Image.asset('assets/bottomBar/Frame-2.png'), label: ''),
-              //backgroundColor: Colors.white)
-            ],
-            elevation: 1.0,
-          ),
-        ));
+        appBar: appBar(),
+        bottomNavigationBar: navBar());
   }
 
   Future<String?> openDialogList() => showDialog<String>(

@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/screens/login_screen.dart';
-
 import '../utils/color_utils.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -266,13 +265,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/background.png"),
+            image: AssetImage("assets/essesntials/background.png"),
             fit: BoxFit.cover,
           ),
         ),
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          resizeToAvoidBottomInset: false,
           body: Center(
             child: SingleChildScrollView(
               child: Padding(
@@ -292,7 +290,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       const SizedBox(
                         height: 25,
                       ),
-                      Image.asset("assets/logo.png",
+                      Image.asset("assets/essentials/logo.png",
                           fit: BoxFit.fitWidth, width: 250, height: 50),
                       const SizedBox(height: 45),
                       firstNameField,

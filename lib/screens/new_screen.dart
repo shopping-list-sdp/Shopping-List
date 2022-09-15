@@ -106,7 +106,7 @@ class _pantry_scrState extends State<pantry_scr> {
                 ]),
               )),
             ]),
-            appBar: appBar(),
+            appBar: appBar(context),
             bottomNavigationBar: navBar()));
   }
 }

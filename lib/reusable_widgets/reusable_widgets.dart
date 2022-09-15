@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shopping_list/custom_icons_icons.dart';
+import 'package:shopping_list/screens/login_screen.dart';
 import 'package:shopping_list/utils/color_utils.dart';
 
 import '../classes/catagories.dart';
@@ -211,7 +212,7 @@ Container navBar() {
   );
 }
 
-AppBar appBar() {
+AppBar appBar(BuildContext context) {
   return AppBar(
     title: Column(children: [
       const SizedBox(height: 20),
@@ -228,6 +229,14 @@ AppBar appBar() {
     backgroundColor: myColors("White"),
     actions: [
       PopupMenuButton<int>(
+        onSelected: (result) {
+          if (result == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginScreen()),
+            );
+          }
+        },
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(20.0),

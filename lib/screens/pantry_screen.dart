@@ -185,7 +185,7 @@ class _PantryScreenState extends State<PantryScreen> {
             ],
           ),
         ), //BodyLayout(context, elements),
-        appBar: appBar(),
+        appBar: appBar(context),
         bottomNavigationBar: navBar());
   }
 

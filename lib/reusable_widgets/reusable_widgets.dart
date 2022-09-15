@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shopping_list/custom_icons_icons.dart';
+import 'package:shopping_list/screens/dashboard_screen.dart';
 import 'package:shopping_list/screens/login_screen.dart';
+import 'package:shopping_list/screens/pantry_screen.dart';
 import 'package:shopping_list/utils/color_utils.dart';
 
 Image logoWidget(String imageName) {
@@ -87,7 +89,7 @@ TextFormField searchField(
           fontSize: 18,
           fontWeight: FontWeight.w500),
       filled: true,
-      contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+      contentPadding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
       floatingLabelBehavior: FloatingLabelBehavior.never,
       fillColor: myColors("TwentyGrey"),
       border: OutlineInputBorder(
@@ -128,6 +130,42 @@ Container signInSignUpButton(
   );
 }
 
+Column dashboardButtons(BuildContext context, String colour, String iconName) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    children: [
+      const Padding(padding: EdgeInsets.fromLTRB(70, 0, 70, 0)),
+      Stack(
+        alignment: Alignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/icons/clipboard$colour.svg',
+          ),
+          InkWell(
+            child: SvgPicture.asset(
+              'assets/icons/$iconName.svg',
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PantryScreen()),
+              );
+            },
+          ),
+        ],
+      ),
+      const SizedBox(
+        height: 15,
+      ),
+      Text(iconName,
+          style: TextStyle(
+              color: myColors("Purple"),
+              fontSize: 18,
+              fontWeight: FontWeight.w500)),
+    ],
+  );
+}
+
 Column catagoryButton(BuildContext context, String catagoryName) {
   //add onTap parameter
   return Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
@@ -162,7 +200,7 @@ Column catagoryButton(BuildContext context, String catagoryName) {
 
 Container navBar() {
   return Container(
-    height: 60,
+    height: 70,
     decoration: BoxDecoration(
       color: myColors("White"),
       boxShadow: [
@@ -177,13 +215,6 @@ Container navBar() {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        IconButton(
-          enableFeedback: false,
-          onPressed: () {},
-          icon: const Icon(CustomIcons.back),
-          iconSize: 30,
-          color: myColors("FiftyGrey"),
-        ),
         IconButton(
           enableFeedback: false,
           onPressed: () {},
@@ -212,6 +243,10 @@ Container navBar() {
 
 AppBar appBar(BuildContext context) {
   return AppBar(
+    iconTheme: IconThemeData(
+      color: myColors("Red"), //change your color here
+    ),
+    centerTitle: true,
     title: Column(children: [
       const SizedBox(height: 20),
       SizedBox(
@@ -232,6 +267,11 @@ AppBar appBar(BuildContext context) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const LoginScreen()),
+            );
+          } else if (result == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const DashboardScreen()),
             );
           }
         },
@@ -267,7 +307,7 @@ AppBar appBar(BuildContext context) {
                     width: 15,
                   ),
                   Text(
-                    "Test",
+                    "Home",
                     style: TextStyle(
                         color: myColors("Purple"),
                         fontSize: 18,

@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shopping_list/custom_icons_icons.dart';
 import 'package:shopping_list/screens/dashboard_screen.dart';
 import 'package:shopping_list/screens/login_screen.dart';
+import 'package:shopping_list/screens/my_list_screen.dart';
 import 'package:shopping_list/screens/pantry_catagory_screen.dart';
 import 'package:shopping_list/screens/pantry_screen.dart';
 import 'package:shopping_list/utils/color_utils.dart';
@@ -149,8 +150,7 @@ Column dashboardButtons(BuildContext context, String colour, String iconName) {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => PantryScreen(text: iconName)),
+                MaterialPageRoute(builder: (context) => const MyListScreen()),
               );
             },
           ),
@@ -226,10 +226,15 @@ Container navBar(BuildContext context, String page) {
       children: [
         IconButton(
           enableFeedback: false,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const MyListScreen()),
+            );
+          },
           icon: const Icon(CustomIcons.mylist),
           iconSize: 30,
-          color: myColors("FiftyGrey"),
+          color: page == "myList" ? myColors("Purple") : myColors("FiftyGrey"),
         ),
         IconButton(
           enableFeedback: false,
@@ -342,4 +347,42 @@ AppBar appBar(BuildContext context) {
       )
     ],
   );
+}
+
+Container listHeader(String col, String date, String noItems, bool isFamily) {
+  return Container(
+      height: 45,
+      decoration: BoxDecoration(
+          color: myColors(col),
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            date,
+            style: TextStyle(
+                color: myColors("White"),
+                fontSize: 12,
+                fontWeight: FontWeight.normal),
+          ),
+          const SizedBox(
+            width: 120,
+          ),
+          Text(
+            noItems,
+            style: TextStyle(
+                color: myColors("White"),
+                fontSize: 12,
+                fontWeight: FontWeight.normal),
+          ),
+          const SizedBox(
+            width: 120,
+          ),
+          SvgPicture.asset(
+            'assets/icons/addPerson.svg',
+            color: isFamily ? myColors("white") : myColors(col),
+          )
+        ],
+      ));
 }

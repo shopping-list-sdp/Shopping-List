@@ -4,18 +4,18 @@ import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
 
 class PantryCatagoryScreen extends StatefulWidget {
-  final String text;
-  const PantryCatagoryScreen({super.key, required this.text});
+  final String catagory;
+  const PantryCatagoryScreen({super.key, required this.catagory});
 
   @override
   State<PantryCatagoryScreen> createState() =>
-      _PantryCatagoryScreenState(this.text);
+      _PantryCatagoryScreenState(catagory);
 }
 
 class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
   final searchTextEditingController = TextEditingController();
-  String text;
-  _PantryCatagoryScreenState(this.text);
+  String catagory;
+  _PantryCatagoryScreenState(this.catagory);
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +43,10 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                     children: [
                       const Image(
                           image: AssetImage('assets/pantryScreen/stall.png')),
-                      Text(text,
+                      Text(catagory,
                           style: TextStyle(
                               color: myColors("White"),
-                              fontSize: 18,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600)),
                     ],
                   ),

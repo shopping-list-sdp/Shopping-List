@@ -180,7 +180,8 @@ Column catagoryButton(BuildContext context, String catagoryName) {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PantryCatagoryScreen(text: catagoryName)),
+                builder: (context) =>
+                    PantryCatagoryScreen(catagory: catagoryName)),
           );
         },
         style: ButtonStyle(

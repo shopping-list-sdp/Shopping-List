@@ -10,22 +10,30 @@ hexStringToColor(String hexColor) {
 
 myColors(String Colour) {
   if (Colour == "Grey") {
-    return Color.fromARGB(255, 174, 174, 175);
+    return const Color.fromARGB(255, 174, 174, 175);
   } else if (Colour == "FiftyGrey") {
-    return Color.fromARGB(125, 174, 174, 175);
+    return const Color.fromARGB(125, 174, 174, 175);
   } else if (Colour == "EightyWhite") {
-    return Color.fromARGB(204, 255, 255, 255);
+    return const Color.fromARGB(204, 255, 255, 255);
   } else if (Colour == "Purple") {
-    return Color.fromARGB(255, 139, 106, 255);
+    return const Color.fromARGB(255, 139, 106, 255);
   } else if (Colour == "White") {
-    return Color.fromARGB(255, 255, 255, 255);
+    return const Color.fromARGB(255, 255, 255, 255);
   } else if (Colour == "Red") {
-    return Color.fromARGB(255, 249, 129, 129);
+    return const Color.fromARGB(255, 249, 129, 129);
   } else if (Colour == "FiftyRed") {
-    return Color.fromARGB(125, 249, 129, 129);
+    return const Color.fromARGB(125, 249, 129, 129);
   } else if (Colour == "TwentyGrey") {
-    return Color.fromARGB(51, 174, 174, 175);
+    return const Color.fromARGB(51, 174, 174, 175);
   } else if (Colour == "TenGrey") {
-    return Color.fromARGB(255, 239, 239, 239);
+    return const Color.fromARGB(255, 239, 239, 239);
+  } else if (Colour == "Blue") {
+    return const Color.fromARGB(255, 103, 235, 250);
+  } else if (Colour == "Pink") {
+    return const Color.fromARGB(255, 246, 165, 235);
+  } else if (Colour == "Yellow") {
+    return const Color.fromARGB(255, 255, 228, 126);
+  } else if (Colour == "Green") {
+    return const Color.fromARGB(255, 74, 222, 182);
   }
 }

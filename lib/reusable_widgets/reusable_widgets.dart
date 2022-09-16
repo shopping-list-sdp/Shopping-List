@@ -207,7 +207,7 @@ Column catagoryButton(BuildContext context, String catagoryName) {
   ]);
 }
 
-Container navBar(BuildContext context) {
+Container navBar(BuildContext context, String page) {
   return Container(
     height: 70,
     decoration: BoxDecoration(
@@ -248,7 +248,8 @@ Container navBar(BuildContext context) {
           },
           icon: const Icon(Icons.home_rounded),
           iconSize: 40,
-          color: myColors("FiftyGrey"),
+          color:
+              page == "dashboard" ? myColors("Purple") : myColors("FiftyGrey"),
         ),
       ],
     ),

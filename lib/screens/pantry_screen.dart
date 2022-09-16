@@ -103,6 +103,6 @@ class _PantryScreenState extends State<PantryScreen> {
               )),
             ]),
             appBar: appBar(context),
-            bottomNavigationBar: navBar(context)));
+            bottomNavigationBar: navBar(context, "pantry")));
   }
 }

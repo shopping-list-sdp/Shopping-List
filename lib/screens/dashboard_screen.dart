@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-
 import '../custom_icons_icons.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
@@ -58,6 +57,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               )),
             ]),
             appBar: appBar(context),
-            bottomNavigationBar: navBar(context)));
+            bottomNavigationBar: navBar(context, "dashboard")));
   }
 }

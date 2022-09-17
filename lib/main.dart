@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_list/screens/dashboard_screen.dart';
 import 'package:shopping_list/screens/home_screen.dart';
+import 'package:shopping_list/screens/login_screen.dart';
 import 'package:shopping_list/screens/pantry_catagory_screen.dart';
 import 'package:shopping_list/screens/pantry_screen.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: const DashboardScreen(),
+      home: const LoginScreen(),
     );
   }
 }

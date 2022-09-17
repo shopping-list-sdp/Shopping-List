@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -7,6 +8,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
+
+CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('category');
+
+Future<void> getData() async {
+  // Get docs from collection reference
+  QuerySnapshot querySnapshot = await _collectionRef.get();
+
+  // Get data from docs and convert map to List
+  final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+  print(allData);
+}
 
 class MyListScreen extends StatefulWidget {
   const MyListScreen({super.key});
@@ -37,7 +51,9 @@ class _MyListScreenState extends State<MyListScreen> {
                   const SizedBox(
                     height: 45,
                   ),
-                  listHeader("Blue", "date", "no items", false)
+                  listHeader("Blue", "date", "no items", false),
+                  const IconButton(
+                      onPressed: getData, icon: Icon(Icons.key_rounded))
                 ]),
               )),
             ]),

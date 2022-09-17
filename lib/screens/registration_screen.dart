@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shopping_list/global.dart' as global;
 import 'package:shopping_list/model/user_model.dart';
+import 'package:shopping_list/screens/dashboard_screen.dart';
 import 'package:shopping_list/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -162,7 +164,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           return ("Please enter password");
         }
         if (!regex.hasMatch(value)) {
-          return ("Inalid Password");
+          return ("Invalid Password");
         }
         return null;
       },
@@ -265,7 +267,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/essesntials/background.png"),
+            image: AssetImage("assets/essentials/background.png"),
             fit: BoxFit.cover,
           ),
         ),
@@ -374,10 +376,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         .doc(user.uid)
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
+    global.userId = user.uid;
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const DashboardScreen()),
         (route) => false);
   }
 

@@ -17,6 +17,8 @@ myColors(String Colour) {
     return const Color.fromARGB(204, 255, 255, 255);
   } else if (Colour == "Purple") {
     return const Color.fromARGB(255, 139, 106, 255);
+  } else if (Colour == "FiftyPurple") {
+    return const Color.fromARGB(125, 139, 106, 255);
   } else if (Colour == "White") {
     return const Color.fromARGB(255, 255, 255, 255);
   } else if (Colour == "Red") {
@@ -29,6 +31,8 @@ myColors(String Colour) {
     return const Color.fromARGB(255, 239, 239, 239);
   } else if (Colour == "Blue") {
     return const Color.fromARGB(255, 103, 235, 250);
+  } else if (Colour == "FiftyBlue") {
+    return const Color.fromARGB(125, 103, 235, 250);
   } else if (Colour == "Pink") {
     return const Color.fromARGB(255, 246, 165, 235);
   } else if (Colour == "Yellow") {

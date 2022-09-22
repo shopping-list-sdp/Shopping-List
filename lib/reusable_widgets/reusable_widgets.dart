@@ -8,6 +8,8 @@ import 'package:shopping_list/screens/pantry_catagory_screen.dart';
 import 'package:shopping_list/screens/pantry_screen.dart';
 import 'package:shopping_list/utils/color_utils.dart';
 
+import '../queries/my_list_queries.dart';
+
 Image logoWidget(String imageName) {
   return Image.asset(imageName, fit: BoxFit.fitWidth, width: 250, height: 50);
 }
@@ -70,24 +72,24 @@ TextFormField reusableTextField(String text, IconData icon, bool isPasswordType,
 }
 
 TextFormField searchField(
-    String text, IconData icon, TextEditingController controller) {
+    String text, IconData icon, TextEditingController controller, String col) {
   return TextFormField(
     controller: controller,
     onSaved: (value) {
       controller.text = value!;
     },
     textInputAction: TextInputAction.done,
-    cursorColor: myColors("Red"),
+    cursorColor: myColors(col),
     style: TextStyle(
         color: myColors("Purple"), fontWeight: FontWeight.w500, fontSize: 18),
     decoration: InputDecoration(
       prefixIcon: Icon(
         icon,
-        color: myColors("Red"),
+        color: myColors(col),
       ),
       labelText: text,
       labelStyle: TextStyle(
-          color: myColors("FiftyRed"),
+          color: myColors("Fifty$col"),
           fontSize: 18,
           fontWeight: FontWeight.w500),
       filled: true,
@@ -148,6 +150,7 @@ Column dashboardButtons(BuildContext context, String colour, String iconName) {
               'assets/icons/$iconName.svg',
             ),
             onTap: () {
+              getMyListInfo();
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const MyListScreen()),
@@ -352,7 +355,7 @@ AppBar appBar(BuildContext context) {
   );
 }
 
-Container listHeader(String col, String date, String noItems, bool isFamily) {
+Container listHeader(String col, String date, int noItems, bool isFamily) {
   return Container(
       height: 45,
       decoration: BoxDecoration(
@@ -362,6 +365,9 @@ Container listHeader(String col, String date, String noItems, bool isFamily) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const SizedBox(
+            width: 20,
+          ),
           Text(
             date,
             style: TextStyle(
@@ -369,23 +375,26 @@ Container listHeader(String col, String date, String noItems, bool isFamily) {
                 fontSize: 12,
                 fontWeight: FontWeight.normal),
           ),
-          const SizedBox(
-            width: 120,
+          const Spacer(
+            flex: 6,
           ),
           Text(
-            noItems,
+            noItems.toString(),
             style: TextStyle(
                 color: myColors("White"),
                 fontSize: 12,
                 fontWeight: FontWeight.normal),
           ),
-          const SizedBox(
-            width: 120,
+          const Spacer(
+            flex: 9,
           ),
           SvgPicture.asset(
             'assets/icons/addPerson.svg',
             color: isFamily ? myColors("white") : myColors(col),
-          )
+          ),
+          const SizedBox(
+            width: 20,
+          ),
         ],
       ));
 }

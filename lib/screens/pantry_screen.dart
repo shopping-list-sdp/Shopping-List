@@ -39,7 +39,7 @@ class _PantryScreenState extends State<PantryScreen> {
                     height: 30,
                   ),
                   searchField("Search Catagories", CustomIcons.search,
-                      searchTextEditingController),
+                      searchTextEditingController, "Red"),
                   const SizedBox(
                     height: 30,
                   ),

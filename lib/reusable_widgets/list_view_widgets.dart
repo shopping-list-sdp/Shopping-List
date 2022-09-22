@@ -2,14 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shopping_list/global.dart' as global;
+import 'package:shopping_list/model/ListItem.dart';
 import 'package:shopping_list/utils/color_utils.dart';
 
-void myListView() {
-  print(global.myListItemCategory);
-}
-
 Column categoryView(String category) {
-  if (!global.myListItemCategory.containsValue(category)) {
+  if (global.myList.where((element) => element.category == category).isEmpty) {
     return Column();
   } else {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -29,8 +26,8 @@ Column categoryView(String category) {
       const SizedBox(
         height: 10,
       ),
-      for (MapEntry<String, String> entry in global.myListItemCategory.entries)
-        if (entry.value == category)
+      for (ListItem entry in global.myList)
+        if (entry.category == category)
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -52,8 +49,8 @@ Column categoryView(String category) {
                 //}
               ),
               Text(
-                  entry.key[0].toUpperCase() +
-                      entry.key.substring(1), //make first etter capital
+                  entry.itemId[0].toUpperCase() +
+                      entry.itemId.substring(1), //make first etter capital
                   style: TextStyle(
                       color: myColors("Grey"),
                       fontSize: 16,

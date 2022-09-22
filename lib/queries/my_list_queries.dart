@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shopping_list/global.dart' as global;
+import 'package:shopping_list/main.dart';
+import 'package:shopping_list/model/List.dart';
+import 'package:shopping_list/model/ListItem.dart';
 
 void getMyListInfo() async {
   final querySnapshot = await FirebaseFirestore.instance
@@ -8,43 +11,50 @@ void getMyListInfo() async {
       .where('type', isEqualTo: 'personal')
       .get();
 
-  for (var doc in querySnapshot.docs) {
-    // Getting data directly
-    global.myListId = doc.get('id');
-    global.myListDate = doc.get('date');
-    global.myListNoItems = doc.get('no_items');
+  final data = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+  var myObjects = [];
+  for (var item in data) {
+    myObjects.add(List.fromJson(item));
   }
+
+  List list = myObjects.singleWhere((temp) => temp.user == global.userId);
+
+  global.myListId = list.id;
+  global.myListDate = list.date;
+  global.myListNoItems = list.noItems;
 }
 
 void getMyListItems() async {
   var list = [];
   final querySnapshot = await FirebaseFirestore.instance
       .collection('list_item')
-      .where('list_id', isEqualTo: global.myListId)
+      .where('list_id',
+          isEqualTo: global.myListId) //only get items for this list
       .get();
 
-  for (var doc in querySnapshot.docs) {
-    // Getting data directly
-    list.add(doc.get('item_id'));
+  final data = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+  var myObjects = [];
+  for (var item in data) {
+    myObjects.add(ListItem.fromJson(item));
   }
-  global.myListItems = list;
-  for (int i = 0; i < global.myListItems.length; i++) {
-    //print(global.myListItems[i]);
+
+  global.myList = myObjects;
+
+  for (int i = 0; i < global.myList.length; i++) {
+    ListItem list_item = global.myList.elementAt(i);
+
     final querySnapshot = await FirebaseFirestore.instance
         .collection('items')
-        .where('name', isEqualTo: global.myListItems[i])
+        .where('name', isEqualTo: list_item.itemId)
         .get();
 
     for (var doc in querySnapshot.docs) {
       String category = doc.get('category');
-      global.myListItemCategory[global.myListItems[i]] = category;
+      list_item.category = category;
     }
   }
-  print(global.myListItemCategory);
-}
-
-void test() {
-  //print(global.);
 }
 
 void updateNoItems(String listId) async {

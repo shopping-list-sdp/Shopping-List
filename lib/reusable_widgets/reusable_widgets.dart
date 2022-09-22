@@ -150,7 +150,6 @@ Column dashboardButtons(BuildContext context, String colour, String iconName) {
               'assets/icons/$iconName.svg',
             ),
             onTap: () {
-              getMyListInfo();
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const MyListScreen()),

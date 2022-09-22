@@ -88,22 +88,26 @@ class _MyListScreenState extends State<MyListScreen> {
                           icon: const Icon(Icons.add)),
                     ],
                   ),
-                  IconButton(
+                  /*IconButton(
                       onPressed: () async {
                         myListView();
                       },
                       icon: const Icon(Icons.list)),
+                      */
+                  const SizedBox(
+                    height: 30,
+                  ),
                   categoryView("bakery"),
-                  categoryView("beverages"),
-                  categoryView("canned"),
-                  categoryView("cleaning"),
-                  categoryView("dairy"),
-                  categoryView("dry goods"),
-                  categoryView("fish"),
-                  categoryView("frozen"),
-                  categoryView("meat"),
-                  categoryView("pet care"),
-                  categoryView("produce"),
+                  //categoryView("beverages"),
+                  //categoryView("canned"),
+                  //categoryView("cleaning"),
+                  //categoryView("dairy"),
+                  //categoryView("dry goods"),
+                  //categoryView("fish"),
+                  //categoryView("frozen"),
+                  //categoryView("meat"),
+                  //categoryView("pet care"),
+                  //categoryView("produce"),
                   categoryView("toiletries"),
                 ]),
               )),

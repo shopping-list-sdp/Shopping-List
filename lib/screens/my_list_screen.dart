@@ -65,7 +65,7 @@ class _MyListScreenState extends State<MyListScreen> {
                   listHeader(
                       "Blue",
                       '${global.myListDate.toDate().day} - ${global.myListDate.toDate().month} - ${global.myListDate.toDate().year.toString()}',
-                      noItems,
+                      global.myListNoItems,
                       false),
                   const SizedBox(
                     height: 35,
@@ -84,7 +84,7 @@ class _MyListScreenState extends State<MyListScreen> {
                                 itemName: addTextEditingController.text,
                                 listID: global.myListId);
                             setState(() {
-                              //noItems = noItems + 1;
+                              noItems = noItems + 1;
                               getMyListInfo();
                               getMyListItems();
                             });

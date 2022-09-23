@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:shopping_list/screens/my_list_screen.dart';
+import 'package:shopping_list/screens/pantry_screen.dart';
 import '../custom_icons_icons.dart';
 import '../queries/my_list_queries.dart';
 import '../reusable_widgets/reusable_widgets.dart';
@@ -46,22 +48,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 50,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(context, "Blue", "My List"),
-                    dashboardButtons(context, "Red", "Family List"),
+                    dashboardButtons(
+                        context, "Blue", "My List", const MyListScreen()),
+                    dashboardButtons(
+                        context, "Red", "Family List", const MyListScreen()),
                   ]),
                   const SizedBox(
                     height: 30,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(context, "Pink", "Concept List"),
-                    dashboardButtons(context, "Purple", "Pantry"),
+                    dashboardButtons(
+                        context, "Pink", "Concept List", const MyListScreen()),
+                    dashboardButtons(context, "Purple", "Pantry",
+                        const PantryScreen(text: '')),
                   ]),
                   const SizedBox(
                     height: 30,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(context, "Green", "Expenses"),
-                    dashboardButtons(context, "Yellow", "Scheduled"),
+                    dashboardButtons(
+                        context, "Green", "Expenses", const MyListScreen()),
+                    dashboardButtons(
+                        context, "Yellow", "Scheduled", const MyListScreen()),
                   ]),
                 ]),
               )),

@@ -134,7 +134,8 @@ Container signInSignUpButton(
   );
 }
 
-Column dashboardButtons(BuildContext context, String colour, String iconName) {
+Column dashboardButtons(
+    BuildContext context, String colour, String iconName, Widget screen) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: [
@@ -152,7 +153,7 @@ Column dashboardButtons(BuildContext context, String colour, String iconName) {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const MyListScreen()),
+                MaterialPageRoute(builder: (context) => screen),
               );
             },
           ),
@@ -327,7 +328,12 @@ AppBar appBar(BuildContext context) {
               value: 2,
               child: Row(
                 children: [
-                  SvgPicture.asset('assets/icons/logOut.svg'),
+                  SvgPicture.asset(
+                    'assets/icons/Pantry.svg',
+                    color: myColors("Purple"),
+                    width: 25,
+                    height: 25,
+                  ),
                   const SizedBox(
                     width: 15,
                   ),

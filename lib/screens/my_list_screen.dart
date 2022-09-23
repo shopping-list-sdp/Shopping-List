@@ -83,10 +83,10 @@ class _MyListScreenState extends State<MyListScreen> {
                             addListItem(
                                 itemName: addTextEditingController.text,
                                 listID: global.myListId);
+                            getMyListInfo();
+                            getMyListItems();
                             setState(() {
                               noItems = noItems + 1;
-                              getMyListInfo();
-                              getMyListItems();
                             });
                           },
                           icon: const Icon(Icons.add)),

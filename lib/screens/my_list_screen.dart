@@ -3,6 +3,7 @@ import 'package:shopping_list/custom_icons_icons.dart';
 import 'package:shopping_list/global.dart' as global;
 import 'package:flutter/material.dart';
 import 'package:shopping_list/reusable_widgets/list_view_widgets.dart';
+import '../model/ListItem.dart';
 import '../queries/my_list_queries.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
@@ -39,6 +40,7 @@ class _MyListScreenState extends State<MyListScreen> {
 
   final addTextEditingController = TextEditingController();
   int noItems = global.myListNoItems;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -82,33 +84,87 @@ class _MyListScreenState extends State<MyListScreen> {
                                 itemName: addTextEditingController.text,
                                 listID: global.myListId);
                             setState(() {
-                              noItems = noItems + 1;
+                              //noItems = noItems + 1;
+                              getMyListInfo();
+                              getMyListItems();
                             });
                           },
                           icon: const Icon(Icons.add)),
                     ],
                   ),
-                  /*IconButton(
-                      onPressed: () async {
-                        myListView();
-                      },
-                      icon: const Icon(Icons.list)),
-                      */
                   const SizedBox(
                     height: 30,
                   ),
-                  categoryView("bakery"),
-                  //categoryView("beverages"),
-                  //categoryView("canned"),
-                  //categoryView("cleaning"),
-                  //categoryView("dairy"),
-                  //categoryView("dry goods"),
-                  //categoryView("fish"),
-                  //categoryView("frozen"),
-                  //categoryView("meat"),
-                  //categoryView("pet care"),
-                  //categoryView("produce"),
-                  categoryView("toiletries"),
+                  Column(
+                    children: [
+                      for (var category in global.categories)
+                        global.myList
+                                .where(
+                                    (element) => element.category == category)
+                                .isEmpty
+                            ? Column()
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(width: 25),
+                                        Text(
+                                            category[0].toUpperCase() +
+                                                category.substring(
+                                                    1), //make first letter capital
+                                            style: TextStyle(
+                                                color: myColors("Blue"),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 18)),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    for (ListItem entry in global.myList)
+                                      if (entry.category == category)
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(width: 15),
+                                            Checkbox(
+                                                checkColor: Colors.white,
+                                                fillColor: MaterialStateProperty
+                                                    .resolveWith<Color>(
+                                                        (Set<MaterialState>
+                                                            states) {
+                                                  return myColors("Purple");
+                                                }),
+                                                value: !entry.toBuy,
+                                                shape: const CircleBorder(),
+                                                onChanged: (bool? val) {
+                                                  changeToBuy(
+                                                      !entry.toBuy, entry.id);
+                                                  setState(() {
+                                                    entry.toBuy = !val!;
+                                                  });
+                                                }),
+                                            Text(
+                                                entry.itemId[0].toUpperCase() +
+                                                    entry.itemId.substring(
+                                                        1), //make first etter capital
+                                                style: TextStyle(
+                                                    color: myColors("Grey"),
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.normal))
+                                          ],
+                                        ),
+                                    const SizedBox(
+                                      height: 20,
+                                    )
+                                  ])
+                    ],
+                  ),
                 ]),
               )),
             ]),

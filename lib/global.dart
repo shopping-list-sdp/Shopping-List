@@ -11,4 +11,17 @@ String myListId = '';
 int myListNoItems = 0;
 Timestamp myListDate = Timestamp.now();
 var myList = [];
-//final Map<String, String> myListItemWithCategory = {};
+final categories = [
+  'bakery',
+  'beverages',
+  'canned',
+  'cleaning',
+  'dairy',
+  'dry goods',
+  'fish',
+  'frozen',
+  'meat',
+  'pet care',
+  'produce',
+  'toiletries'
+];

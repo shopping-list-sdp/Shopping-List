@@ -68,9 +68,18 @@ Future addListItem({required String itemName, required String listID}) async {
   final docMyList = FirebaseFirestore.instance.collection('list_item').doc();
 
   final json = {
+    'id': docMyList.id,
     'item_id': itemName,
     'list_id': listID,
+    'to_buy': true
   };
   updateNoItems(listID);
   await docMyList.set(json);
+}
+
+void changeToBuy(bool newVal, String itemId) {
+  FirebaseFirestore.instance
+      .collection('list_item')
+      .doc(itemId)
+      .update({'to_buy': newVal});
 }

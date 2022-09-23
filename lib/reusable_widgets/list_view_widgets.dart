@@ -33,21 +33,18 @@ Column categoryView(String category) {
             children: [
               const SizedBox(width: 15),
               Checkbox(
-                checkColor: Colors.white,
-                fillColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                  if (states.contains(MaterialState.disabled)) {
+                  checkColor: Colors.white,
+                  fillColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
                     return myColors("Purple");
-                  }
-                  return myColors("FiftyPurple");
-                }),
-                value: false,
-                shape: const CircleBorder(),
-                onChanged: (value) {}, //(bool? value) {
-                //setState(() {
-                //isChecked = value!;
-                //}
-              ),
+                  }),
+                  value: !entry.toBuy,
+                  shape: const CircleBorder(),
+                  onChanged: (bool? value) {
+                    //(bool? value) {
+                    //setState(() {
+                    value = true;
+                  }),
               Text(
                   entry.itemId[0].toUpperCase() +
                       entry.itemId.substring(1), //make first etter capital

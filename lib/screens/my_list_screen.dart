@@ -65,7 +65,7 @@ class _MyListScreenState extends State<MyListScreen> {
                   listHeader(
                       "Blue",
                       '${global.myListDate.toDate().day} - ${global.myListDate.toDate().month} - ${global.myListDate.toDate().year.toString()}',
-                      global.myListNoItems,
+                      noItems,
                       false),
                   const SizedBox(
                     height: 35,

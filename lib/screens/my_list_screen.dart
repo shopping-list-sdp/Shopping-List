@@ -82,7 +82,6 @@ class _MyListScreenState extends State<MyListScreen> {
                             await addListItem(
                                 itemName: addTextEditingController.text,
                                 listID: global.myListId);
-                            await getMyListInfo();
                             setState(() {
                               noItems = noItems + 1;
                             });
@@ -105,7 +104,6 @@ class _MyListScreenState extends State<MyListScreen> {
                           ),
                           onPressed: () async {
                             await clearList(global.myListId);
-                            await getMyListInfo();
                             setState(() {
                               date = Timestamp.now();
                               noItems = 0;

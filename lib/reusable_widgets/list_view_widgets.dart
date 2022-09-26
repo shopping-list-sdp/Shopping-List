@@ -60,3 +60,5 @@ Column categoryView(String category) {
     ]);
   }
 }
+
+void doNothing() {}

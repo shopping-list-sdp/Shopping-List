@@ -8,20 +8,6 @@ import '../queries/my_list_queries.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
 
-CollectionReference _collectionRef =
-    FirebaseFirestore.instance.collection('users');
-//.where("name", isEqualTo: "bakery") as CollectionReference<Object?>;
-
-Future<void> getData() async {
-  // Get docs from collection reference
-  QuerySnapshot querySnapshot = await _collectionRef.get();
-
-  // Get data from docs and convert map to List
-  final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-
-  print(allData);
-}
-
 class MyListScreen extends StatefulWidget {
   const MyListScreen({super.key});
 
@@ -30,13 +16,38 @@ class MyListScreen extends StatefulWidget {
 }
 
 class _MyListScreenState extends State<MyListScreen> {
+  final addTextEditingController = TextEditingController();
+  var duplicateItems = global.items;
+  var items = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
 
-  final addTextEditingController = TextEditingController();
+  void filterSearchResults(String query) {
+    List<String> dummySearchList = [];
+    dummySearchList.addAll(global.items);
+    if (query.isNotEmpty) {
+      List<String> dummyListData = [];
+      for (var item in dummySearchList) {
+        if (item.contains(query)) {
+          dummyListData.add(item);
+        }
+      }
+      setState(() {
+        items.clear();
+        items.addAll(dummyListData);
+      });
+      return;
+    } else {
+      setState(() {
+        items.clear();
+        items.addAll(global.items);
+      });
+    }
+  }
+
   int noItems = global.myListNoItems;
   Timestamp date = global.myListDate;
 
@@ -74,23 +85,70 @@ class _MyListScreenState extends State<MyListScreen> {
                     children: [
                       SizedBox(
                         width: 325,
-                        child: searchField("Add items", CustomIcons.search,
-                            addTextEditingController, "Blue"),
+                        child: //searchField("Add items", CustomIcons.search,
+                            //addTextEditingController, "Blue"),
+                            TextField(
+                                controller: addTextEditingController,
+                                onChanged: (value) {
+                                  filterSearchResults(value);
+                                  if (addTextEditingController.toString() ==
+                                      '') {
+                                    items = [];
+                                  }
+                                },
+                                textInputAction: TextInputAction.done,
+                                cursorColor: myColors("Blue"),
+                                style: TextStyle(
+                                    color: myColors("Purple"),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18),
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(
+                                    CustomIcons.search,
+                                    color: myColors("Blue"),
+                                  ),
+                                  labelText: "Add Items",
+                                  labelStyle: TextStyle(
+                                      color: myColors("FiftyBlue"),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500),
+                                  filled: true,
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                  fillColor: myColors("TwentyGrey"),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      borderSide: const BorderSide(
+                                          width: 0, style: BorderStyle.none)),
+                                )),
                       ),
                       IconButton(
-                          onPressed: () async {
-                            await addListItem(
-                                itemName: addTextEditingController.text,
-                                listID: global.myListId);
-                            setState(() {
-                              noItems = noItems + 1;
-                            });
-                          },
-                          icon: const Icon(Icons.add)),
+                        onPressed: () async {
+                          await addListItem(
+                              itemName: addTextEditingController.text,
+                              listID: global.myListId);
+                          setState(() {
+                            noItems = noItems + 1;
+                          });
+                        },
+                        icon: const Icon(Icons.add),
+                        color: myColors("Blue"),
+                      ),
                     ],
                   ),
                   const SizedBox(
                     height: 20,
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: items.length < 4 ? items.length : 4,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(items[index]),
+                      );
+                    },
                   ),
                   Align(
                       alignment: Alignment.centerRight,

@@ -4,7 +4,7 @@ import 'package:shopping_list/main.dart';
 import 'package:shopping_list/model/List.dart';
 import 'package:shopping_list/model/ListItem.dart';
 
-void getMyListInfo() async {
+Future<void> getMyListInfo() async {
   final querySnapshot = await FirebaseFirestore.instance
       .collection('list')
       .where('user', isEqualTo: global.userId)
@@ -23,10 +23,15 @@ void getMyListInfo() async {
   global.myListId = list.id;
   global.myListDate = list.date;
   global.myListNoItems = list.noItems;
+
+  //print("got list");
+  //print("list id: " + global.myListId);
+  //print("list date: " + global.myListDate.toString());
+  //print("no items: " + global.myListNoItems.toString());
+  await getMyListItems();
 }
 
-void getMyListItems() async {
-  var list = [];
+Future<void> getMyListItems() async {
   final querySnapshot = await FirebaseFirestore.instance
       .collection('list_item')
       .where('list_id',
@@ -43,28 +48,32 @@ void getMyListItems() async {
   global.myList = myObjects;
 
   for (int i = 0; i < global.myList.length; i++) {
-    ListItem list_item = global.myList.elementAt(i);
+    ListItem listItem = global.myList.elementAt(i);
 
     final querySnapshot = await FirebaseFirestore.instance
         .collection('items')
-        .where('name', isEqualTo: list_item.itemId)
+        .where('name', isEqualTo: listItem.itemId)
         .get();
 
     for (var doc in querySnapshot.docs) {
       String category = doc.get('category');
-      list_item.category = category;
+      listItem.category = category;
     }
   }
+
+  //print("got my list");
+  //print(global.myList);
 }
 
-void updateNoItems(String listId) async {
+Future<void> updateNoItems(String listId) async {
   FirebaseFirestore.instance
       .collection('list')
       .doc(listId)
       .update({'no_items': FieldValue.increment(1)});
 }
 
-Future addListItem({required String itemName, required String listID}) async {
+Future<void> addListItem(
+    {required String itemName, required String listID}) async {
   final docMyList = FirebaseFirestore.instance.collection('list_item').doc();
 
   final json = {
@@ -73,13 +82,37 @@ Future addListItem({required String itemName, required String listID}) async {
     'list_id': listID,
     'to_buy': true
   };
-  updateNoItems(listID);
+  await updateNoItems(listID);
   await docMyList.set(json);
+  await getMyListInfo();
 }
 
-void changeToBuy(bool newVal, String itemId) {
+Future<void> changeToBuy(bool newVal, String itemId) async {
   FirebaseFirestore.instance
       .collection('list_item')
       .doc(itemId)
       .update({'to_buy': newVal});
+}
+
+Future<void> clearList(String listId) async {
+  var collection = FirebaseFirestore.instance.collection('list_item');
+  var snapshot = await collection.where('list_id', isEqualTo: listId).get();
+  for (var doc in snapshot.docs) {
+    await doc.reference.delete();
+  }
+
+  FirebaseFirestore.instance
+      .collection('list')
+      .doc(listId)
+      .update({'no_items': 0});
+
+  await updateDate(listId);
+  await getMyListInfo();
+}
+
+Future<void> updateDate(String listId) async {
+  FirebaseFirestore.instance
+      .collection('list')
+      .doc(listId)
+      .update({'date': Timestamp.now()});
 }

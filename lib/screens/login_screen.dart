@@ -1,4 +1,5 @@
 import 'package:shopping_list/global.dart' as global;
+import 'package:shopping_list/queries/my_list_queries.dart';
 import 'package:shopping_list/screens/dashboard_screen.dart';
 import 'package:shopping_list/screens/home_screen.dart';
 import 'package:shopping_list/screens/registration_screen.dart';
@@ -242,7 +243,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   Fluttertoast.showToast(msg: "Login Successful"),
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const DashboardScreen())),
-                  global.userId = uid.user?.uid
+                  global.userId = uid.user?.uid,
+                  getMyListInfo(),
+                  //getMyListItems()
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

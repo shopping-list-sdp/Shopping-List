@@ -33,13 +33,12 @@ class _MyListScreenState extends State<MyListScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    getMyListInfo();
-    getMyListItems();
     super.initState();
   }
 
   final addTextEditingController = TextEditingController();
   int noItems = global.myListNoItems;
+  Timestamp date = global.myListDate;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +63,7 @@ class _MyListScreenState extends State<MyListScreen> {
                   ),
                   listHeader(
                       "Blue",
-                      '${global.myListDate.toDate().day} - ${global.myListDate.toDate().month} - ${global.myListDate.toDate().year.toString()}',
+                      '${date.toDate().day} - ${date.toDate().month} - ${date.toDate().year.toString()}',
                       noItems,
                       false),
                   const SizedBox(
@@ -80,11 +79,10 @@ class _MyListScreenState extends State<MyListScreen> {
                       ),
                       IconButton(
                           onPressed: () async {
-                            addListItem(
+                            await addListItem(
                                 itemName: addTextEditingController.text,
                                 listID: global.myListId);
-                            getMyListInfo();
-                            getMyListItems();
+                            await getMyListInfo();
                             setState(() {
                               noItems = noItems + 1;
                             });
@@ -93,9 +91,28 @@ class _MyListScreenState extends State<MyListScreen> {
                     ],
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                          child: Text(
+                            "Clear List     ",
+                            style: TextStyle(
+                                color: myColors("Purple"),
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          onPressed: () async {
+                            await clearList(global.myListId);
+                            await getMyListInfo();
+                            setState(() {
+                              date = Timestamp.now();
+                              noItems = 0;
+                            });
+                          })),
                   Column(
+                    key: UniqueKey(),
                     children: [
                       for (var category in global.categories)
                         global.myList

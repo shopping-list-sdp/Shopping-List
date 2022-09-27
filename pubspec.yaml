@@ -64,8 +64,8 @@ flutter:
     - assets/
     - assets/essentials/
     - assets/icons/
-    - assets/pantryScreen/
-    - assets/bottomBar/
+    - assets/images/
+
   fonts:
     - family: CustomIcons
       fonts:

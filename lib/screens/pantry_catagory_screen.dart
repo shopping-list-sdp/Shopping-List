@@ -44,8 +44,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                   Stack(
                     alignment: Alignment.center,
                     children: [
-                      const Image(
-                          image: AssetImage('assets/pantryScreen/stall.png')),
+                      const Image(image: AssetImage('assets/images/stall.png')),
                       Text(catagory,
                           style: TextStyle(
                               color: myColors("White"),

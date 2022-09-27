@@ -92,16 +92,6 @@ class _LoginScreenState extends State<LoginScreen> {
       controller: passwordController,
       obscureText: true,
       validator: (value) => PasswordFieldValidator.validate(value!),
-      /*{
-        RegExp regex = RegExp(r'^.{6,}$');
-        if (value!.isEmpty) {
-          return ("Please enter password");
-        }
-        if (!regex.hasMatch(value)) {
-          return ("Invalid password");
-        }
-        return null;
-      },*/
       onSaved: (value) {
         passwordController.text = value!;
       },
@@ -156,56 +146,60 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-
-    return Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/essentials/background.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Scaffold(
-            backgroundColor: Colors.transparent,
-            resizeToAvoidBottomInset: false,
-            body: Center(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      30, MediaQuery.of(context).size.height * 0.02, 30, 0),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Column(
-                            children: <Widget>[
-                              Text("Welcome",
-                                  style: TextStyle(
-                                      color: myColors("Purple"),
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w500)),
-                              const SizedBox(
-                                height: 25,
-                              ),
-                              Image.asset("assets/essentials/logo.png",
-                                  fit: BoxFit.fitWidth, width: 250, height: 50),
-                              const SizedBox(height: 40),
-                              emailField,
-                              const SizedBox(height: 15),
-                              passwordField,
-                              const SizedBox(height: 25),
-                              loginButton,
-                              signUpOption()
-                            ],
-                          ),
-                        ]),
-                  ),
-                ),
+    return MaterialApp(
+        home: Container(
+            key: const Key('k'),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/essentials/background.png"),
+                fit: BoxFit.cover,
               ),
-            )));
+            ),
+            child: Scaffold(
+                backgroundColor: Colors.transparent,
+                resizeToAvoidBottomInset: false,
+                body: Center(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          30, MediaQuery.of(context).size.height * 0.02, 30, 0),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Column(
+                                children: <Widget>[
+                                  Text("Welcome",
+                                      key: const Key('WelcomeText'),
+                                      style: TextStyle(
+                                          color: myColors("Purple"),
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.w500)),
+                                  const SizedBox(
+                                    height: 25,
+                                  ),
+                                  Image.asset("assets/essentials/logo.png",
+                                      fit: BoxFit.fitWidth,
+                                      width: 250,
+                                      height: 50),
+                                  const SizedBox(height: 40),
+                                  emailField,
+                                  const SizedBox(height: 15),
+                                  passwordField,
+                                  const SizedBox(height: 25),
+                                  loginButton,
+                                  signUpOption()
+                                ],
+                              ),
+                            ]),
+                      ),
+                    ),
+                  ),
+                ))));
   }
 
   Row signUpOption() {

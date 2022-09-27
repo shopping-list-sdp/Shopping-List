@@ -43,7 +43,7 @@ class _MyListScreenState extends State<MyListScreen> {
     } else {
       setState(() {
         items.clear();
-        items.addAll(global.items);
+        //items.addAll(global.items);
       });
     }
   }

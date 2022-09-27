@@ -74,6 +74,7 @@ TextFormField reusableTextField(String text, IconData icon, bool isPasswordType,
 TextFormField searchField(
     String text, IconData icon, TextEditingController controller, String col) {
   return TextFormField(
+    key: Key("s"),
     controller: controller,
     onSaved: (value) {
       controller.text = value!;

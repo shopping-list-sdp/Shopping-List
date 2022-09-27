@@ -34,8 +34,7 @@ class _PantryScreenState extends State<PantryScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      const Image(
-                          image: AssetImage('assets/pantryScreen/stall.png')),
+                      const Image(image: AssetImage('assets/images/stall.png')),
                       const SizedBox(
                         height: 30,
                       ),

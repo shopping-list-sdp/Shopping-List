@@ -25,4 +25,14 @@ final categories = [
   'produce',
   'toiletries'
 ];
-final items = ['bread', 'bagels', 'baked beans', 'rolls', 'lemonade', 'juice'];
+final items = [
+  'bread',
+  'milk',
+  'bagels',
+  'baked beans',
+  'sliced peaches',
+  'rolls',
+  'lemonade',
+  'juice',
+  'tennis biscuit'
+];

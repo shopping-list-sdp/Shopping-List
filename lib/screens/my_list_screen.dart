@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/custom_icons_icons.dart';
 import 'package:shopping_list/global.dart' as global;
 import 'package:flutter/material.dart';
@@ -107,6 +108,20 @@ class _MyListScreenState extends State<MyListScreen> {
                                     CustomIcons.search,
                                     color: myColors("Blue"),
                                   ),
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
+                                        items = [];
+                                        addTextEditingController.text = '';
+                                      });
+                                    },
+                                    icon: Icon(
+                                      Icons.cancel_rounded,
+                                      color: myColors("FiftyGrey"),
+                                    ),
+                                  ),
                                   labelText: "Add Items",
                                   labelStyle: TextStyle(
                                       color: myColors("FiftyBlue"),
@@ -118,38 +133,65 @@ class _MyListScreenState extends State<MyListScreen> {
                                   floatingLabelBehavior:
                                       FloatingLabelBehavior.never,
                                   fillColor: myColors("TwentyGrey"),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      borderSide: const BorderSide(
+                                  border: const OutlineInputBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20)),
+                                      borderSide: BorderSide(
                                           width: 0, style: BorderStyle.none)),
                                 )),
                       ),
-                      IconButton(
-                        onPressed: () async {
-                          await addListItem(
-                              itemName: addTextEditingController.text,
-                              listID: global.myListId);
-                          setState(() {
-                            noItems = noItems + 1;
-                          });
-                        },
-                        icon: const Icon(Icons.add),
-                        color: myColors("Blue"),
-                      ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: items.length < 4 ? items.length : 4,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(items[index]),
-                      );
-                    },
-                  ),
+                  Container(
+                      width: 325,
+                      decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20)),
+                          color: myColors("TwentyGrey")),
+                      //border: Border.all(color: Colors.blueAccent)),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: items.length < 5 ? items.length : 5,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            //tileColor: myColors("TwentyGrey"),
+                            /*shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Colors.black, width: 1),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            */
+                            leading: Transform.translate(
+                                offset: const Offset(-5, 0),
+                                child: Icon(
+                                  Icons.add,
+                                  color: myColors("Purple"),
+                                )),
+                            title: Transform.translate(
+                                offset: const Offset(-22, 0),
+                                child: Text(
+                                  items[index],
+                                  style: TextStyle(color: myColors("Grey")),
+                                )),
+                            onTap: () async {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              addTextEditingController.text = items[index];
+                              setState(() {
+                                items = [];
+                              });
+                              await addListItem(
+                                  itemName: addTextEditingController.text,
+                                  listID: global.myListId);
+                              setState(() {
+                                noItems = noItems + 1;
+                                addTextEditingController.text = '';
+                              });
+                              Fluttertoast.showToast(msg: "Item Added");
+                            },
+                          );
+                        },
+                      )),
                   Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(

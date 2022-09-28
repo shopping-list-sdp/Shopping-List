@@ -1,7 +1,6 @@
 library global;
 
 import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shopping_list/model/ListItem.dart';
@@ -25,6 +24,7 @@ final categories = [
   'produce',
   'toiletries'
 ];
+
 final items = [
   'bread',
   'milk',

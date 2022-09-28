@@ -133,11 +133,21 @@ class _MyListScreenState extends State<MyListScreen> {
                                   floatingLabelBehavior:
                                       FloatingLabelBehavior.never,
                                   fillColor: myColors("TwentyGrey"),
-                                  border: const OutlineInputBorder(
+                                  border: OutlineInputBorder(
                                       borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20)),
-                                      borderSide: BorderSide(
+                                          topLeft: const Radius.circular(20),
+                                          topRight: const Radius.circular(20),
+                                          bottomLeft:
+                                              addTextEditingController.text ==
+                                                      ''
+                                                  ? const Radius.circular(20)
+                                                  : const Radius.circular(0),
+                                          bottomRight:
+                                              addTextEditingController.text ==
+                                                      ''
+                                                  ? const Radius.circular(20)
+                                                  : const Radius.circular(0)),
+                                      borderSide: const BorderSide(
                                           width: 0, style: BorderStyle.none)),
                                 )),
                       ),
@@ -176,16 +186,15 @@ class _MyListScreenState extends State<MyListScreen> {
                                 )),
                             onTap: () async {
                               FocusManager.instance.primaryFocus?.unfocus();
-                              addTextEditingController.text = items[index];
+                              addTextEditingController.text = '';
+                              String item = items[index];
                               setState(() {
                                 items = [];
                               });
                               await addListItem(
-                                  itemName: addTextEditingController.text,
-                                  listID: global.myListId);
+                                  itemName: item, listID: global.myListId);
                               setState(() {
                                 noItems = noItems + 1;
-                                addTextEditingController.text = '';
                               });
                               Fluttertoast.showToast(msg: "Item Added");
                             },

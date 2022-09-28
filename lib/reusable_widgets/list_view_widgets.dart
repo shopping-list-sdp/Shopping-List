@@ -7,13 +7,14 @@ import 'package:shopping_list/utils/color_utils.dart';
 
 Column categoryView(String category) {
   if (global.myList.where((element) => element.category == category).isEmpty) {
-    return Column();
+    return Column(); //if theres no items for this category
   } else {
+    //if category does have items
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const SizedBox(width: 25),
+          const SizedBox(width: 25), //add space
           Text(
               category[0].toUpperCase() +
                   category.substring(1), //make first letter capital
@@ -24,25 +25,26 @@ Column categoryView(String category) {
         ],
       ),
       const SizedBox(
+        //add space
         height: 10,
       ),
       for (ListItem entry in global.myList)
         if (entry.category == category)
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start, //middle
             children: [
               const SizedBox(width: 15),
               Checkbox(
-                  checkColor: Colors.white,
+                  //to mark if item is bought or not
+                  checkColor: Colors.white, //tick in circle
                   fillColor: MaterialStateProperty.resolveWith<Color>(
                       (Set<MaterialState> states) {
-                    return myColors("Purple");
+                    return myColors("Purple"); //colour when filled
                   }),
-                  value: !entry.toBuy,
-                  shape: const CircleBorder(),
+                  value: !entry.toBuy, //change to opposite
+                  shape: const CircleBorder(), //shape
                   onChanged: (bool? value) {
-                    //(bool? value) {
-                    //setState(() {
+                    //when clicked change value
                     value = true;
                   }),
               Text(
@@ -55,10 +57,9 @@ Column categoryView(String category) {
             ],
           ),
       const SizedBox(
+        //add space
         height: 20,
       ) //Text(item)
     ]);
   }
 }
-
-void doNothing() {}

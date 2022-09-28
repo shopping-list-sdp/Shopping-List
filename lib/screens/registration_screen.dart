@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shopping_list/global.dart' as global;
 import 'package:shopping_list/model/user_model.dart';
+import 'package:shopping_list/screens/dashboard_screen.dart';
 import 'package:shopping_list/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/screens/login_screen.dart';
-
 import '../utils/color_utils.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -163,7 +164,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           return ("Please enter password");
         }
         if (!regex.hasMatch(value)) {
-          return ("Inalid Password");
+          return ("Invalid Password");
         }
         return null;
       },
@@ -266,13 +267,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/background.png"),
+            image: AssetImage("assets/essentials/background.png"),
             fit: BoxFit.cover,
           ),
         ),
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          resizeToAvoidBottomInset: false,
           body: Center(
             child: SingleChildScrollView(
               child: Padding(
@@ -292,7 +292,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       const SizedBox(
                         height: 25,
                       ),
-                      Image.asset("assets/logo.png",
+                      Image.asset("assets/essentials/logo.png",
                           fit: BoxFit.fitWidth, width: 250, height: 50),
                       const SizedBox(height: 45),
                       firstNameField,
@@ -355,6 +355,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 
+  Future createMyList({required String? uid}) async {
+    final docMyList = FirebaseFirestore.instance.collection('list').doc();
+
+    final json = {
+      'name': 'myList',
+      'no_items': 0,
+      'family': null,
+      'id': docMyList.id,
+      'type': 'personal',
+      'user': uid,
+      'date': FieldValue.serverTimestamp()
+    };
+
+    await docMyList.set(json);
+  }
+
   postDetailsToFirestore() async {
     // calling our firestore
     // calling our user model
@@ -376,10 +392,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         .doc(user.uid)
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
+    global.userId = user.uid;
+    createMyList(uid: global.userId);
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const DashboardScreen()),
         (route) => false);
   }
 

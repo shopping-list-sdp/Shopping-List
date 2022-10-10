@@ -58,7 +58,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 30,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(context, "Pink", "Concept List",
+                    dashboardButtons(context, "Pink", "Concept list",
                         const MyListScreen()), //takes you to concept list
                     dashboardButtons(
                         context,

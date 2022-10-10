@@ -35,11 +35,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
             backgroundColor: myColors("White"),
             body: ListView(children: <Widget>[
               SingleChildScrollView(
+                  //allow page to scroll
                   child: Padding(
                 padding: EdgeInsets.fromLTRB(
                     35, MediaQuery.of(context).size.height * 0.05, 35, 0),
                 child: Column(children: <Widget>[
-                  Text("Home",
+                  Text("Home", //title of page
                       style: TextStyle(
                           color: myColors("Purple"),
                           fontSize: 30,
@@ -48,28 +49,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 50,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(
-                        context, "Blue", "My List", const MyListScreen()),
-                    dashboardButtons(
-                        context, "Red", "Family List", const MyListScreen()),
+                    dashboardButtons(context, "Blue", "My List",
+                        const MyListScreen()), //my list screen
+                    dashboardButtons(context, "Red", "Family List",
+                        const MyListScreen()), //takes you to family list
                   ]),
                   const SizedBox(
                     height: 30,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    dashboardButtons(context, "Pink", "Concept List",
+                        const MyListScreen()), //takes you to concept list
                     dashboardButtons(
-                        context, "Pink", "Concept List", const MyListScreen()),
-                    dashboardButtons(context, "Purple", "Pantry",
+                        context,
+                        "Purple",
+                        "Pantry", //takes you pantry page
                         const PantryScreen(text: '')),
                   ]),
                   const SizedBox(
+                    //add space
                     height: 30,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(
-                        context, "Green", "Expenses", const MyListScreen()),
-                    dashboardButtons(
-                        context, "Yellow", "Scheduled", const MyListScreen()),
+                    dashboardButtons(context, "Green", "Expenses",
+                        const MyListScreen()), //take you to spending page
+                    dashboardButtons(context, "Yellow", "Scheduled",
+                        const MyListScreen()), //take you to scheduled page
                   ]),
                 ]),
               )),

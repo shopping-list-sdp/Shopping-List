@@ -1,16 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class List {
-  late Timestamp date;
-  late String family;
-  late String id;
-  late String name;
-  late int noItems;
-  late String type;
-  late String user;
+  // a list has the following properties
+  late Timestamp date; //date it was last cleared
+  late String family; //family id if its a family list
+  late String id; //id of list
+  late String name; //name of list
+  late int noItems; //no items in the list
+  late String type; //type family, personal or concept
+  late String user; //user id it belongs to
 
   List(
-      {required this.date,
+      {required this.date, //required to force user to enter these paras
       required this.family,
       required this.id,
       required this.name,
@@ -19,6 +20,7 @@ class List {
       required this.user});
 
   List.fromJson(Map<String, dynamic> json) {
+    //to get item from db
     date = json['date'];
     family = json['family'];
     id = json['id'];
@@ -29,6 +31,7 @@ class List {
   }
 
   Map<String, dynamic> toJson() {
+    //to post list to db
     final Map<String, dynamic> data = <String, dynamic>{};
     data['date'] = date;
     data['family'] = family;

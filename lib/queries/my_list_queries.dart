@@ -5,22 +5,26 @@ import 'package:shopping_list/model/List.dart';
 import 'package:shopping_list/model/ListItem.dart';
 
 Future<void> getMyListInfo() async {
+  //get the list
   final querySnapshot = await FirebaseFirestore.instance
-      .collection('list')
-      .where('user', isEqualTo: global.userId)
-      .where('type', isEqualTo: 'personal')
-      .get();
+      .collection('list') //serch list table
+      .where('user',
+          isEqualTo: global.userId) //filter to where user is this user
+      .where('type', isEqualTo: 'personal') //filter to where type is personal
+      .get(); //get from db
 
-  final data = querySnapshot.docs.map((doc) => doc.data()).toList();
+  final data =
+      querySnapshot.docs.map((doc) => doc.data()).toList(); //convert to list
 
   var myObjects = [];
   for (var item in data) {
-    myObjects.add(List.fromJson(item));
+    myObjects.add(List.fromJson(item)); //add to list of objects
   }
 
-  List list = myObjects.singleWhere((temp) => temp.user == global.userId);
+  List list = myObjects.singleWhere((temp) =>
+      temp.user == global.userId); //get where user id is this users id
 
-  global.myListId = list.id;
+  global.myListId = list.id; //set global variables
   global.myListDate = list.date;
   global.myListNoItems = list.noItems;
 
@@ -28,36 +32,40 @@ Future<void> getMyListInfo() async {
   //print("list id: " + global.myListId);
   //print("list date: " + global.myListDate.toString());
   //print("no items: " + global.myListNoItems.toString());
-  await getMyListItems();
+  await getMyListItems(); //get the items in the list
 }
 
 Future<void> getMyListItems() async {
+  //get the items in the list
   final querySnapshot = await FirebaseFirestore.instance
-      .collection('list_item')
+      .collection('list_item') //search table list item
       .where('list_id',
           isEqualTo: global.myListId) //only get items for this list
-      .get();
+      .get(); //get from db
 
-  final data = querySnapshot.docs.map((doc) => doc.data()).toList();
+  final data =
+      querySnapshot.docs.map((doc) => doc.data()).toList(); //convert to list
 
   var myObjects = [];
   for (var item in data) {
-    myObjects.add(ListItem.fromJson(item));
+    myObjects.add(ListItem.fromJson(item)); //add objects to list
   }
 
-  global.myList = myObjects;
+  global.myList = myObjects; //set global variable
 
   for (int i = 0; i < global.myList.length; i++) {
     ListItem listItem = global.myList.elementAt(i);
 
     final querySnapshot = await FirebaseFirestore.instance
-        .collection('items')
-        .where('name', isEqualTo: listItem.itemId)
-        .get();
+        .collection('items') //search item table in db
+        .where('name',
+            isEqualTo: listItem
+                .itemId) //filter where name is the same as the items name
+        .get(); //get from db
 
     for (var doc in querySnapshot.docs) {
-      String category = doc.get('category');
-      listItem.category = category;
+      String category = doc.get('category'); //get cattegory
+      listItem.category = category; //update category of object in list
     }
   }
 
@@ -66,53 +74,65 @@ Future<void> getMyListItems() async {
 }
 
 Future<void> updateNoItems(String listId) async {
+  //increment no items
   FirebaseFirestore.instance
-      .collection('list')
-      .doc(listId)
-      .update({'no_items': FieldValue.increment(1)});
+      .collection('list') //search list table
+      .doc(listId) //get specific doc from list table
+      .update({'no_items': FieldValue.increment(1)}); //increment no items
 }
 
 Future<void> addListItem(
-    {required String itemName, required String listID}) async {
-  final docMyList = FirebaseFirestore.instance.collection('list_item').doc();
+    //add item to list
+    {required String itemName,
+    required String listID}) async {
+  final docMyList = FirebaseFirestore.instance
+      .collection('list_item')
+      .doc(); //search list item table in db
 
   final json = {
     'id': docMyList.id,
-    'item_id': itemName,
-    'list_id': listID,
-    'to_buy': true
+    'item_id': itemName, //item id is name of item
+    'list_id': listID, //list id is the id of this list
+    'to_buy': true //default to true
   };
-  await updateNoItems(listID);
+  await updateNoItems(listID); //update no items
   await docMyList.set(json);
-  await getMyListInfo();
+  await getMyListInfo(); //get list info again
 }
 
 Future<void> changeToBuy(bool newVal, String itemId) async {
+  //change buy status
   FirebaseFirestore.instance
-      .collection('list_item')
-      .doc(itemId)
-      .update({'to_buy': newVal});
+      .collection('list_item') //search list item table
+      .doc(itemId) //filter where item id is the same as specific item
+      .update({'to_buy': newVal}); //change to buy to false
 }
 
 Future<void> clearList(String listId) async {
-  var collection = FirebaseFirestore.instance.collection('list_item');
-  var snapshot = await collection.where('list_id', isEqualTo: listId).get();
+  //clear entire list
+  var collection = FirebaseFirestore.instance
+      .collection('list_item'); //search list item collection
+  var snapshot = await collection
+      .where('list_id', isEqualTo: listId)
+      .get(); //where list id is this list
   for (var doc in snapshot.docs) {
-    await doc.reference.delete();
+    await doc.reference
+        .delete(); //delete where the items have this specific list id
   }
 
   FirebaseFirestore.instance
-      .collection('list')
-      .doc(listId)
-      .update({'no_items': 0});
+      .collection('list') //get from list table
+      .doc(listId) //filter to list id
+      .update({'no_items': 0}); //change no items to 0
 
-  await updateDate(listId);
-  await getMyListInfo();
+  await updateDate(listId); //update date in list table
+  await getMyListInfo(); //get list info again
 }
 
 Future<void> updateDate(String listId) async {
+  //set new date for list
   FirebaseFirestore.instance
-      .collection('list')
-      .doc(listId)
-      .update({'date': Timestamp.now()});
+      .collection('list') //go to list tabale in db
+      .doc(listId) //filter where list id is correct
+      .update({'date': Timestamp.now()}); //update to current date
 }

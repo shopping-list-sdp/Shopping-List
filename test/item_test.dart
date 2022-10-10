@@ -3,7 +3,7 @@ import 'package:shopping_list/model/Item.dart';
 
 void main() {
   test('fromJson returns  a valid object', () {
-    Map<String, dynamic> json = new Map();
+    Map<String, dynamic> json = {};
     json['category'] = 'Test';
     json['name'] = 'Test';
     json['price'] = 1;

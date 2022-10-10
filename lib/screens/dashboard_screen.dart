@@ -58,12 +58,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 30,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(context, "Pink", "Concept List",
+                    dashboardButtons(context, "Pink", "Concept list",
                         const MyListScreen()), //takes you to concept list
                     dashboardButtons(
                         context,
                         "Purple",
-                        "Pantry", //takes you pantry page
+                        "pantry", //takes you pantry page
                         const PantryScreen(text: '')),
                   ]),
                   const SizedBox(
@@ -71,9 +71,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 30,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(context, "Green", "Expenses",
+                    dashboardButtons(context, "Green", "expenses",
                         const MyListScreen()), //take you to spending page
-                    dashboardButtons(context, "Yellow", "Scheduled",
+                    dashboardButtons(context, "Yellow", "scheduled",
                         const MyListScreen()), //take you to scheduled page
                   ]),
                 ]),

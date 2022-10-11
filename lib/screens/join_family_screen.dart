@@ -19,6 +19,8 @@ class JoinFamilyScreen extends StatefulWidget {
 }
 
 class _JoinFamilyScreenState extends State<JoinFamilyScreen> {
+  final TextEditingController joinFamilyController = TextEditingController();
+  final TextEditingController createFamilyController = TextEditingController();
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -29,10 +31,6 @@ class _JoinFamilyScreenState extends State<JoinFamilyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController joinFamilyController = TextEditingController();
-    final TextEditingController createFamilyController =
-        TextEditingController();
-
     return Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -59,7 +57,7 @@ class _JoinFamilyScreenState extends State<JoinFamilyScreen> {
                           fontSize: 30,
                           fontWeight: FontWeight.w500)),
                   const SizedBox(
-                    height: 70,
+                    height: 60,
                   ),
                   reusableTextField("Family Code", CustomIcons.familylist,
                       false, joinFamilyController),
@@ -67,7 +65,8 @@ class _JoinFamilyScreenState extends State<JoinFamilyScreen> {
                     height: 10,
                   ),
                   reusableButton(context, "Join Family", () {
-                    joinFamily(joinFamilyController.text);
+                    joinFamily(joinFamilyController.text, context);
+                    joinFamilyController.text = "";
                     FocusManager.instance.primaryFocus?.unfocus();
                   }),
                   const SizedBox(
@@ -89,7 +88,10 @@ class _JoinFamilyScreenState extends State<JoinFamilyScreen> {
                     height: 10,
                   ),
                   reusableButton(context, "Create Family", () {
-                    print("button clicked");
+                    createFamily(
+                        name: createFamilyController.text, context: context);
+                    createFamilyController.text = "";
+                    FocusManager.instance.primaryFocus?.unfocus();
                   }),
                 ]),
               )),

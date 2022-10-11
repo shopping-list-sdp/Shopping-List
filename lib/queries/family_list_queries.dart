@@ -4,13 +4,15 @@ import 'package:shopping_list/main.dart';
 import 'package:shopping_list/model/List.dart';
 import 'package:shopping_list/model/ListItem.dart';
 
-Future<void> getMyListInfo() async {
+import 'my_list_queries.dart';
+
+Future<void> getFamilyListInfo() async {
   //get the list
   final querySnapshot = await FirebaseFirestore.instance
       .collection('list') //serch list table
       .where('user',
           isEqualTo: global.userId) //filter to where user is this user
-      .where('type', isEqualTo: 'personal') //filter to where type is personal
+      .where('type', isEqualTo: 'shared') //filter to where type is personal
       .get(); //get from db
 
   final data =
@@ -24,23 +26,23 @@ Future<void> getMyListInfo() async {
   List list = myObjects.singleWhere((temp) =>
       temp.user == global.userId); //get where user id is this users id
 
-  global.myListId = list.id; //set global variables
-  global.myListDate = list.date;
-  global.myListNoItems = list.noItems;
+  global.familyListId = list.id; //set global variables
+  global.familyListDate = list.date;
+  global.familyListNoItems = list.noItems;
 
   //print("got list");
   //print("list id: " + global.myListId);
   //print("list date: " + global.myListDate.toString());
   //print("no items: " + global.myListNoItems.toString());
-  await getMyListItems(); //get the items in the list
+  await getFamilyListItems(); //get the items in the list
 }
 
-Future<void> getMyListItems() async {
+Future<void> getFamilyListItems() async {
   //get the items in the list
   final querySnapshot = await FirebaseFirestore.instance
       .collection('list_item') //search table list item
       .where('list_id',
-          isEqualTo: global.myListId) //only get items for this list
+          isEqualTo: global.familyListId) //only get items for this list
       .get(); //get from db
 
   final data =
@@ -51,10 +53,10 @@ Future<void> getMyListItems() async {
     myObjects.add(ListItem.fromJson(item)); //add objects to list
   }
 
-  global.myList = myObjects; //set global variable
+  global.familyList = myObjects; //set global variable
 
-  for (int i = 0; i < global.myList.length; i++) {
-    ListItem listItem = global.myList.elementAt(i);
+  for (int i = 0; i < global.familyList.length; i++) {
+    ListItem listItem = global.familyList.elementAt(i);
 
     final querySnapshot = await FirebaseFirestore.instance
         .collection('items') //search item table in db
@@ -73,15 +75,7 @@ Future<void> getMyListItems() async {
   //print(global.myList);
 }
 
-Future<void> updateNoItems(String listId) async {
-  //increment no items
-  FirebaseFirestore.instance
-      .collection('list') //search list table
-      .doc(listId) //get specific doc from list table
-      .update({'no_items': FieldValue.increment(1)}); //increment no items
-}
-
-Future<void> addListItem(
+Future<void> addFamilyListItem(
     {required String itemName, required String listID}) async {
   final docMyList = FirebaseFirestore.instance
       .collection('list_item')
@@ -95,18 +89,10 @@ Future<void> addListItem(
   };
   await updateNoItems(listID); //update no items
   await docMyList.set(json);
-  await getMyListInfo(); //get list info again
+  await getFamilyListInfo(); //get list info again
 }
 
-Future<void> changeToBuy(bool newVal, String itemId) async {
-  //change buy status
-  FirebaseFirestore.instance
-      .collection('list_item') //search list item table
-      .doc(itemId) //filter where item id is the same as specific item
-      .update({'to_buy': newVal}); //change to buy to false
-}
-
-Future<void> clearList(String listId) async {
+Future<void> clearFamilyList(String listId) async {
   //clear entire list
   var collection = FirebaseFirestore.instance
       .collection('list_item'); //search list item collection
@@ -124,13 +110,5 @@ Future<void> clearList(String listId) async {
       .update({'no_items': 0}); //change no items to 0
 
   await updateDate(listId); //update date in list table
-  await getMyListInfo(); //get list info again
-}
-
-Future<void> updateDate(String listId) async {
-  //set new date for list
-  FirebaseFirestore.instance
-      .collection('list') //go to list tabale in db
-      .doc(listId) //filter where list id is correct
-      .update({'date': Timestamp.now()}); //update to current date
+  await getFamilyListInfo(); //get list info again
 }

@@ -7,6 +7,7 @@ import 'package:shopping_list/model/ListItem.dart';
 
 String? userId = '';
 String myListId = '';
+String familyID = '';
 int myListNoItems = 0;
 Timestamp myListDate = Timestamp.now();
 var myList = [];

@@ -1,8 +1,3 @@
 ignore:
     - "**/home_screen.dart"
-    - "**/pantry_screen.dart"
-    - "**/registration_screen.dart"
-    - "**/main.dart"
-    - "**/body_layout.dart"
-    - "**/family_model.dart"
-    - "**/user_model.dart"
+

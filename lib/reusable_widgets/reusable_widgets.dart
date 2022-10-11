@@ -103,8 +103,7 @@ TextFormField searchField(
   );
 }
 
-Container signInSignUpButton(
-    BuildContext context, bool isLogin, Function onTap) {
+Container reusableButton(BuildContext context, String text, Function onTap) {
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 60,
@@ -124,10 +123,10 @@ Container signInSignUpButton(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)))),
       child: Text(
-        isLogin ? 'LOG IN' : 'SIGN UP',
+        text,
         style: TextStyle(
             color: myColors("White"),
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
             fontSize: 18),
       ),
     ),

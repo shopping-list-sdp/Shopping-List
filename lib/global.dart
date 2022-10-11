@@ -7,6 +7,7 @@ import 'package:shopping_list/model/ListItem.dart';
 
 String? userId = '';
 String myListId = '';
+String familyID = '';
 String myPantryId = '';
 String pantryCategory = '';
 int myListNoItems = 0;

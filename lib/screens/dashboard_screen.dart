@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:shopping_list/screens/join_family_screen.dart';
 import 'package:shopping_list/screens/my_list_screen.dart';
 import 'package:shopping_list/screens/pantry_screen.dart';
 import '../custom_icons_icons.dart';
@@ -51,20 +52,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     dashboardButtons(context, "Blue", "My List",
                         const MyListScreen()), //my list screen
-                    dashboardButtons(context, "Pink", "Family List",
-                        const MyListScreen()), //takes you to family list
+                    dashboardButtons(context, "Red", "Family List",
+                        const JoinFamilyScreen()), //takes you to family list
                   ]),
                   const SizedBox(
                     height: 30,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     dashboardButtons(
-                        context, "Yellow", "scheduled", const MyListScreen()),
-                    dashboardButtons(
                         context,
                         "Purple",
                         "pantry", //takes you pantry page
                         const PantryScreen()),
+                    dashboardButtons(
+                        context, "Yellow", "Scheduled", const MyListScreen()),
                   ]),
                   const SizedBox(
                     //add space

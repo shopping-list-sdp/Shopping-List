@@ -5,18 +5,19 @@ import 'package:shopping_list/global.dart' as global;
 import 'package:flutter/material.dart';
 import 'package:shopping_list/reusable_widgets/list_view_widgets.dart';
 import '../model/ListItem.dart';
+import '../queries/family_list_queries.dart';
 import '../queries/my_list_queries.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
 
-class MyListScreen extends StatefulWidget {
-  const MyListScreen({super.key});
+class FamilyListScreen extends StatefulWidget {
+  const FamilyListScreen({super.key});
 
   @override
-  State<MyListScreen> createState() => _MyListScreenState();
+  State<FamilyListScreen> createState() => _FamilyListScreenState();
 }
 
-class _MyListScreenState extends State<MyListScreen> {
+class _FamilyListScreenState extends State<FamilyListScreen> {
   final addTextEditingController = TextEditingController();
   var duplicateItems = global.items;
   var items = [];
@@ -49,8 +50,8 @@ class _MyListScreenState extends State<MyListScreen> {
     }
   }
 
-  int noItems = global.myListNoItems;
-  Timestamp date = global.myListDate;
+  int noItems = global.familyListNoItems;
+  Timestamp date = global.familyListDate;
 
   @override
   Widget build(BuildContext context) {
@@ -65,19 +66,19 @@ class _MyListScreenState extends State<MyListScreen> {
                 padding: EdgeInsets.fromLTRB(
                     0, MediaQuery.of(context).size.height * 0.05, 0, 0),
                 child: Column(children: <Widget>[
-                  Text("My List",
+                  Text("Family List",
                       style: TextStyle(
-                          color: myColors("Blue"),
+                          color: myColors("Red"),
                           fontSize: 30,
                           fontWeight: FontWeight.w500)),
                   const SizedBox(
                     height: 45,
                   ),
                   listHeader(
-                      "Blue",
+                      "Red",
                       '${date.toDate().day} - ${date.toDate().month} - ${date.toDate().year.toString()}',
                       noItems,
-                      false,
+                      true,
                       context),
                   const SizedBox(
                     height: 35,
@@ -99,7 +100,7 @@ class _MyListScreenState extends State<MyListScreen> {
                                   }
                                 },
                                 textInputAction: TextInputAction.done,
-                                cursorColor: myColors("Blue"),
+                                cursorColor: myColors("Red"),
                                 style: TextStyle(
                                     color: myColors("Purple"),
                                     fontWeight: FontWeight.w500,
@@ -107,7 +108,7 @@ class _MyListScreenState extends State<MyListScreen> {
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(
                                     CustomIcons.search,
-                                    color: myColors("Blue"),
+                                    color: myColors("Red"),
                                   ),
                                   suffixIcon: IconButton(
                                     onPressed: () {
@@ -125,7 +126,7 @@ class _MyListScreenState extends State<MyListScreen> {
                                   ),
                                   labelText: "Add Items",
                                   labelStyle: TextStyle(
-                                      color: myColors("FiftyBlue"),
+                                      color: myColors("FiftyRed"),
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500),
                                   filled: true,
@@ -192,8 +193,8 @@ class _MyListScreenState extends State<MyListScreen> {
                               setState(() {
                                 items = [];
                               });
-                              await addListItem(
-                                  itemName: item, listID: global.myListId);
+                              await addFamilyListItem(
+                                  itemName: item, listID: global.familyListId);
                               setState(() {
                                 noItems = noItems + 1;
                               });
@@ -213,7 +214,7 @@ class _MyListScreenState extends State<MyListScreen> {
                                 fontWeight: FontWeight.normal),
                           ),
                           onPressed: () async {
-                            await clearList(global.myListId);
+                            await clearFamilyList(global.familyListId);
                             setState(() {
                               date = Timestamp.now();
                               noItems = 0;
@@ -223,7 +224,7 @@ class _MyListScreenState extends State<MyListScreen> {
                     key: UniqueKey(),
                     children: [
                       for (var category in global.categories)
-                        global.myList
+                        global.familyList
                                 .where(
                                     (element) => element.category == category)
                                 .isEmpty
@@ -241,7 +242,7 @@ class _MyListScreenState extends State<MyListScreen> {
                                                 category.substring(
                                                     1), //make first letter capital
                                             style: TextStyle(
-                                                color: myColors("Blue"),
+                                                color: myColors("Red"),
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 18)),
                                       ],
@@ -249,7 +250,7 @@ class _MyListScreenState extends State<MyListScreen> {
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    for (ListItem entry in global.myList)
+                                    for (ListItem entry in global.familyList)
                                       if (entry.category == category)
                                         Row(
                                           mainAxisAlignment:
@@ -294,6 +295,6 @@ class _MyListScreenState extends State<MyListScreen> {
               )),
             ]),
             appBar: appBar(context),
-            bottomNavigationBar: navBar(context, "myList")));
+            bottomNavigationBar: navBar(context, "familyList")));
   }
 }

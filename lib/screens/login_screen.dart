@@ -1,5 +1,6 @@
 import 'package:shopping_list/global.dart' as global;
 import 'package:shopping_list/queries/my_list_queries.dart';
+import 'package:shopping_list/queries/pantry_queries.dart';
 import 'package:shopping_list/screens/dashboard_screen.dart';
 import 'package:shopping_list/screens/home_screen.dart';
 import 'package:shopping_list/screens/registration_screen.dart';
@@ -239,6 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       builder: (context) => const DashboardScreen())),
                   global.userId = uid.user?.uid,
                   getMyListInfo(),
+                  getMyPantryInfo(),
                   //getMyListItems()
                 });
       } on FirebaseAuthException catch (error) {

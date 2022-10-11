@@ -371,6 +371,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     await docMyList.set(json);
   }
 
+  Future createMyPantry({required String? uid}) async {
+    final docMyList = FirebaseFirestore.instance.collection('pantry').doc();
+
+    final json = {
+      'id': docMyList.id,
+      'user': uid,
+    };
+
+    await docMyList.set(json);
+  }
+
   postDetailsToFirestore() async {
     // calling our firestore
     // calling our user model
@@ -394,6 +405,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     Fluttertoast.showToast(msg: "Account created successfully :) ");
     global.userId = user.uid;
     createMyList(uid: global.userId);
+    createMyPantry(uid: global.userId);
 
     Navigator.pushAndRemoveUntil(
         (context),

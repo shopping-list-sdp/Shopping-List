@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../utils/color_utils.dart';
+//this is a test
 
 class EmailFieldValidator {
   static String? validate(String value) {

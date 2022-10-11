@@ -62,7 +62,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     dashboardButtons(
                         context,
                         "Purple",
-                        "pantry", //takes you pantry page
+                        "Pantry", //takes you to pantry page
                         const PantryScreen()),
                     dashboardButtons(
                         context, "Yellow", "Scheduled", const MyListScreen()),
@@ -72,7 +72,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 30,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(context, "Green", "expenses",
+                    dashboardButtons(context, "Green", "Expenses",
                         const MyListScreen()), //take you to spending page
                   ]),
                 ]),

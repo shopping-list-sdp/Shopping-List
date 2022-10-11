@@ -32,12 +32,6 @@ C:\Users\user\Desktop\master-repo\.circleci
 .pub-cache/
 .pub/
 /build/
-home_screen.dart
-pantry_screen.dart
-registration_screen.dart
-body_layout.dart
-family_model.dart
-user_model.dart
 
 # Web related
 lib/generated_plugin_registrant.dart

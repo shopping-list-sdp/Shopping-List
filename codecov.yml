@@ -1,3 +1,6 @@
 ignore:
-    - "**/home_screen.dart"
+    - "SHOPPING-LIST/lib/screens"
+    - "lib/screens"
+    - "lib/utils"
+    - "SHOPPING-LIST/lib/utils"
 

@@ -38,7 +38,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   //allow page to scroll
                   child: Padding(
                 padding: EdgeInsets.fromLTRB(
-                    35, MediaQuery.of(context).size.height * 0.05, 35, 0),
+                    35, MediaQuery.of(context).size.height * 0.1, 35, 0),
                 child: Column(children: <Widget>[
                   Text("Home", //title of page
                       style: TextStyle(
@@ -51,20 +51,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     dashboardButtons(context, "Blue", "My List",
                         const MyListScreen()), //my list screen
-                    dashboardButtons(context, "Red", "Family List",
+                    dashboardButtons(context, "Pink", "Family List",
                         const MyListScreen()), //takes you to family list
                   ]),
                   const SizedBox(
                     height: 30,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(context, "Pink", "Concept List",
-                        const MyListScreen()), //takes you to concept list
+                    dashboardButtons(
+                        context, "Yellow", "scheduled", const MyListScreen()),
                     dashboardButtons(
                         context,
                         "Purple",
                         "pantry", //takes you pantry page
-                        const PantryScreen(text: '')),
+                        const PantryScreen()),
                   ]),
                   const SizedBox(
                     //add space
@@ -73,8 +73,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     dashboardButtons(context, "Green", "expenses",
                         const MyListScreen()), //take you to spending page
-                    dashboardButtons(context, "Yellow", "scheduled",
-                        const MyListScreen()), //take you to scheduled page
                   ]),
                 ]),
               )),

@@ -294,10 +294,7 @@ AppBar appBar(BuildContext context) {
           } else if (result == 2) {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => const PantryScreen(
-                        text: '',
-                      )),
+              MaterialPageRoute(builder: (context) => const PantryScreen()),
             );
           }
         },

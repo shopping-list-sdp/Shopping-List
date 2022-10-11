@@ -64,7 +64,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         context,
                         "Purple",
                         "Pantry", //takes you pantry page
-                        const PantryScreen(text: '')),
+                        const PantryScreen()),
                   ]),
                   const SizedBox(
                     //add space

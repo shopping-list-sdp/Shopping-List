@@ -67,8 +67,8 @@ Future<void> getMyPantryItems() async {
     }
   }
 
-  //print("got my list");
-  //print(global.myList);
+  print("got my list");
+  print(global.myPantry);
 }
 
 /*Future<void> updateNoItems(String pantryId, int number) async {

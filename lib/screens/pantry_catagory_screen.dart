@@ -54,7 +54,9 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    global.pantryCategory = catagory;
+    //getMyPantryItems();
+    getMyPantryInfo();
+    //global.pantryCategory = catagory;
     return Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -105,7 +107,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                   }
                                 },
                                 textInputAction: TextInputAction.done,
-                                cursorColor: myColors("Blue"),
+                                cursorColor: myColors("Purple"),
                                 style: TextStyle(
                                     color: myColors("Purple"),
                                     fontWeight: FontWeight.w500,
@@ -113,7 +115,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(
                                     CustomIcons.search,
-                                    color: myColors("Blue"),
+                                    color: myColors("Purple"),
                                   ),
                                   suffixIcon: IconButton(
                                     onPressed: () {
@@ -131,7 +133,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                   ),
                                   labelText: "Add Items",
                                   labelStyle: TextStyle(
-                                      color: myColors("FiftyBlue"),
+                                      color: myColors("FiftyPurple"),
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500),
                                   filled: true,
@@ -222,7 +224,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                     key: UniqueKey(),
                     children: [
                       for (var category in global.categories)
-                        global.myList
+                        global.myPantry
                                 .where(
                                     (element) => element.category == category)
                                 .isEmpty
@@ -236,11 +238,12 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                       children: [
                                         const SizedBox(width: 25),
                                         Text(
-                                            category[0].toUpperCase() +
-                                                category.substring(
+                                            global.pantryCategory[0]
+                                                    .toUpperCase() +
+                                                global.pantryCategory.substring(
                                                     1), //make first letter capital
                                             style: TextStyle(
-                                                color: myColors("Blue"),
+                                                color: myColors("Purple"),
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 18)),
                                       ],
@@ -249,13 +252,14 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                       height: 10,
                                     ),
                                     for (pantryItem entry in global.myPantry)
-                                      //if (entry.category == category)
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          const SizedBox(width: 15),
-                                          /*Checkbox(
+                                      if (entry.category.toLowerCase() ==
+                                          global.pantryCategory)
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(width: 15),
+                                            /*Checkbox(
                                                 checkColor: Colors.white,
                                                 fillColor: MaterialStateProperty
                                                     .resolveWith<Color>(
@@ -272,17 +276,17 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                                     entry.toBuy = !val!;
                                                   });
                                                 })*/
-                                          Text(
-                                              entry.itemId[0].toUpperCase() +
-                                                  entry.itemId.substring(
-                                                      1), //make first etter capital
-                                              style: TextStyle(
-                                                  color: myColors("Grey"),
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.normal))
-                                        ],
-                                      ),
+                                            Text(
+                                                entry.itemId[0].toUpperCase() +
+                                                    entry.itemId.substring(
+                                                        1), //make first etter capital
+                                                style: TextStyle(
+                                                    color: myColors("Grey"),
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.normal))
+                                          ],
+                                        ),
                                     const SizedBox(
                                       height: 20,
                                     )

@@ -10,6 +10,7 @@ import 'package:shopping_list/screens/my_list_screen.dart';
 import 'package:shopping_list/screens/pantry_catagory_screen.dart';
 import 'package:shopping_list/screens/pantry_screen.dart';
 import 'package:shopping_list/utils/color_utils.dart';
+import 'package:shopping_list/global.dart' as global;
 
 import '../queries/my_list_queries.dart';
 
@@ -182,6 +183,8 @@ Column catagoryButton(BuildContext context, String catagoryName) {
       margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: ElevatedButton(
         onPressed: () {
+          global.pantryCategory = catagoryName.toLowerCase();
+          print(global.pantryCategory);
           Navigator.push(
             context,
             MaterialPageRoute(

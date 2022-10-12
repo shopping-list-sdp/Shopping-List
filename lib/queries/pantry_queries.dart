@@ -78,7 +78,7 @@ Future<dynamic> getMyPantryItems() async {
   //return true;
 }
 
-Future<void> updateNoItems(String itemId, int number) async {
+Future<void> updateQuantityItems(String itemId, int number) async {
   //increment no items
   FirebaseFirestore.instance
       .collection('pantry_item') //search list table
@@ -106,7 +106,7 @@ Future<void> addPantryItem(
   await getMyPantryItems(); //get list info again
 }
 
-Future<void> clearList() async {
+Future<void> clearPantryList() async {
   //clear entire list
   var collection = FirebaseFirestore.instance
       .collection('pantry_item'); //search list item collection

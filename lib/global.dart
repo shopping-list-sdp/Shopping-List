@@ -44,3 +44,19 @@ final items = [
   'juice',
   'tennis biscuit'
 ];
+
+void resetGlobal() {
+  userId = '';
+  myListId = '';
+  familyListId = '';
+  familyID = '';
+  myPantryId = '';
+  pantryCategory = '';
+  myListNoItems = 0;
+  familyListNoItems = 0;
+  myListDate = Timestamp.now();
+  familyListDate = Timestamp.now();
+  myList = [];
+  familyList = [];
+  myPantry = [];
+}

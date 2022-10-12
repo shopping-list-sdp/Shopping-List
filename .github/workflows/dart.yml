@@ -35,7 +35,7 @@ jobs:
       with:
         flutter-version: '2.0.1'
     - name: Restore packages
-      run: flutter pub get
+      run: flutter upgrade && flutter pub get
     - name: Run Tests
       run: flutter test --coverage
     - name: Install lcov

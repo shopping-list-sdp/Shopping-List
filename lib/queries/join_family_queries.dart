@@ -47,6 +47,7 @@ Future<void> joinFamily(String familyCode, BuildContext context) async {
   } else {
     Fluttertoast.showToast(msg: "Joined Family");
   }
+
   updateUserFamilyID(global.userId, global.familyID);
   getFamilyListInfo();
 
@@ -101,4 +102,5 @@ Future createFamilyList(
     'date': FieldValue.serverTimestamp()
   };
   await docMyList.set(json);
+  global.familyListId = docMyList.id;
 }

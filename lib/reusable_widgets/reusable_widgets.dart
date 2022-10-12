@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list/global.dart' as global;
 import 'package:flutter_svg/svg.dart';
 import 'package:shopping_list/custom_icons_icons.dart';
 import 'package:shopping_list/screens/dashboard_screen.dart';
+import 'package:shopping_list/screens/family_list_screen.dart';
+import 'package:shopping_list/screens/join_family_screen.dart';
 import 'package:shopping_list/screens/login_screen.dart';
 import 'package:shopping_list/screens/my_list_screen.dart';
 import 'package:shopping_list/screens/pantry_catagory_screen.dart';
 import 'package:shopping_list/screens/pantry_screen.dart';
 import 'package:shopping_list/utils/color_utils.dart';
+import 'package:shopping_list/global.dart' as global;
 
 import '../queries/my_list_queries.dart';
+import '../queries/pantry_queries.dart';
 
 Image logoWidget(String imageName) {
   return Image.asset(imageName, fit: BoxFit.fitWidth, width: 250, height: 50);
@@ -103,8 +108,7 @@ TextFormField searchField(
   );
 }
 
-Container signInSignUpButton(
-    BuildContext context, bool isLogin, Function onTap) {
+Container reusableButton(BuildContext context, String text, Function onTap) {
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 60,
@@ -124,10 +128,10 @@ Container signInSignUpButton(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)))),
       child: Text(
-        isLogin ? 'LOG IN' : 'SIGN UP',
+        text,
         style: TextStyle(
             color: myColors("White"),
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
             fontSize: 18),
       ),
     ),
@@ -180,6 +184,9 @@ Column catagoryButton(BuildContext context, String catagoryName) {
       margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: ElevatedButton(
         onPressed: () {
+          global.pantryCategory = catagoryName.toLowerCase();
+          getMyPantryInfo();
+          //print(global.pantryCategory);
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -241,10 +248,19 @@ Container navBar(BuildContext context, String page) {
         ),
         IconButton(
           enableFeedback: false,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => global.familyID.isEmpty
+                      ? const JoinFamilyScreen()
+                      : const FamilyListScreen()),
+            );
+          },
           icon: const Icon(CustomIcons.familylist),
           iconSize: 30,
-          color: myColors("FiftyGrey"),
+          color:
+              page == "familyList" ? myColors("Purple") : myColors("FiftyGrey"),
         ),
         IconButton(
           enableFeedback: false,
@@ -357,7 +373,8 @@ AppBar appBar(BuildContext context) {
   );
 }
 
-Container listHeader(String col, String date, int noItems, bool isFamily) {
+Container listHeader(
+    String col, String date, int noItems, bool isFamily, BuildContext context) {
   return Container(
       height: 45,
       decoration: BoxDecoration(
@@ -368,7 +385,7 @@ Container listHeader(String col, String date, int noItems, bool isFamily) {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(
-            width: 20,
+            width: 25,
           ),
           Text(
             date,
@@ -390,12 +407,70 @@ Container listHeader(String col, String date, int noItems, bool isFamily) {
           const Spacer(
             flex: 9,
           ),
-          SvgPicture.asset(
-            'assets/icons/addPerson.svg',
-            color: isFamily ? myColors("white") : myColors(col),
-          ),
+          IconButton(
+              onPressed: () {
+                if (isFamily) {
+                  showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            title: Text(
+                              global.familyID.substring(0, 10),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: myColors("Purple"),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            titlePadding:
+                                const EdgeInsets.fromLTRB(0, 40, 0, 0),
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                            actionsPadding:
+                                const EdgeInsets.fromLTRB(0, 20, 20, 15),
+                            content: Text(
+                              "Use this code to share your list.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: myColors("Grey"), fontSize: 16),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(ctx).pop();
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: myColors("Purple"),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(20))),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(14, 10, 14, 10),
+                                  child: Text(
+                                    "Got it!",
+                                    style: TextStyle(
+                                      color: myColors("White"),
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ));
+                }
+              },
+              icon: SvgPicture.asset(
+                'assets/icons/addPerson.svg',
+                color: isFamily ? myColors("white") : myColors(col),
+              )),
+          //SvgPicture.asset(
+          //'assets/icons/addPerson.svg',
+          //color: isFamily ? myColors("white") : myColors(col),
+          //),
           const SizedBox(
-            width: 20,
+            width: 10,
           ),
         ],
       ));

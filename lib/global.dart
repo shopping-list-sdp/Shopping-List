@@ -7,9 +7,17 @@ import 'package:shopping_list/model/ListItem.dart';
 
 String? userId = '';
 String myListId = '';
+String familyListId = '';
+String familyID = '';
+String myPantryId = '';
+String pantryCategory = '';
 int myListNoItems = 0;
+int familyListNoItems = 0;
 Timestamp myListDate = Timestamp.now();
+Timestamp familyListDate = Timestamp.now();
 var myList = [];
+var familyList = [];
+var myPantry = [];
 final categories = [
   'bakery',
   'beverages',

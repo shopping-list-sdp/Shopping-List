@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shopping_list/global.dart' as global;
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:shopping_list/screens/family_list_screen.dart';
+import 'package:shopping_list/screens/join_family_screen.dart';
 import 'package:shopping_list/screens/my_list_screen.dart';
 import 'package:shopping_list/screens/pantry_screen.dart';
 import '../custom_icons_icons.dart';
@@ -28,6 +31,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Widget screen;
+    if (global.familyID.isEmpty) {
+      screen = const JoinFamilyScreen();
+    } else {
+      screen = const FamilyListScreen();
+    }
     return Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -51,27 +60,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     dashboardButtons(context, "Blue", "My List",
                         const MyListScreen()), //my list screen
-                    dashboardButtons(context, "Pink", "Family List",
-                        const MyListScreen()), //takes you to family list
+                    dashboardButtons(context, "Red", "Family List",
+                        screen) //takes you to family list
                   ]),
                   const SizedBox(
                     height: 30,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     dashboardButtons(
-                        context, "Yellow", "scheduled", const MyListScreen()),
-                    dashboardButtons(
                         context,
                         "Purple",
-                        "pantry", //takes you pantry page
+                        "Pantry", //takes you to pantry page
                         const PantryScreen()),
+                    dashboardButtons(
+                        context, "Yellow", "Scheduled", const MyListScreen()),
                   ]),
                   const SizedBox(
                     //add space
                     height: 30,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(context, "Green", "expenses",
+                    dashboardButtons(context, "Green", "Expenses",
                         const MyListScreen()), //take you to spending page
                   ]),
                 ]),

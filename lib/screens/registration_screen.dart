@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/screens/login_screen.dart';
+import '../queries/my_list_queries.dart';
 import '../utils/color_utils.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -361,11 +362,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final json = {
       'name': 'myList',
       'no_items': 0,
-      'family': null,
+      'family': "",
       'id': docMyList.id,
       'type': 'personal',
       'user': uid,
       'date': FieldValue.serverTimestamp()
+    };
+
+    await docMyList.set(json);
+  }
+
+  Future createMyPantry({required String? uid}) async {
+    final docMyList = FirebaseFirestore.instance.collection('pantry').doc();
+
+    final json = {
+      'id': docMyList.id,
+      'user': uid,
     };
 
     await docMyList.set(json);
@@ -395,6 +407,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     Fluttertoast.showToast(msg: "Account created successfully :) ");
     global.userId = user.uid;
     createMyList(uid: global.userId);
+    getMyListInfo();
+    createMyPantry(uid: global.userId);
 
     Navigator.pushAndRemoveUntil(
         (context),

@@ -11,6 +11,7 @@ import 'package:shopping_list/screens/pantry_catagory_screen.dart';
 import 'package:shopping_list/screens/pantry_screen.dart';
 import 'package:shopping_list/utils/color_utils.dart';
 
+import '../global.dart';
 import '../queries/my_list_queries.dart';
 
 Image logoWidget(String imageName) {
@@ -302,6 +303,7 @@ AppBar appBar(BuildContext context) {
               context,
               MaterialPageRoute(builder: (context) => const LoginScreen()),
             );
+            resetGlobal();
           } else if (result == 2) {
             Navigator.push(
               context,

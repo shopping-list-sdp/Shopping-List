@@ -54,7 +54,9 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    global.pantryCategory = catagory;
+    //getMyPantryItems();
+    getMyPantryInfo();
+    //global.pantryCategory = catagory;
     return Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -222,7 +224,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                     key: UniqueKey(),
                     children: [
                       for (var category in global.categories)
-                        global.myList
+                        global.myPantry
                                 .where(
                                     (element) => element.category == category)
                                 .isEmpty
@@ -236,8 +238,9 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                       children: [
                                         const SizedBox(width: 25),
                                         Text(
-                                            category[0].toUpperCase() +
-                                                category.substring(
+                                            global.pantryCategory[0]
+                                                    .toUpperCase() +
+                                                global.pantryCategory.substring(
                                                     1), //make first letter capital
                                             style: TextStyle(
                                                 color: myColors("Purple"),
@@ -249,7 +252,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                       height: 10,
                                     ),
                                     for (pantryItem entry in global.myPantry)
-                                      if (entry.category ==
+                                      if (entry.category.toLowerCase() ==
                                           global.pantryCategory)
                                         Row(
                                           mainAxisAlignment:

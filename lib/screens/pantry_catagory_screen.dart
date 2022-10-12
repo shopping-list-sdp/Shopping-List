@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shopping_list/queries/my_list_queries.dart';
 import 'package:shopping_list/reusable_widgets/list_view_widgets.dart';
 import 'package:shopping_list/global.dart' as global;
 import '../custom_icons_icons.dart';
@@ -226,7 +227,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                           ),
                           onPressed: () async {
                             //await getMyPantryItems();
-                            await clearList();
+                            await clearPantryList();
                             setState(() {
                               items = [];
                             });
@@ -288,7 +289,8 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                             ),
                                             onTap: () {
                                               int number = 1;
-                                              updateNoItems(entry.id, number);
+                                              updateQuantityItems(
+                                                  entry.id, number);
                                               setState(() {
                                                 entry.quantity += number;
                                               });
@@ -310,11 +312,15 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                             onTap: () {
                                               if (entry.quantity > 0) {
                                                 int number = -1;
-                                                updateNoItems(entry.id, number);
+                                                updateQuantityItems(
+                                                    entry.id, number);
                                                 setState(() {
                                                   entry.quantity += number;
                                                 });
                                               } else {
+                                                addListItem(
+                                                    itemName: entry.itemId,
+                                                    listID: global.myListId);
                                                 removeFromList(entry.id);
                                               }
                                             },

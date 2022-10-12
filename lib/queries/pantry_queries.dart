@@ -24,7 +24,7 @@ Future<void> getMyPantryInfo() async {
       temp.user == global.userId); //get where user id is this users id
 
   global.myPantryId = pantry.id;
-  print(global.myPantryId); //set global variables
+  //print(global.myPantryId); //set global variables
 
   //print("got list");
   //print("list id: " + global.myListId);

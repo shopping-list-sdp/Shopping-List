@@ -10,9 +10,9 @@ Future<void> getFamilyListInfo() async {
   //get the list
   final querySnapshot = await FirebaseFirestore.instance
       .collection('list') //serch list table
-      .where('user',
-          isEqualTo: global.userId) //filter to where user is this user
-      .where('type', isEqualTo: 'shared') //filter to where type is personal
+      .where('family',
+          isEqualTo: global.familyID) //filter to where user is this user
+      //.where('type', isEqualTo: 'shared') //filter to where type is personal
       .get(); //get from db
 
   final data =
@@ -23,15 +23,15 @@ Future<void> getFamilyListInfo() async {
     myObjects.add(List.fromJson(item)); //add to list of objects
   }
 
-  List list = myObjects.singleWhere((temp) =>
-      temp.user == global.userId); //get where user id is this users id
+  List list = myObjects.singleWhere(
+      (temp) => temp.type == "shared"); //get where user id is this users id
 
   global.familyListId = list.id; //set global variables
   global.familyListDate = list.date;
   global.familyListNoItems = list.noItems;
 
   //print("got list");
-  //print("list id: " + global.myListId);
+  //print("list id: " + global.familyListId);
   //print("list date: " + global.myListDate.toString());
   //print("no items: " + global.myListNoItems.toString());
   await getFamilyListItems(); //get the items in the list
@@ -39,6 +39,7 @@ Future<void> getFamilyListInfo() async {
 
 Future<void> getFamilyListItems() async {
   //get the items in the list
+  print(global.familyListId);
   final querySnapshot = await FirebaseFirestore.instance
       .collection('list_item') //search table list item
       .where('list_id',

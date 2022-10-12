@@ -1,5 +1,8 @@
 import 'package:shopping_list/global.dart' as global;
+import 'package:shopping_list/queries/family_list_queries.dart';
+import 'package:shopping_list/queries/join_family_queries.dart';
 import 'package:shopping_list/queries/my_list_queries.dart';
+import 'package:shopping_list/queries/pantry_queries.dart';
 import 'package:shopping_list/screens/dashboard_screen.dart';
 import 'package:shopping_list/screens/home_screen.dart';
 import 'package:shopping_list/screens/registration_screen.dart';
@@ -234,12 +237,15 @@ class _LoginScreenState extends State<LoginScreen> {
       try {
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
-            .then((uid) => {
+            .then((uid) async => {
                   Fluttertoast.showToast(msg: "Login Successful"),
+                  global.userId = uid.user?.uid,
+                  await getFamilyID(global.userId),
+                  getMyListInfo(),
+                  getFamilyListInfo(),
+                  getMyPantryInfo(),
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const DashboardScreen())),
-                  global.userId = uid.user?.uid,
-                  getMyListInfo(),
                   //getMyListItems()
                 });
       } on FirebaseAuthException catch (error) {

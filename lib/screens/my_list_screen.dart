@@ -77,7 +77,8 @@ class _MyListScreenState extends State<MyListScreen> {
                       "Blue",
                       '${date.toDate().day} - ${date.toDate().month} - ${date.toDate().year.toString()}',
                       noItems,
-                      false),
+                      false,
+                      context),
                   const SizedBox(
                     height: 35,
                   ),

@@ -13,6 +13,7 @@ import 'package:shopping_list/utils/color_utils.dart';
 import 'package:shopping_list/global.dart' as global;
 
 import '../queries/my_list_queries.dart';
+import '../queries/pantry_queries.dart';
 
 Image logoWidget(String imageName) {
   return Image.asset(imageName, fit: BoxFit.fitWidth, width: 250, height: 50);
@@ -184,7 +185,8 @@ Column catagoryButton(BuildContext context, String catagoryName) {
       child: ElevatedButton(
         onPressed: () {
           global.pantryCategory = catagoryName.toLowerCase();
-          print(global.pantryCategory);
+          getMyPantryInfo();
+          //print(global.pantryCategory);
           Navigator.push(
             context,
             MaterialPageRoute(

@@ -10,7 +10,6 @@ String myListId = '';
 String familyListId = '';
 String familyID = '';
 String myPantryId = '';
-String familyID = '';
 String pantryCategory = '';
 int myListNoItems = 0;
 int familyListNoItems = 0;

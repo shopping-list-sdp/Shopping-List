@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list/screens/pantry_catagory_screen.dart';
 import '../custom_icons_icons.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
+import 'package:shopping_list/global.dart' as global;
 
 class PantryScreen extends StatefulWidget {
   const PantryScreen({super.key});
@@ -12,6 +14,34 @@ class PantryScreen extends StatefulWidget {
 
 class _PantryScreenState extends State<PantryScreen> {
   final searchTextEditingController = TextEditingController();
+  final addTextEditingController = TextEditingController();
+
+  var duplicateItems = global.categories;
+  var categories = [];
+
+  void filterSearchResults(String query) {
+    List<String> dummySearchList = [];
+    dummySearchList.addAll(global.items);
+    if (query.isNotEmpty) {
+      List<String> dummyListData = [];
+      for (var item in dummySearchList) {
+        if (item.contains(query)) {
+          dummyListData.add(item);
+        }
+      }
+      setState(() {
+        categories.clear();
+        categories.addAll(dummyListData);
+      });
+      return;
+    } else {
+      setState(() {
+        categories.clear();
+        //items.addAll(global.items);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,8 +67,85 @@ class _PantryScreenState extends State<PantryScreen> {
                   const SizedBox(
                     height: 30,
                   ),
-                  searchField("Search Catagories", CustomIcons.search,
-                      searchTextEditingController, "Red"),
+                  SizedBox(
+                    width: 330,
+                    child: //searchField("Add items", CustomIcons.search,
+                        //addTextEditingController, "Blue"),
+                        TextField(
+                            controller: addTextEditingController,
+                            onChanged: (value) {
+                              filterSearchResults(value);
+                              if (addTextEditingController.toString() == '') {
+                                categories = [];
+                              }
+                            },
+                            onSubmitted: (value) {
+                              String val = value.toString();
+                              val = val.substring(0, 1).toUpperCase() +
+                                  val.substring(1);
+                              if (global.categories
+                                  .contains(val.toLowerCase())) {
+                                global.pantryCategory = val.toLowerCase();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          PantryCatagoryScreen(catagory: val)),
+                                );
+                              }
+                            },
+                            textInputAction: TextInputAction.done,
+                            cursorColor: myColors("Purple"),
+                            style: TextStyle(
+                                color: myColors("Purple"),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18),
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                CustomIcons.search,
+                                color: myColors("Purple"),
+                              ),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                    categories = [];
+                                    addTextEditingController.text = '';
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.cancel_rounded,
+                                  color: myColors("FiftyGrey"),
+                                ),
+                              ),
+                              labelText: "Search Categories",
+                              labelStyle: TextStyle(
+                                  color: myColors("FiftyPurple"),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500),
+                              filled: true,
+                              contentPadding:
+                                  const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
+                              fillColor: myColors("TwentyGrey"),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: const Radius.circular(20),
+                                      topRight: const Radius.circular(20),
+                                      bottomLeft:
+                                          addTextEditingController.text == ''
+                                              ? const Radius.circular(20)
+                                              : const Radius.circular(0),
+                                      bottomRight:
+                                          addTextEditingController.text == ''
+                                              ? const Radius.circular(20)
+                                              : const Radius.circular(0)),
+                                  borderSide: const BorderSide(
+                                      width: 0, style: BorderStyle.none)),
+                            )),
+                  ),
                   const SizedBox(
                     height: 30,
                   ),

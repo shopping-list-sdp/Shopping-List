@@ -185,7 +185,8 @@ Column catagoryButton(BuildContext context, String catagoryName) {
       child: ElevatedButton(
         onPressed: () {
           global.pantryCategory = catagoryName.toLowerCase();
-          getMyPantryInfo();
+          getMyPantryItems();
+          //getMyPantryInfo();
           //print(global.pantryCategory);
           Navigator.push(
             context,

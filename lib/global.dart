@@ -18,6 +18,7 @@ Timestamp familyListDate = Timestamp.now();
 var myList = [];
 var familyList = [];
 var myPantry = [];
+
 final categories = [
   'bakery',
   'beverages',

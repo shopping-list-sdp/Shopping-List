@@ -54,6 +54,12 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
   _PantryCatagoryScreenState(this.catagory);
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     //getMyPantryItems();
     //getMyPantryInfo();
@@ -195,14 +201,14 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                   style: TextStyle(color: myColors("Grey")),
                                 )),
                             onTap: () async {
+                              String item = items[index];
+                              await addPantryItem(
+                                  itemName: item, pantryID: global.myPantryId);
                               FocusManager.instance.primaryFocus?.unfocus();
                               addTextEditingController.text = '';
-                              String item = items[index];
                               setState(() {
                                 items = [];
                               });
-                              await addPantryItem(
-                                  itemName: item, pantryID: global.myPantryId);
                               Fluttertoast.showToast(msg: "Item Added");
                             },
                           );
@@ -219,34 +225,35 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                 fontWeight: FontWeight.normal),
                           ),
                           onPressed: () async {
+                            //await getMyPantryItems();
                             await clearList();
+                            setState(() {
+                              items = [];
+                            });
                           })),
                   Column(
                     key: UniqueKey(),
                     children: [
-                      for (var category in global.categories)
-                        global.myPantry
-                                .where(
-                                    (element) => element.category == category)
-                                .isEmpty
-                            ? Column()
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    for (pantryItem entry in global.myPantry)
-                                      if (entry.category.toLowerCase() ==
-                                          global.pantryCategory)
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            //const SizedBox(width: 15),
-                                            /*Checkbox(
+                      //for (var category in global.categories)
+                      //global.myPantry
+                      //.where((element) => element.category == category)
+                      //.isEmpty
+                      //? Column()
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            for (pantryItem entry in global.myPantry)
+                              if (entry.category == global.pantryCategory)
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    //const SizedBox(width: 15),
+                                    /*Checkbox(
                                                 checkColor: Colors.white,
                                                 fillColor: MaterialStateProperty
                                                     .resolveWith<Color>(
@@ -263,71 +270,64 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                                     entry.toBuy = !val!;
                                                   });
                                                 })*/
-                                            Text(
-                                                entry.itemId[0].toUpperCase() +
-                                                    entry.itemId.substring(
-                                                        1), //make first etter capital
-                                                style: TextStyle(
-                                                    color: myColors("Purple"),
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 18)),
-                                            const SizedBox(width: 190),
-                                            Column(children: [
-                                              Row(
-                                                children: [
-                                                  InkWell(
-                                                    child: SvgPicture.asset(
-                                                      'assets/icons/plus.svg',
-                                                    ),
-                                                    onTap: () {
-                                                      int number = 1;
-                                                      updateNoItems(
-                                                          entry.id, number);
-                                                      setState(() {
-                                                        entry.quantity +=
-                                                            number;
-                                                      });
-                                                    },
-                                                  ),
-                                                  const SizedBox(width: 10),
-                                                  Text(
-                                                      entry.quantity
-                                                          .toString(), //make first etter capital
-                                                      style: TextStyle(
-                                                          color: myColors(
-                                                              "Purple"),
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 18)),
-                                                  const SizedBox(width: 10),
-                                                  InkWell(
-                                                    child: SvgPicture.asset(
-                                                      'assets/icons/minus.svg',
-                                                    ),
-                                                    onTap: () {
-                                                      if (entry.quantity > 0) {
-                                                        int number = -1;
-                                                        updateNoItems(
-                                                            entry.id, number);
-                                                        setState(() {
-                                                          entry.quantity +=
-                                                              number;
-                                                        });
-                                                      } else {
-                                                        removeFromList(
-                                                            entry.id);
-                                                      }
-                                                    },
-                                                  )
-                                                ],
-                                              )
-                                            ]),
-                                          ],
-                                        ),
-                                    const SizedBox(
-                                      height: 20,
-                                    )
-                                  ])
+                                    Text(
+                                        entry.itemId[0].toUpperCase() +
+                                            entry.itemId.substring(
+                                                1), //make first etter capital
+                                        style: TextStyle(
+                                            color: myColors("Purple"),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 18)),
+                                    const SizedBox(width: 190),
+                                    Column(children: [
+                                      Row(
+                                        children: [
+                                          InkWell(
+                                            child: SvgPicture.asset(
+                                              'assets/icons/plus.svg',
+                                            ),
+                                            onTap: () {
+                                              int number = 1;
+                                              updateNoItems(entry.id, number);
+                                              setState(() {
+                                                entry.quantity += number;
+                                              });
+                                            },
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Text(
+                                              entry.quantity
+                                                  .toString(), //make first etter capital
+                                              style: TextStyle(
+                                                  color: myColors("Purple"),
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 18)),
+                                          const SizedBox(width: 10),
+                                          InkWell(
+                                            child: SvgPicture.asset(
+                                              'assets/icons/minus.svg',
+                                            ),
+                                            onTap: () {
+                                              if (entry.quantity > 0) {
+                                                int number = -1;
+                                                updateNoItems(entry.id, number);
+                                                setState(() {
+                                                  entry.quantity += number;
+                                                });
+                                              } else {
+                                                removeFromList(entry.id);
+                                              }
+                                            },
+                                          )
+                                        ],
+                                      )
+                                    ]),
+                                  ],
+                                ),
+                            const SizedBox(
+                              height: 20,
+                            )
+                          ])
                     ],
                   ),
                 ]),

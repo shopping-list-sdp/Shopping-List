@@ -309,19 +309,26 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                             child: SvgPicture.asset(
                                               'assets/icons/minus.svg',
                                             ),
-                                            onTap: () {
-                                              if (entry.quantity > 0) {
+                                            onTap: () async {
+                                              if (entry.quantity > 1) {
                                                 int number = -1;
                                                 updateQuantityItems(
                                                     entry.id, number);
                                                 setState(() {
                                                   entry.quantity += number;
                                                 });
-                                              } else {
+                                              } else if (entry.quantity == 1) {
+                                                print("Q = " +
+                                                    entry.quantity.toString());
+                                                await removeFromList(entry.id);
+                                                setState(() {
+                                                  entry.quantity = 0;
+                                                });
+                                                /*updateQuantityItems(
+                                                    entry.id, 0);*/
                                                 addListItem(
                                                     itemName: entry.itemId,
                                                     listID: global.myListId);
-                                                removeFromList(entry.id);
                                               }
                                             },
                                           )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/screens/pantry_catagory_screen.dart';
 import '../custom_icons_icons.dart';
 import '../reusable_widgets/reusable_widgets.dart';
@@ -92,6 +93,9 @@ class _PantryScreenState extends State<PantryScreen> {
                                       builder: (context) =>
                                           PantryCatagoryScreen(catagory: val)),
                                 );
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "Category not found");
                               }
                             },
                             textInputAction: TextInputAction.done,
@@ -130,19 +134,10 @@ class _PantryScreenState extends State<PantryScreen> {
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.never,
                               fillColor: myColors("TwentyGrey"),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: const Radius.circular(20),
-                                      topRight: const Radius.circular(20),
-                                      bottomLeft:
-                                          addTextEditingController.text == ''
-                                              ? const Radius.circular(20)
-                                              : const Radius.circular(0),
-                                      bottomRight:
-                                          addTextEditingController.text == ''
-                                              ? const Radius.circular(20)
-                                              : const Radius.circular(0)),
-                                  borderSide: const BorderSide(
+                              border: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                  borderSide: BorderSide(
                                       width: 0, style: BorderStyle.none)),
                             )),
                   ),

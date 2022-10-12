@@ -31,9 +31,10 @@ Future<dynamic> getMyPantryInfo() async {
   //print("list date: " + global.myListDate.toString());
   //print("no items: " + global.myListNoItems.toString());
   await getMyPantryItems(); //get the items in the list
+  return true;
 }
 
-Future<void> getMyPantryItems() async {
+Future<dynamic> getMyPantryItems() async {
   //get the items in the list
   final querySnapshot = await FirebaseFirestore.instance
       .collection('pantry_item') //search table list item
@@ -75,6 +76,8 @@ Future<void> getMyPantryItems() async {
     print("name = " + global.myPantry.elementAt(j).itemId);
     print("category = " + global.myPantry.elementAt(j).category);
   }
+
+  return true;
 }
 
 Future<void> updateNoItems(String itemId, int number) async {

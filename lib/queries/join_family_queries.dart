@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/global.dart' as global;
+import 'package:shopping_list/queries/family_list_queries.dart';
 import 'package:shopping_list/screens/family_list_screen.dart';
 
 Future<void> getFamilyID(String? userID) async {
@@ -47,6 +48,7 @@ Future<void> joinFamily(String familyCode, BuildContext context) async {
     Fluttertoast.showToast(msg: "Joined Family");
   }
   updateUserFamilyID(global.userId, global.familyID);
+  getFamilyListInfo();
 
   // ignore: use_build_context_synchronously
   Navigator.push(
@@ -68,7 +70,7 @@ Future<void> createFamily(
 
   final json = {
     'id': docMyList.id,
-    'familyCode': docMyList.id.substring(0, 10), //item id is name of item
+    'familyCode': docMyList.id.substring(0, 5), //item id is name of item
     'name': name //list id is the id of this list
   };
   Fluttertoast.showToast(msg: "Family Created");
@@ -77,7 +79,7 @@ Future<void> createFamily(
   global.familyID = docMyList.id;
   updateUserFamilyID(global.userId, global.familyID);
   createFamilyList(familyID: global.familyID, userID: global.userId);
-
+  getFamilyListInfo();
   // ignore: use_build_context_synchronously
   Navigator.push(
     context,

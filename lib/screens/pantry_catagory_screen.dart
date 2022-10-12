@@ -278,7 +278,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                             color: myColors("Purple"),
                                             fontWeight: FontWeight.w500,
                                             fontSize: 18)),
-                                    const SizedBox(width: 190),
+                                    //const SizedBox(width: ),
                                     Column(children: [
                                       Row(
                                         children: [

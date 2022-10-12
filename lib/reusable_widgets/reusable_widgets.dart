@@ -417,7 +417,7 @@ Container listHeader(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             title: Text(
-                              global.familyID.substring(0, 10),
+                              global.familyID.substring(0, 5),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: myColors("Purple"),

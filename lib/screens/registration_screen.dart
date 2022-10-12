@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/screens/login_screen.dart';
+import '../queries/join_family_queries.dart';
 import '../queries/my_list_queries.dart';
 import '../utils/color_utils.dart';
 
@@ -406,6 +407,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
     global.userId = user.uid;
+    await getFamilyID(global.userId);
     createMyList(uid: global.userId);
     getMyListInfo();
     createMyPantry(uid: global.userId);

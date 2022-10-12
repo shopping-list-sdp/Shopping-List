@@ -70,9 +70,6 @@ Future<void> getFamilyListItems() async {
       listItem.category = category; //update category of object in list
     }
   }
-
-  //print("got my list");
-  //print(global.myList);
 }
 
 Future<void> addFamilyListItem(
@@ -87,8 +84,8 @@ Future<void> addFamilyListItem(
     'list_id': listID, //list id is the id of this list
     'to_buy': true //default to true
   };
-  await updateNoItems(listID); //update no items
   await docMyList.set(json);
+  await updateNoItems(listID); //update no items
   await getFamilyListInfo(); //get list info again
 }
 
@@ -109,6 +106,14 @@ Future<void> clearFamilyList(String listId) async {
       .doc(listId) //filter to list id
       .update({'no_items': 0}); //change no items to 0
 
-  await updateDate(listId); //update date in list table
+  await updateFamilyDate(listId); //update date in list table
   await getFamilyListInfo(); //get list info again
+}
+
+Future<void> updateFamilyDate(String listId) async {
+  //set new date for list
+  FirebaseFirestore.instance
+      .collection('list') //go to list tabale in db
+      .doc(listId) //filter where list id is correct
+      .update({'date': Timestamp.now()}); //update to current date
 }

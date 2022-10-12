@@ -4,7 +4,7 @@ import 'package:shopping_list/main.dart';
 import 'package:shopping_list/model/pantry.dart';
 import 'package:shopping_list/model/pantryItem.dart';
 
-Future<void> getMyPantryInfo() async {
+Future<dynamic> getMyPantryInfo() async {
   //get the list
   final querySnapshot = await FirebaseFirestore.instance
       .collection('pantry') //serch list table
@@ -51,8 +51,9 @@ Future<void> getMyPantryItems() async {
 
   global.myPantry = myObjects; //set global variable
 
-  for (int i = 0; i < global.myList.length; i++) {
+  for (int i = 0; i < global.myPantry.length; i++) {
     pantryItem PantryItem = global.myPantry.elementAt(i);
+    print(PantryItem.id);
 
     final querySnapshot = await FirebaseFirestore.instance
         .collection('items') //search item table in db
@@ -63,22 +64,27 @@ Future<void> getMyPantryItems() async {
 
     for (var doc in querySnapshot.docs) {
       String category = doc.get('category'); //get cattegory
-      PantryItem.category = category; //update category of object in list
+      if (PantryItem.itemId == doc.get('name')) {
+        PantryItem.category = category;
+      } //update category of object in list
     }
   }
 
-  print("got my list");
-  print(global.myPantry);
+  for (int j = 0; j < global.myPantry.length; j++) {
+    //print("got my list");
+    print("name = " + global.myPantry.elementAt(j).itemId);
+    print("category = " + global.myPantry.elementAt(j).category);
+  }
 }
 
-/*Future<void> updateNoItems(String pantryId, int number) async {
+Future<void> updateNoItems(String itemId, int number) async {
   //increment no items
   FirebaseFirestore.instance
-      .collection('pantry_items') //search list table
-      .doc(pantryId)
+      .collection('pantry_item') //search list table
+      .doc(itemId)
       //.doc(itemId) //get specific doc from list table
       .update({'quantity': FieldValue.increment(number)}); //increment no items
-}*/
+}
 
 Future<void> addPantryItem(
     //add item to list
@@ -92,7 +98,7 @@ Future<void> addPantryItem(
     'id': docMyList.id,
     'item_id': itemName, //item id is name of item
     'pantry_id': pantryID, //list id is the id of this list
-    'quantity': 0 //default to true
+    'quantity': 1 //default to true
   };
   //await updateNoItems(pantryID, 1); //update no items
   await docMyList.set(json);
@@ -105,6 +111,21 @@ Future<void> clearList() async {
       .collection('pantry_item'); //search list item collection
   var snapshot = await collection
       .where('pantry_id', isEqualTo: global.myPantryId)
+      .get(); //where list id is this list
+  for (var doc in snapshot.docs) {
+    await doc.reference
+        .delete(); //delete where the items have this specific list id
+  }
+
+  await getMyPantryInfo(); //get list info again
+}
+
+Future<void> removeFromList(String itemId) async {
+  //clear entire list
+  var collection = FirebaseFirestore.instance
+      .collection('pantry_item'); //search list item collection
+  var snapshot = await collection
+      .where('id', isEqualTo: itemId)
       .get(); //where list id is this list
   for (var doc in snapshot.docs) {
     await doc.reference

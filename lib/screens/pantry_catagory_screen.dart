@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/reusable_widgets/list_view_widgets.dart';
 import 'package:shopping_list/global.dart' as global;
@@ -55,7 +56,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
   @override
   Widget build(BuildContext context) {
     //getMyPantryItems();
-    getMyPantryInfo();
+    //getMyPantryInfo();
     //global.pantryCategory = catagory;
     return Container(
         width: MediaQuery.of(context).size.width,
@@ -232,22 +233,6 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(width: 25),
-                                        Text(
-                                            global.pantryCategory[0]
-                                                    .toUpperCase() +
-                                                global.pantryCategory.substring(
-                                                    1), //make first letter capital
-                                            style: TextStyle(
-                                                color: myColors("Purple"),
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 18)),
-                                      ],
-                                    ),
                                     const SizedBox(
                                       height: 10,
                                     ),
@@ -256,9 +241,11 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                           global.pantryCategory)
                                         Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            const SizedBox(width: 15),
+                                            //const SizedBox(width: 15),
                                             /*Checkbox(
                                                 checkColor: Colors.white,
                                                 fillColor: MaterialStateProperty
@@ -281,10 +268,60 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                                     entry.itemId.substring(
                                                         1), //make first etter capital
                                                 style: TextStyle(
-                                                    color: myColors("Grey"),
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.normal))
+                                                    color: myColors("Purple"),
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 18)),
+                                            const SizedBox(width: 190),
+                                            Column(children: [
+                                              Row(
+                                                children: [
+                                                  InkWell(
+                                                    child: SvgPicture.asset(
+                                                      'assets/icons/plus.svg',
+                                                    ),
+                                                    onTap: () {
+                                                      int number = 1;
+                                                      updateNoItems(
+                                                          entry.id, number);
+                                                      setState(() {
+                                                        entry.quantity +=
+                                                            number;
+                                                      });
+                                                    },
+                                                  ),
+                                                  const SizedBox(width: 10),
+                                                  Text(
+                                                      entry.quantity
+                                                          .toString(), //make first etter capital
+                                                      style: TextStyle(
+                                                          color: myColors(
+                                                              "Purple"),
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 18)),
+                                                  const SizedBox(width: 10),
+                                                  InkWell(
+                                                    child: SvgPicture.asset(
+                                                      'assets/icons/minus.svg',
+                                                    ),
+                                                    onTap: () {
+                                                      if (entry.quantity > 0) {
+                                                        int number = -1;
+                                                        updateNoItems(
+                                                            entry.id, number);
+                                                        setState(() {
+                                                          entry.quantity +=
+                                                              number;
+                                                        });
+                                                      } else {
+                                                        removeFromList(
+                                                            entry.id);
+                                                      }
+                                                    },
+                                                  )
+                                                ],
+                                              )
+                                            ]),
                                           ],
                                         ),
                                     const SizedBox(

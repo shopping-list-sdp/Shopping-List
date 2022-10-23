@@ -3,6 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/custom_icons_icons.dart';
 import 'package:shopping_list/global.dart' as global;
 import 'package:flutter/material.dart';
+import 'package:shopping_list/model/ScheduleItem.dart';
+import 'package:shopping_list/queries/scheduled_queries.dart';
 import 'package:shopping_list/reusable_widgets/list_view_widgets.dart';
 import '../model/ListItem.dart';
 import '../queries/my_list_queries.dart';
@@ -47,6 +49,11 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
         //items.addAll(global.items);
       });
     }
+  }
+
+  bool _isEditing = false;
+  void _edit() {
+    setState(() => _isEditing = true);
   }
 
   @override
@@ -183,11 +190,14 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                               setState(() {
                                 items = [];
                               });
-                              /*await addListItem(
-                                  itemName: item, listID: global.ScheduledId);
+                              await addScheduleItem(
+                                  itemName: item,
+                                  scheduleID: global.myScheduleId,
+                                  days: 0,
+                                  dateAdded: global.today);
                               setState(() {
-                                noItems = noItems + 1;
-                              });*/
+                                //noItems = noItems + 1;
+                              });
                               Fluttertoast.showToast(msg: "Item Added");
                             },
                           );
@@ -214,7 +224,7 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                     key: UniqueKey(),
                     children: [
                       for (var category in global.categories)
-                        global.myScheduled
+                        global.mySchedule
                                 .where(
                                     (element) => element.category == category)
                                 .isEmpty
@@ -235,19 +245,27 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                                                 color: myColors("Blue"),
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 18)),
+                                        const SizedBox(width: 175),
+                                        Text(
+                                            "Frequency", //make first letter capital
+                                            style: TextStyle(
+                                                color: myColors("Blue"),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 18))
                                       ],
                                     ),
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    for (ListItem entry in global.myScheduled)
+                                    for (ScheduleItem entry
+                                        in global.mySchedule)
                                       if (entry.category == category)
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           children: [
-                                            const SizedBox(width: 15),
-                                            Checkbox(
+                                            const SizedBox(width: 30),
+                                            /*Checkbox(
                                                 checkColor: Colors.white,
                                                 fillColor: MaterialStateProperty
                                                     .resolveWith<Color>(
@@ -263,7 +281,7 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                                                   setState(() {
                                                     entry.toBuy = !val!;
                                                   });
-                                                }),
+                                                })*/
                                             Text(
                                                 entry.itemId[0].toUpperCase() +
                                                     entry.itemId.substring(
@@ -272,7 +290,21 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                                                     color: myColors("Grey"),
                                                     fontSize: 16,
                                                     fontWeight:
-                                                        FontWeight.normal))
+                                                        FontWeight.normal)),
+                                            const SizedBox(width: 180),
+                                            TextButton(
+                                              onPressed: () {
+                                                _edit();
+                                              },
+                                              child: Text(
+                                                  entry.days
+                                                      .toString(), //make first etter capital
+                                                  style: TextStyle(
+                                                      color: myColors("Grey"),
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.normal)),
+                                            ),
                                           ],
                                         ),
                                     const SizedBox(

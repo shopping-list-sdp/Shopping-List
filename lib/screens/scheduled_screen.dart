@@ -222,6 +222,9 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                           ),
                           onPressed: () async {
                             await clearSchedule(global.myScheduleId);
+                            setState(() {
+                              items = [];
+                            });
                           })),
                   Column(
                     key: UniqueKey(),
@@ -318,6 +321,10 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                                                       }*/
                                                       onSubmitted:
                                                           (value) async {
+                                                        setState(() {
+                                                          entry.days =
+                                                              int.parse(value);
+                                                        });
                                                         changeFrequency(
                                                             entry.days,
                                                             entry.id);

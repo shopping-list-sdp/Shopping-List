@@ -8,6 +8,7 @@ import 'package:shopping_list/screens/family_list_screen.dart';
 import 'package:shopping_list/screens/join_family_screen.dart';
 import 'package:shopping_list/screens/my_list_screen.dart';
 import 'package:shopping_list/screens/pantry_screen.dart';
+import 'package:shopping_list/screens/scheduled_screen.dart';
 import '../custom_icons_icons.dart';
 import '../queries/my_list_queries.dart';
 import '../reusable_widgets/reusable_widgets.dart';
@@ -40,6 +41,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/essentials/background.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Scaffold(
             backgroundColor: myColors("White"),
             body: ListView(children: <Widget>[
@@ -72,8 +79,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         "Purple",
                         "Pantry", //takes you to pantry page
                         const PantryScreen()),
-                    dashboardButtons(
-                        context, "Yellow", "Scheduled", const MyListScreen()),
+                    dashboardButtons(context, "Yellow", "Scheduled",
+                        const ScheduledScreen()),
                   ]),
                   const SizedBox(
                     //add space

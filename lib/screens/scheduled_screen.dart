@@ -1,46 +1,44 @@
-import 'dart:ffi';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shopping_list/queries/my_list_queries.dart';
-import 'package:shopping_list/reusable_widgets/list_view_widgets.dart';
+import 'package:shopping_list/custom_icons_icons.dart';
 import 'package:shopping_list/global.dart' as global;
-import '../custom_icons_icons.dart';
-import '../model/pantryItem.dart';
-import '../queries/pantry_queries.dart';
+import 'package:flutter/material.dart';
+import 'package:shopping_list/reusable_widgets/list_view_widgets.dart';
+import '../model/ListItem.dart';
+import '../queries/my_list_queries.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
 
-class PantryCatagoryScreen extends StatefulWidget {
-  final String catagory;
-  const PantryCatagoryScreen({super.key, required this.catagory});
+class ScheduledScreen extends StatefulWidget {
+  const ScheduledScreen({super.key});
 
   @override
-  State<PantryCatagoryScreen> createState() =>
-      _PantryCatagoryScreenState(catagory);
+  State<ScheduledScreen> createState() => _ScheduledScreenState();
 }
 
-class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
-  final searchTextEditingController = TextEditingController();
+class _ScheduledScreenState extends State<ScheduledScreen> {
   final addTextEditingController = TextEditingController();
-
   var duplicateItems = global.items;
   var items = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   void filterSearchResults(String query) {
     List<String> dummySearchList = [];
     dummySearchList.addAll(global.items);
     if (query.isNotEmpty) {
-      List<String> dummyListData = [];
+      List<String> dumScheduledData = [];
       for (var item in dummySearchList) {
         if (item.contains(query)) {
-          dummyListData.add(item);
+          dumScheduledData.add(item);
         }
       }
       setState(() {
         items.clear();
-        items.addAll(dummyListData);
+        items.addAll(dumScheduledData);
       });
       return;
     } else {
@@ -51,20 +49,8 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
     }
   }
 
-  String catagory;
-  _PantryCatagoryScreenState(this.catagory);
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    //getMyPantryItems();
-    //getMyPantryInfo();
-    //global.pantryCategory = catagory;
     return Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -74,35 +60,24 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
               SingleChildScrollView(
                   child: Padding(
                 padding: EdgeInsets.fromLTRB(
-                    35, MediaQuery.of(context).size.height * 0.05, 35, 0),
+                    0, MediaQuery.of(context).size.height * 0.05, 0, 0),
                 child: Column(children: <Widget>[
-                  Text("Pantry",
+                  Text("Scheduled List",
                       style: TextStyle(
-                          color: myColors("Purple"),
+                          color: myColors("Yellow"),
                           fontSize: 30,
                           fontWeight: FontWeight.w500)),
                   const SizedBox(
-                    height: 10,
-                  ),
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      const Image(image: AssetImage('assets/images/stall.png')),
-                      Text(catagory,
-                          style: TextStyle(
-                              color: myColors("White"),
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600)),
-                    ],
+                    height: 45,
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 35,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 330,
+                        width: 325,
                         child: //searchField("Add items", CustomIcons.search,
                             //addTextEditingController, "Blue"),
                             TextField(
@@ -115,7 +90,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                   }
                                 },
                                 textInputAction: TextInputAction.done,
-                                cursorColor: myColors("Purple"),
+                                cursorColor: myColors("Yellow"),
                                 style: TextStyle(
                                     color: myColors("Purple"),
                                     fontWeight: FontWeight.w500,
@@ -123,7 +98,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(
                                     CustomIcons.search,
-                                    color: myColors("Purple"),
+                                    color: myColors("Yellow"),
                                   ),
                                   suffixIcon: IconButton(
                                     onPressed: () {
@@ -141,7 +116,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                   ),
                                   labelText: "Add Items",
                                   labelStyle: TextStyle(
-                                      color: myColors("FiftyPurple"),
+                                      color: myColors("Yellow"),
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500),
                                   filled: true,
@@ -202,14 +177,17 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                   style: TextStyle(color: myColors("Grey")),
                                 )),
                             onTap: () async {
-                              String item = items[index];
-                              await addPantryItem(
-                                  itemName: item, pantryID: global.myPantryId);
                               FocusManager.instance.primaryFocus?.unfocus();
                               addTextEditingController.text = '';
+                              String item = items[index];
                               setState(() {
                                 items = [];
                               });
+                              /*await addListItem(
+                                  itemName: item, listID: global.ScheduledId);
+                              setState(() {
+                                noItems = noItems + 1;
+                              });*/
                               Fluttertoast.showToast(msg: "Item Added");
                             },
                           );
@@ -226,35 +204,50 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                 fontWeight: FontWeight.normal),
                           ),
                           onPressed: () async {
-                            //await getMyPantryItems();
-                            await clearPantryList();
+                            /*await clearList(global.ScheduledId);
                             setState(() {
-                              items = [];
-                            });
+                              date = Timestamp.now();
+                              noItems = 0;
+                            });*/
                           })),
                   Column(
                     key: UniqueKey(),
                     children: [
-                      //for (var category in global.categories)
-                      //global.myPantry
-                      //.where((element) => element.category == category)
-                      //.isEmpty
-                      //? Column()
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            for (pantryItem entry in global.myPantry)
-                              if (entry.category == global.pantryCategory)
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    //const SizedBox(width: 15),
-                                    /*Checkbox(
+                      for (var category in global.categories)
+                        global.myScheduled
+                                .where(
+                                    (element) => element.category == category)
+                                .isEmpty
+                            ? Column()
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(width: 25),
+                                        Text(
+                                            category[0].toUpperCase() +
+                                                category.substring(
+                                                    1), //make first letter capital
+                                            style: TextStyle(
+                                                color: myColors("Blue"),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 18)),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    for (ListItem entry in global.myScheduled)
+                                      if (entry.category == category)
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(width: 15),
+                                            Checkbox(
                                                 checkColor: Colors.white,
                                                 fillColor: MaterialStateProperty
                                                     .resolveWith<Color>(
@@ -270,86 +263,28 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                                   setState(() {
                                                     entry.toBuy = !val!;
                                                   });
-                                                })*/
-                                    Text(
-                                        entry.itemId[0].toUpperCase() +
-                                            entry.itemId.substring(
-                                                1), //make first etter capital
-                                        style: TextStyle(
-                                            color: myColors("Purple"),
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 18)),
-                                    //const SizedBox(width: ),
-                                    Column(children: [
-                                      Row(
-                                        children: [
-                                          InkWell(
-                                            child: SvgPicture.asset(
-                                              'assets/icons/plus.svg',
-                                            ),
-                                            onTap: () {
-                                              int number = 1;
-                                              updateQuantityItems(
-                                                  entry.id, number);
-                                              setState(() {
-                                                entry.quantity += number;
-                                              });
-                                            },
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Text(
-                                              entry.quantity
-                                                  .toString(), //make first etter capital
-                                              style: TextStyle(
-                                                  color: myColors("Purple"),
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 18)),
-                                          const SizedBox(width: 10),
-                                          InkWell(
-                                            child: SvgPicture.asset(
-                                              'assets/icons/minus.svg',
-                                            ),
-                                            onTap: () async {
-                                              if (entry.quantity > 1) {
-                                                int number = -1;
-                                                updateQuantityItems(
-                                                    entry.id, number);
-                                                setState(() {
-                                                  entry.quantity += number;
-                                                });
-                                              } else if (entry.quantity == 1) {
-                                                //print("Q = " +
-                                                //entry.quantity.toString());
-                                                await removeFromList(entry.id);
-                                                setState(() {
-                                                  entry.quantity = 0;
-                                                });
-                                                /*updateQuantityItems(
-                                                    entry.id, 0);*/
-                                                addListItem(
-                                                    itemName: entry.itemId,
-                                                    listID: global.myListId);
-                                                Fluttertoast.showToast(
-                                                    msg:
-                                                        "Item Added to My List");
-                                              }
-                                            },
-                                          )
-                                        ],
-                                      )
-                                    ]),
-                                  ],
-                                ),
-                            const SizedBox(
-                              height: 20,
-                            )
-                          ])
+                                                }),
+                                            Text(
+                                                entry.itemId[0].toUpperCase() +
+                                                    entry.itemId.substring(
+                                                        1), //make first etter capital
+                                                style: TextStyle(
+                                                    color: myColors("Grey"),
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.normal))
+                                          ],
+                                        ),
+                                    const SizedBox(
+                                      height: 20,
+                                    )
+                                  ])
                     ],
                   ),
                 ]),
               )),
             ]),
             appBar: appBar(context),
-            bottomNavigationBar: navBar(context, "pantryCatagory")));
+            bottomNavigationBar: navBar(context, "Scheduled")));
   }
 }

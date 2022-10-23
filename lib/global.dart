@@ -10,14 +10,17 @@ String myListId = '';
 String familyListId = '';
 String familyID = '';
 String myPantryId = '';
+String myScheduleId = '';
 String pantryCategory = '';
 int myListNoItems = 0;
 int familyListNoItems = 0;
+Timestamp today = Timestamp.now();
 Timestamp myListDate = Timestamp.now();
 Timestamp familyListDate = Timestamp.now();
 var myList = [];
 var familyList = [];
 var myPantry = [];
+var mySchedule = [];
 
 final categories = [
   'bakery',

@@ -3,6 +3,7 @@ import 'package:shopping_list/queries/family_list_queries.dart';
 import 'package:shopping_list/queries/join_family_queries.dart';
 import 'package:shopping_list/queries/my_list_queries.dart';
 import 'package:shopping_list/queries/pantry_queries.dart';
+import 'package:shopping_list/queries/scheduled_queries.dart';
 import 'package:shopping_list/screens/dashboard_screen.dart';
 import 'package:shopping_list/screens/home_screen.dart';
 import 'package:shopping_list/screens/registration_screen.dart';
@@ -244,6 +245,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   getMyListInfo(),
                   getFamilyListInfo(),
                   getMyPantryInfo(),
+                  getMyScheduleInfo(),
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const DashboardScreen())),
                   //getMyListItems()

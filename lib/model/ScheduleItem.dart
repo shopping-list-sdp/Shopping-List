@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ScheduleItem {
   late Timestamp dateAdded;
-  late String days; //date it was last cleared
+  late int days; //date it was last cleared
   late String id; //id of the list item
   late String itemId; //item id
   late String scheduleId; // list id of list item belongs to

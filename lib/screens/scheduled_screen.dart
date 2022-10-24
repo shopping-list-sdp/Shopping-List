@@ -3,6 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/custom_icons_icons.dart';
 import 'package:shopping_list/global.dart' as global;
 import 'package:flutter/material.dart';
+import 'package:shopping_list/model/ScheduleItem.dart';
+import 'package:shopping_list/queries/scheduled_queries.dart';
 import 'package:shopping_list/reusable_widgets/list_view_widgets.dart';
 import '../model/ListItem.dart';
 import '../queries/my_list_queries.dart';
@@ -18,12 +20,15 @@ class ScheduledScreen extends StatefulWidget {
 
 class _ScheduledScreenState extends State<ScheduledScreen> {
   final addTextEditingController = TextEditingController();
+  final editDaysController = TextEditingController();
   var duplicateItems = global.items;
   var items = [];
+  late FocusNode myFocusNode;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    myFocusNode = FocusNode();
   }
 
   void filterSearchResults(String query) {
@@ -47,6 +52,18 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
         //items.addAll(global.items);
       });
     }
+  }
+
+  /*bool _isEditing = false;
+  void _edit() {
+    setState(() => _isEditing = true);
+  }*/
+
+  void dispose() {
+    // Clean up the focus node when the Form is disposed.
+    myFocusNode.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -180,14 +197,14 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                               FocusManager.instance.primaryFocus?.unfocus();
                               addTextEditingController.text = '';
                               String item = items[index];
+                              await addScheduleItem(
+                                  itemName: item,
+                                  scheduleID: global.myScheduleId,
+                                  days: 0,
+                                  dateAdded: Timestamp.now());
                               setState(() {
                                 items = [];
                               });
-                              /*await addListItem(
-                                  itemName: item, listID: global.ScheduledId);
-                              setState(() {
-                                noItems = noItems + 1;
-                              });*/
                               Fluttertoast.showToast(msg: "Item Added");
                             },
                           );
@@ -204,17 +221,16 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                                 fontWeight: FontWeight.normal),
                           ),
                           onPressed: () async {
-                            /*await clearList(global.ScheduledId);
+                            await clearSchedule(global.myScheduleId);
                             setState(() {
-                              date = Timestamp.now();
-                              noItems = 0;
-                            });*/
+                              items = [];
+                            });
                           })),
                   Column(
                     key: UniqueKey(),
                     children: [
                       for (var category in global.categories)
-                        global.myScheduled
+                        global.mySchedule
                                 .where(
                                     (element) => element.category == category)
                                 .isEmpty
@@ -235,19 +251,29 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                                                 color: myColors("Blue"),
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 18)),
+                                        const SizedBox(width: 175),
+                                        Text(
+                                            "Frequency", //make first letter capital
+                                            style: TextStyle(
+                                                color: myColors("Blue"),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 18))
                                       ],
                                     ),
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    for (ListItem entry in global.myScheduled)
+                                    for (ScheduleItem entry
+                                        in global.mySchedule)
                                       if (entry.category == category)
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           children: [
-                                            const SizedBox(width: 15),
-                                            Checkbox(
+                                            Row(
+                                              children: [
+                                                const SizedBox(width: 30),
+                                                /*Checkbox(
                                                 checkColor: Colors.white,
                                                 fillColor: MaterialStateProperty
                                                     .resolveWith<Color>(
@@ -263,21 +289,71 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                                                   setState(() {
                                                     entry.toBuy = !val!;
                                                   });
-                                                }),
-                                            Text(
-                                                entry.itemId[0].toUpperCase() +
-                                                    entry.itemId.substring(
-                                                        1), //make first etter capital
-                                                style: TextStyle(
-                                                    color: myColors("Grey"),
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.normal))
+                                                })*/
+                                                Text(
+                                                    entry.itemId[0]
+                                                            .toUpperCase() +
+                                                        entry.itemId.substring(
+                                                            1), //make first etter capital
+                                                    style: TextStyle(
+                                                        color: myColors("Grey"),
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.normal)),
+                                                const SizedBox(width: 180),
+                                                SizedBox(
+                                                    height: 50,
+                                                    width: 50,
+                                                    child: //_isEditing
+                                                        TextField(
+                                                      onTap: () => myFocusNode
+                                                          .requestFocus(),
+                                                      focusNode: myFocusNode,
+                                                      //autofocus: true,
+                                                      maxLines: 1,
+                                                      keyboardType:
+                                                          TextInputType.number,
+                                                      controller:
+                                                          editDaysController,
+                                                      /*onChanged: (value) {
+                                                        entry.days =
+                                                            int.parse(value);
+                                                      }*/
+                                                      onSubmitted:
+                                                          (value) async {
+                                                        setState(() {
+                                                          entry.days =
+                                                              int.parse(value);
+                                                        });
+                                                        changeFrequency(
+                                                            entry.days,
+                                                            entry.id);
+                                                      },
+                                                    )
+                                                    /*: TextButton(
+                                                            onPressed: () {
+                                                              _edit();
+                                                            },
+                                                            child: Text(
+                                                                entry.days
+                                                                    .toString(), //make first etter capital
+                                                                style: TextStyle(
+                                                                    color: myColors(
+                                                                        "Grey"),
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .normal)),
+                                                          )*/
+                                                    ),
+                                              ],
+                                            )
                                           ],
                                         ),
                                     const SizedBox(
                                       height: 20,
-                                    )
+                                    ),
                                   ])
                     ],
                   ),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shopping_list/global.dart' as global;
 import 'package:shopping_list/model/user_model.dart';
+import 'package:shopping_list/queries/scheduled_queries.dart';
 import 'package:shopping_list/screens/dashboard_screen.dart';
 import 'package:shopping_list/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -384,6 +385,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     await docMyList.set(json);
   }
 
+  Future createMySchedule({required String? uid}) async {
+    final docMySchedule =
+        FirebaseFirestore.instance.collection('schedule').doc();
+
+    final json = {
+      'id': docMySchedule.id,
+      'user': uid,
+    };
+
+    await docMySchedule.set(json);
+  }
+
   postDetailsToFirestore() async {
     // calling our firestore
     // calling our user model
@@ -411,6 +424,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     createMyList(uid: global.userId);
     getMyListInfo();
     createMyPantry(uid: global.userId);
+    createMySchedule(uid: global.userId);
+    getMyScheduleInfo();
 
     Navigator.pushAndRemoveUntil(
         (context),

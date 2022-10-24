@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shopping_list/global.dart' as global;
 import 'package:shopping_list/model/Schedule.dart';
 import 'package:shopping_list/model/ScheduleItem.dart';
+import 'package:shopping_list/queries/my_list_queries.dart';
 
 Future<void> getMyScheduleInfo() async {
   //get the list
@@ -23,6 +24,7 @@ Future<void> getMyScheduleInfo() async {
       temp.user == global.userId); //get where user id is this users id
 
   global.myScheduleId = schedule.id; //set global variables
+  print("sID = " + global.myScheduleId);
 
   //print("got list");
   //print("list id: " + global.myListId);
@@ -52,6 +54,14 @@ Future<void> getMyScheduledItems() async {
   for (int i = 0; i < global.mySchedule.length; i++) {
     ScheduleItem scheduleItem = global.mySchedule.elementAt(i);
 
+    Timestamp ftr = scheduleItem.dateAdded;
+    DateTime dst = ftr.toDate();
+
+    if (global.today.isAfter(dst.add(Duration(days: scheduleItem.days)))) {
+      await updateDate(scheduleItem.id);
+      addListItem(itemName: scheduleItem.itemId, listID: global.myListId);
+    }
+
     final querySnapshot = await FirebaseFirestore.instance
         .collection('items') //search item table in db
         .where('name',
@@ -72,7 +82,7 @@ Future<void> getMyScheduledItems() async {
 Future<void> addScheduleItem(
     {required String itemName,
     required String scheduleID,
-    required String days,
+    required int days,
     required Timestamp dateAdded}) async {
   final docMySchedule = FirebaseFirestore.instance
       .collection('scheduled_items')
@@ -89,39 +99,35 @@ Future<void> addScheduleItem(
   await getMyScheduleInfo(); //get list info again
 }
 
-Future<void> changeToBuy(bool newVal, String itemId) async {
+Future<void> changeFrequency(int newVal, String itemId) async {
   //change buy status
   FirebaseFirestore.instance
-      .collection('list_item') //search list item table
+      .collection('scheduled_items') //search list item table
       .doc(itemId) //filter where item id is the same as specific item
-      .update({'to_buy': newVal}); //change to buy to false
+      .update({'days': newVal}); //change to buy to false
 }
 
-Future<void> clearList(String listId) async {
+Future<void> updateDate(String itemId) async {
+  //change buy status
+  FirebaseFirestore.instance
+      .collection('scheduled_items') //search list item table
+      .doc(itemId) //filter where item id is the same as specific item
+      .update({'date_added': Timestamp.now()}); //change to buy to false
+}
+
+Future<void> clearSchedule(String scheduleId) async {
   //clear entire list
   var collection = FirebaseFirestore.instance
       .collection('Scheduled_items'); //search list item collection
   var snapshot = await collection
-      .where('list_id', isEqualTo: listId)
+      .where('schedule_id', isEqualTo: scheduleId)
       .get(); //where list id is this list
   for (var doc in snapshot.docs) {
     await doc.reference
         .delete(); //delete where the items have this specific list id
   }
 
-  FirebaseFirestore.instance
-      .collection('list') //get from list table
-      .doc(listId) //filter to list id
-      .update({'no_items': 0}); //change no items to 0
+  print("working");
 
-  await updateDate(listId); //update date in list table
-  await getMyListInfo(); //get list info again
-}
-
-Future<void> updateDate(String listId) async {
-  //set new date for list
-  FirebaseFirestore.instance
-      .collection('list') //go to list tabale in db
-      .doc(listId) //filter where list id is correct
-      .update({'date': Timestamp.now()}); //update to current date
+  await getMyScheduleInfo(); //get list info again
 }

@@ -315,7 +315,12 @@ class _MyListScreenState extends State<MyListScreen> {
                                                         alignment:
                                                             Alignment.topCenter,
                                                       ),
-                                                      onPressed: () {},
+                                                      onPressed: () async {
+                                                        print("clicked");
+                                                        print(global.myListId);
+                                                        calculateCost(
+                                                            global.myListId);
+                                                      },
                                                       child: Text(
                                                         "R ${entry.price.toString()}",
                                                         style: TextStyle(
@@ -327,18 +332,35 @@ class _MyListScreenState extends State<MyListScreen> {
                                                                     .w500),
                                                       ),
                                                     ),
-                                                    SvgPicture.asset(
+                                                    /*SvgPicture.asset(
                                                       'assets/icons/edit.svg',
                                                       color: myColors("Grey"),
-                                                    ),
+                                                    ),*/
                                                   ])
                                             ]),
                                     const SizedBox(
                                       height: 20,
-                                    )
+                                    ),
                                   ])
                     ],
                   ),
+                  global.myList.isEmpty
+                      ? Row()
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Total Estimated Cost: R" + global.myListCost,
+                              style: TextStyle(
+                                  color: myColors("Purple"),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                  const SizedBox(
+                    height: 30,
+                  )
                 ]),
               )),
             ]),

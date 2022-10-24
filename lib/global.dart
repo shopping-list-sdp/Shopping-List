@@ -17,6 +17,7 @@ int familyListNoItems = 0;
 DateTime today = DateTime.now();
 Timestamp myListDate = Timestamp.now();
 Timestamp familyListDate = Timestamp.now();
+String myListCost = "";
 var myList = [];
 var familyList = [];
 var myPantry = [];

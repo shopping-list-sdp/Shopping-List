@@ -286,11 +286,28 @@ class _FamilyListScreenState extends State<FamilyListScreen> {
                                           ],
                                         ),
                                     const SizedBox(
-                                      height: 20,
-                                    )
-                                  ])
+                                      height: 10,
+                                    ),
+                                  ]),
                     ],
                   ),
+                  TextButton(
+                      onPressed: () async {
+                        await leaveFamily(context);
+                        print(global.familyID);
+                        setState(() {
+                          //global.familyID = "";
+                        });
+                      },
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text("Leave Family",
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: myColors("Purple"),
+                                fontWeight: FontWeight.normal),
+                            textAlign: TextAlign.center),
+                      ))
                 ]),
               )),
             ]),

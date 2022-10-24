@@ -74,7 +74,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
               SingleChildScrollView(
                   child: Padding(
                 padding: EdgeInsets.fromLTRB(
-                    35, MediaQuery.of(context).size.height * 0.05, 35, 0),
+                    0, MediaQuery.of(context).size.height * 0.05, 0, 0),
                 child: Column(children: <Widget>[
                   Text("Pantry",
                       style: TextStyle(
@@ -102,7 +102,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 330,
+                        width: 325,
                         child: //searchField("Add items", CustomIcons.search,
                             //addTextEditingController, "Blue"),
                             TextField(
@@ -271,10 +271,9 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                                     entry.toBuy = !val!;
                                                   });
                                                 })*/
+
                                     Text(
-                                        entry.itemId[0].toUpperCase() +
-                                            entry.itemId.substring(
-                                                1), //make first etter capital
+                                        "     ${entry.itemId[0].toUpperCase()}${entry.itemId.substring(1)}", //make first etter capital
                                         style: TextStyle(
                                             color: myColors("Purple"),
                                             fontWeight: FontWeight.w500,
@@ -334,7 +333,8 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                                         "Item Added to My List");
                                               }
                                             },
-                                          )
+                                          ),
+                                          const SizedBox(width: 25),
                                         ],
                                       )
                                     ]),

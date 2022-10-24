@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:shopping_list/global.dart' as global;
 import 'package:shopping_list/main.dart';
 import 'package:shopping_list/model/List.dart';
 import 'package:shopping_list/model/ListItem.dart';
+import 'package:shopping_list/screens/join_family_screen.dart';
 
+import '../screens/dashboard_screen.dart';
 import 'my_list_queries.dart';
 
 Future<void> getFamilyListInfo() async {
@@ -117,4 +120,17 @@ Future<void> updateFamilyDate(String listId) async {
       .collection('list') //go to list tabale in db
       .doc(listId) //filter where list id is correct
       .update({'date': Timestamp.now()}); //update to current date
+}
+
+Future<void> leaveFamily(BuildContext context) async {
+  //set new date for list
+  FirebaseFirestore.instance
+      .collection('users') //go to list tabale in db
+      .doc(global.userId) //filter where list id is correct
+      .update({'familyID': ""}); //update to empty
+  global.familyID = "";
+  Navigator.pushAndRemoveUntil(
+      (context),
+      MaterialPageRoute(builder: (context) => const DashboardScreen()),
+      (route) => false);
 }

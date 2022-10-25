@@ -97,20 +97,14 @@ Future<void> updateItemPrice(String id, String price) async {
 
 Future<void> addListItem(
     {required String itemName, required String listID}) async {
-  /*final querySnap = await FirebaseFirestore.instance
-        .collection(
-            'items') //serch list table //filter to where type is personal
-        .get();
+  
+  final querySnap = await FirebaseFirestore.instance
+      .collection('items') //serch list table //filter to where type is personal
+      .get();
 
-    final Data =
-        querySnap.docs.map((doc) => doc.data()).toList(); //convert to list
-
-    var myObjects = [];
-    for (var item in Data) {
-      myObjects.add(Item.fromJson(item)); //add to list of objects
-    }
-
-    global.pantryitems = myObjects;*/
+  final Data =
+      querySnap.docs.map((doc) => doc.data()).toList(); //convert to list
+  
   var collection = FirebaseFirestore.instance.collection('items');
   var querySnapshot = await collection.where('name', isEqualTo: itemName).get();
   Map<String, dynamic> data = {};
@@ -157,6 +151,7 @@ Future<void> clearList(String listId) async {
     await doc.reference
         .delete(); //delete where the items have this specific list id
     global.myListCost = "0.00";
+    global.myListMarkedCost = "0.00";
   }
 
   FirebaseFirestore.instance
@@ -176,7 +171,7 @@ Future<void> updateDate(String listId) async {
       .update({'date': Timestamp.now()}); //update to current date
 }
 
-Future<void> updateQuantity(String itemId, int number) async {
+Future<void> updateQuantityOfItems(String itemId, int number) async {
   //increment no items
   FirebaseFirestore.instance
       .collection('list_item') //search list table
@@ -194,13 +189,20 @@ Future<void> calculateCost(String listId) async {
       //.where('to_buy', isEqualTo: false)
       .get(); //get from db
   double total = 0;
+  double markedTotal = 0;
   //print(querySnapshot.docs);
   for (var doc in querySnapshot.docs) {
-    //print(doc);
     String p = doc.get('price'); //get price
-    //print(double.parse(p));
-    total += double.parse(p);
+    int q = doc.get('quantity');
+    total += double.parse(p) * q;
+
+    if (doc.get('to_buy') == false) {
+      String p2 = doc.get('price'); //get price
+      int q2 = doc.get('quantity');
+      markedTotal += double.parse(p2) * q2;
+    }
   }
+  global.myListMarkedCost = markedTotal.toStringAsFixed(2);
   global.myListCost = total.toStringAsFixed(2);
 }
 

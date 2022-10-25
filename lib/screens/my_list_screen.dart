@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/custom_icons_icons.dart';
 import 'package:shopping_list/global.dart' as global;
 import 'package:flutter/material.dart';
+import 'package:shopping_list/queries/pantry_queries.dart';
 import 'package:shopping_list/reusable_widgets/list_view_widgets.dart';
 import '../model/ListItem.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
@@ -198,17 +199,16 @@ class _MyListScreenState extends State<MyListScreen> {
                               for (ListItem listitems in global.myList) {
                                 if (listitems.itemId.compareTo(item) == 0) {
                                   flag = true;
-                                  break;
                                 }
                                 if (flag) {
                                   await updateQuantity(listitems.id, 1);
+                                  
                                   setState(() {
                                     items = [];
                                     listitems.quantity += 1;
                                   });
                                   break;
                                 }
-                              }
 
                               if (flag == false) {
                                 await addListItem(
@@ -217,11 +217,6 @@ class _MyListScreenState extends State<MyListScreen> {
                                   noItems = noItems + 1;
                                 });
                               }
-                              //setState(() {
-                              //items = [];
-                              //});
-                              //await addListItem(
-                              //itemName: item, listID: global.myListId);
                               Fluttertoast.showToast(msg: "Item Added");
                             },
                           );
@@ -299,12 +294,17 @@ class _MyListScreenState extends State<MyListScreen> {
                                                       value: !entry.toBuy,
                                                       shape:
                                                           const CircleBorder(),
-                                                      onChanged: (bool? val) {
-                                                        changeToBuy(
+                                                      onChanged:
+                                                          (bool? val) async {
+                                                        await changeToBuy(
                                                             !entry.toBuy,
                                                             entry.id);
+                                                        await calculateCost(
+                                                            global.myListId);
                                                         setState(() {
                                                           entry.toBuy = !val!;
+                                                          global
+                                                              .myListMarkedCost;
                                                         });
                                                       }),
                                                   Text(
@@ -317,7 +317,103 @@ class _MyListScreenState extends State<MyListScreen> {
                                                               myColors("Grey"),
                                                           fontSize: 16,
                                                           fontWeight: FontWeight
-                                                              .normal))
+                                                              .normal)),
+                                                  //const SizedBox(width: 180),
+                                                  Column(children: [
+                                                    Row(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  180,
+                                                                  5,
+                                                                  0,
+                                                                  10),
+                                                          child: Row(children: [
+                                                            InkWell(
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                'assets/icons/plus.svg',
+                                                              ),
+                                                              onTap: () {
+                                                                int number = 1;
+                                                                updateQuantityOfItems(
+                                                                    entry.id,
+                                                                    number);
+                                                                setState(() {
+                                                                  entry.quantity +=
+                                                                      number;
+                                                                });
+                                                              },
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 10),
+                                                            Text(
+                                                                entry.quantity
+                                                                    .toString(), //make first etter capital
+                                                                style: TextStyle(
+                                                                    color: myColors(
+                                                                        "Purple"),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontSize:
+                                                                        18)),
+                                                            const SizedBox(
+                                                                width: 10),
+                                                            InkWell(
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                'assets/icons/minus.svg',
+                                                              ),
+                                                              onTap: () async {
+                                                                if (entry
+                                                                        .quantity >
+                                                                    1) {
+                                                                  int number =
+                                                                      -1;
+                                                                  updateQuantityOfItems(
+                                                                      entry.id,
+                                                                      number);
+                                                                  setState(() {
+                                                                    entry.quantity +=
+                                                                        number;
+                                                                  });
+                                                                } else if (entry
+                                                                        .quantity ==
+                                                                    1) {
+                                                                  //print("Q = " +
+                                                                  //entry.quantity.toString());
+                                                                  await removeList(
+                                                                      entry.id);
+                                                                  setState(() {
+                                                                    entry.quantity =
+                                                                        0;
+                                                                  });
+                                                                  /*updateQuantityItems(
+                                                    entry.id, 0);*/
+                                                                  addPantryItem(
+                                                                      itemName:
+                                                                          entry
+                                                                              .itemId,
+                                                                      pantryID:
+                                                                          global
+                                                                              .myPantryId);
+                                                                  Fluttertoast
+                                                                      .showToast(
+                                                                          msg:
+                                                                              "Item Added to My List");
+                                                                }
+                                                              },
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 25),
+                                                          ]),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ]),
                                                 ],
                                               ),
                                               Row(
@@ -476,12 +572,12 @@ class _MyListScreenState extends State<MyListScreen> {
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                                SizedBox(
+                                                                                const SizedBox(
                                                                                   width: 20,
                                                                                 )
                                                                               ],
                                                                             ),
-                                                                            SizedBox(
+                                                                            const SizedBox(
                                                                               height: 15,
                                                                             )
                                                                           ]),
@@ -560,7 +656,21 @@ class _MyListScreenState extends State<MyListScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Total Estimated Cost: R" + global.myListCost,
+                              "All Items Total: R" + global.myListCost,
+                              style: TextStyle(
+                                  color: myColors("Purple"),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                  global.myList.isEmpty
+                      ? Row()
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Marked Items Total: R" + global.myListMarkedCost,
                               style: TextStyle(
                                   color: myColors("Purple"),
                                   fontSize: 16,

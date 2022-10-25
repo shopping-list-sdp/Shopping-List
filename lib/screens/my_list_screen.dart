@@ -210,7 +210,6 @@ class _MyListScreenState extends State<MyListScreen> {
                                     });
                                     break;
                                   }
-
                                   if (flag == false) {
                                     await addListItem(
                                         itemName: item,

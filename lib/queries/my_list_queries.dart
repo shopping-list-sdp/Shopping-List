@@ -90,7 +90,8 @@ Future<void> addListItem(
   final json = {
     'id': docMyList.id,
     'item_id': itemName, //item id is name of item
-    'list_id': listID, //list id is the id of this list
+    'list_id': listID,
+    'quantity': 1, //list id is the id of this list
     'to_buy': true //default to true
   };
   await updateNoItems(listID); //update no items

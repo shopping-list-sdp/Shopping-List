@@ -59,13 +59,18 @@ void resetGlobal() {
   familyListId = '';
   familyID = '';
   myPantryId = '';
+  myScheduleId = '';
   pantryCategory = '';
   myListCost = "";
   myListNoItems = 0;
   familyListNoItems = 0;
+  today = DateTime.now();
   myListDate = Timestamp.now();
   familyListDate = Timestamp.now();
+  myListCost = "";
   myList = [];
   familyList = [];
   myPantry = [];
+  mySchedule = [];
+  pantryitems = [];
 }

@@ -38,6 +38,7 @@ dependencies:
   fluttertoast: ^8.0.9
   firebase_auth: ^3.7.0
   cloud_firestore: ^3.4.6
+  currency_text_input_formatter: ^2.1.7
 
 dev_dependencies:
   integration_test:

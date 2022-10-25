@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/custom_icons_icons.dart';
@@ -6,6 +7,7 @@ import 'package:shopping_list/global.dart' as global;
 import 'package:flutter/material.dart';
 import 'package:shopping_list/reusable_widgets/list_view_widgets.dart';
 import '../model/ListItem.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import '../queries/my_list_queries.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
@@ -19,7 +21,7 @@ class MyListScreen extends StatefulWidget {
 
 class _MyListScreenState extends State<MyListScreen> {
   final addTextEditingController = TextEditingController();
-  final priceEditingController = TextEditingController();
+  final _priceTextEditingController = TextEditingController();
   var duplicateItems = global.items;
   var items = [];
   @override
@@ -53,6 +55,7 @@ class _MyListScreenState extends State<MyListScreen> {
 
   int noItems = global.myListNoItems;
   Timestamp date = global.myListDate;
+  String clickedItemPrice = "";
 
   @override
   Widget build(BuildContext context) {
@@ -316,11 +319,15 @@ class _MyListScreenState extends State<MyListScreen> {
                                                             Alignment.topCenter,
                                                       ),
                                                       onPressed: () async {
-                                                        print("clicked");
-                                                        print(global.myListId);
+                                                        clickedItemPrice = entry
+                                                            .price
+                                                            .toString()
+                                                            .replaceAll(
+                                                                ",", ".");
+                                                        print(clickedItemPrice);
                                                         //calculateCost(
                                                         //global.myListId);
-                                                        /*showDialog(
+                                                        showDialog(
                                                             barrierDismissible:
                                                                 true,
                                                             context: context,
@@ -332,7 +339,7 @@ class _MyListScreenState extends State<MyListScreen> {
                                                                               BorderRadius.all(Radius.circular(20))),
                                                                       title:
                                                                           Text(
-                                                                        "Change cost",
+                                                                        "Change Cost",
                                                                         textAlign:
                                                                             TextAlign.center,
                                                                         style: TextStyle(
@@ -352,29 +359,111 @@ class _MyListScreenState extends State<MyListScreen> {
                                                                       contentPadding:
                                                                           const EdgeInsets.fromLTRB(
                                                                               0,
-                                                                              20,
+                                                                              10,
                                                                               0,
                                                                               0),
-                                                                      actionsPadding:
-                                                                          const EdgeInsets.fromLTRB(
-                                                                              0,
-                                                                              20,
-                                                                              20,
-                                                                              15),
                                                                       content: Column(
                                                                           mainAxisAlignment: MainAxisAlignment
                                                                               .center,
                                                                           mainAxisSize:
                                                                               MainAxisSize.min,
                                                                           children: [
-                                                                            TextField(
-                                                                              onChanged: (value) {},
-                                                                              //controller:
-                                                                              //_textFieldController,
-
-                                                                              keyboardType: TextInputType.number,
-                                                                              decoration: const InputDecoration(hintText: "New Cost"),
+                                                                            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                                                              Text(
+                                                                                "R ",
+                                                                                style: TextStyle(color: myColors("Purple"), fontSize: 16, fontWeight: FontWeight.w500),
+                                                                              ),
+                                                                              Container(
+                                                                                  width: 60,
+                                                                                  child: TextField(
+                                                                                    textAlign: TextAlign.center,
+                                                                                    controller: _priceTextEditingController,
+                                                                                    inputFormatters: <TextInputFormatter>[
+                                                                                      CurrencyTextInputFormatter(
+                                                                                        locale: 'en_ZA',
+                                                                                        decimalDigits: 2,
+                                                                                        symbol: '',
+                                                                                      ),
+                                                                                    ],
+                                                                                    maxLines: 1,
+                                                                                    keyboardType: TextInputType.number,
+                                                                                    style: TextStyle(
+                                                                                      color: myColors("Grey"),
+                                                                                      fontSize: 16,
+                                                                                      fontWeight: FontWeight.w500,
+                                                                                    ),
+                                                                                    decoration: InputDecoration(
+                                                                                      //errorText: "hi",
+                                                                                      errorStyle: TextStyle(color: myColors("Grey")),
+                                                                                      hintText: clickedItemPrice,
+                                                                                      focusedErrorBorder: UnderlineInputBorder(
+                                                                                        borderSide: BorderSide(color: myColors("Grey"), width: 1),
+                                                                                      ),
+                                                                                      errorBorder: UnderlineInputBorder(
+                                                                                        borderSide: BorderSide(color: myColors("Purple"), width: 1),
+                                                                                      ),
+                                                                                      enabledBorder: UnderlineInputBorder(
+                                                                                        borderSide: BorderSide(color: myColors("Purple"), width: 1),
+                                                                                      ),
+                                                                                      focusedBorder: UnderlineInputBorder(
+                                                                                        borderSide: BorderSide(color: myColors("Grey"), width: 1),
+                                                                                      ),
+                                                                                      hintStyle: TextStyle(color: myColors("FiftyGrey"), fontSize: 16, fontWeight: FontWeight.w500),
+                                                                                    ),
+                                                                                  ))
+                                                                            ]),
+                                                                            const SizedBox(height: 15),
+                                                                            Row(
+                                                                              mainAxisAlignment: MainAxisAlignment.end,
+                                                                              children: [
+                                                                                TextButton(
+                                                                                  onPressed: () {
+                                                                                    Navigator.of(ctx).pop();
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    decoration: BoxDecoration(color: myColors("Purple"), borderRadius: const BorderRadius.all(Radius.circular(20))),
+                                                                                    padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
+                                                                                    child: Text(
+                                                                                      "Cancel",
+                                                                                      style: TextStyle(
+                                                                                        color: myColors("White"),
+                                                                                        fontSize: 14,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                                TextButton(
+                                                                                  onPressed: () async {
+                                                                                    print(entry.id);
+                                                                                    await updateItemPrice(entry.id, _priceTextEditingController.text);
+                                                                                    setState(() {
+                                                                                      String temp = _priceTextEditingController.text;
+                                                                                      entry.price = temp.replaceAll(",", ".");
+                                                                                      global.myListCost;
+                                                                                    });
+                                                                                    _priceTextEditingController.text = "";
+                                                                                    Navigator.of(ctx).pop();
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    decoration: BoxDecoration(color: myColors("Purple"), borderRadius: const BorderRadius.all(Radius.circular(20))),
+                                                                                    padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
+                                                                                    child: Text(
+                                                                                      "Update",
+                                                                                      style: TextStyle(
+                                                                                        color: myColors("White"),
+                                                                                        fontSize: 14,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                                SizedBox(
+                                                                                  width: 20,
+                                                                                )
+                                                                              ],
                                                                             ),
+                                                                            SizedBox(
+                                                                              height: 15,
+                                                                            )
                                                                           ]),
 
                                                                       /*Text(
@@ -413,7 +502,7 @@ class _MyListScreenState extends State<MyListScreen> {
                                                                           ),
                                                                         ),
                                                                       ],*/
-                                                                    ));*/
+                                                                    ));
                                                       },
                                                       child: Text(
                                                         "R ${entry.price.toString()}",

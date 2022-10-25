@@ -84,6 +84,17 @@ Future<void> updateNoItems(String listId) async {
       .update({'no_items': FieldValue.increment(1)}); //increment no items
 }
 
+Future<void> updateItemPrice(String id, String price) async {
+  //print(price);
+  price = price.replaceAll(",", ".");
+  //print(price);
+  FirebaseFirestore.instance
+      .collection('list_item') //search list table
+      .doc(id) //get specific doc from list table
+      .update({'price': price}); //increment no items
+  await calculateCost(global.myListId);
+}
+
 Future<void> addListItem(
     {required String itemName, required String listID}) async {
   var collection = FirebaseFirestore.instance.collection('items');

@@ -106,7 +106,7 @@ Future<void> addListItem(
   }
 
   if (flag == false) {
-    final querySnap = await FirebaseFirestore.instance
+    /*final querySnap = await FirebaseFirestore.instance
         .collection(
             'items') //serch list table //filter to where type is personal
         .get();
@@ -119,7 +119,7 @@ Future<void> addListItem(
       myObjects.add(Item.fromJson(item)); //add to list of objects
     }
 
-    global.pantryitems = myObjects;
+    global.pantryitems = myObjects;*/
     var collection = FirebaseFirestore.instance.collection('items');
     var querySnapshot =
         await collection.where('name', isEqualTo: itemName).get();
@@ -139,7 +139,7 @@ Future<void> addListItem(
       'item_id': itemName, //item id is name of item
       'list_id': listID, //list id is the id of this list
       'to_buy': true,
-      'quantity': 1;//default to true
+      'quantity': 1, //default to true
       'price': price
     };
     await updateNoItems(listID); //update no items

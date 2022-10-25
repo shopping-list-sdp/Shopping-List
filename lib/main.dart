@@ -5,6 +5,7 @@ import 'package:shopping_list/screens/home_screen.dart';
 import 'package:shopping_list/screens/login_screen.dart';
 import 'package:shopping_list/screens/pantry_catagory_screen.dart';
 import 'package:shopping_list/screens/pantry_screen.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,12 +21,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'shopping_list',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: const LoginScreen(),
-    );
+        title: 'shopping_list',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: AnimatedSplashScreen(
+          splash: Image.asset('assets/essentials/logo.png'),
+          duration: 3000,
+          splashTransition: SplashTransition.fadeTransition,
+          backgroundColor: Colors.white,
+          nextScreen: const LoginScreen(),
+        ));
   }
 }

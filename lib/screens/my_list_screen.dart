@@ -173,53 +173,54 @@ class _MyListScreenState extends State<MyListScreen> {
                         itemCount: items.length < 5 ? items.length : 5,
                         itemBuilder: (context, index) {
                           return ListTile(
-                            //tileColor: myColors("TwentyGrey"),
-                            /*shape: RoundedRectangleBorder(
+                              //tileColor: myColors("TwentyGrey"),
+                              /*shape: RoundedRectangleBorder(
                               side: BorderSide(color: Colors.black, width: 1),
                               borderRadius: BorderRadius.circular(5),
                             ),
                             */
-                            leading: Transform.translate(
-                                offset: const Offset(-5, 0),
-                                child: Icon(
-                                  Icons.add,
-                                  color: myColors("Purple"),
-                                )),
-                            title: Transform.translate(
-                                offset: const Offset(-22, 0),
-                                child: Text(
-                                  items[index],
-                                  style: TextStyle(color: myColors("Grey")),
-                                )),
-                            onTap: () async {
-                              FocusManager.instance.primaryFocus?.unfocus();
-                              addTextEditingController.text = '';
-                              String item = items[index];
-                              bool flag = false;
-                              for (ListItem listitems in global.myList) {
-                                if (listitems.itemId.compareTo(item) == 0) {
-                                  flag = true;
-                                }
-                                if (flag) {
-                                  await updateQuantityOfItems(listitems.id, 1);
-                                  
-                                  setState(() {
-                                    items = [];
-                                    listitems.quantity += 1;
-                                  });
-                                  break;
-                                }
+                              leading: Transform.translate(
+                                  offset: const Offset(-5, 0),
+                                  child: Icon(
+                                    Icons.add,
+                                    color: myColors("Purple"),
+                                  )),
+                              title: Transform.translate(
+                                  offset: const Offset(-22, 0),
+                                  child: Text(
+                                    items[index],
+                                    style: TextStyle(color: myColors("Grey")),
+                                  )),
+                              onTap: () async {
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                addTextEditingController.text = '';
+                                String item = items[index];
+                                bool flag = false;
+                                for (ListItem listitems in global.myList) {
+                                  if (listitems.itemId.compareTo(item) == 0) {
+                                    flag = true;
+                                  }
+                                  if (flag) {
+                                    await updateQuantityOfItems(
+                                        listitems.id, 1);
 
-                              if (flag == false) {
-                                await addListItem(
-                                    itemName: item, listID: global.myListId);
-                                setState(() {
-                                  noItems = noItems + 1;
-                                });
-                              }
-                              Fluttertoast.showToast(msg: "Item Added");
-                            },
-                          );
+                                    setState(() {
+                                      items = [];
+                                      listitems.quantity += 1;
+                                    });
+                                    break;
+                                  }
+                                  if (flag == false) {
+                                    await addListItem(
+                                        itemName: item,
+                                        listID: global.myListId);
+                                    setState(() {
+                                      noItems = noItems + 1;
+                                    });
+                                  }
+                                  Fluttertoast.showToast(msg: "Item Added");
+                                }
+                              });
                         },
                       )),
                   Align(

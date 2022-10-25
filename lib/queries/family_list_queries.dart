@@ -78,6 +78,15 @@ Future<void> getFamilyListItems() async {
 
 Future<void> addFamilyListItem(
     {required String itemName, required String listID}) async {
+  var collection = FirebaseFirestore.instance.collection('items');
+  var querySnapshot = await collection.where('name', isEqualTo: itemName).get();
+  Map<String, dynamic> data = {};
+  for (var snapshot in querySnapshot.docs) {
+    data = snapshot.data();
+  }
+  var p = data['estimatedPrice'];
+  String price = p.toStringAsFixed(2);
+
   final docMyList = FirebaseFirestore.instance
       .collection('list_item')
       .doc(); //search list item table in db
@@ -86,7 +95,8 @@ Future<void> addFamilyListItem(
     'id': docMyList.id,
     'item_id': itemName, //item id is name of item
     'list_id': listID, //list id is the id of this list
-    'to_buy': true //default to true
+    'to_buy': true, //default to true
+    'price': price
   };
   await docMyList.set(json);
   await updateNoItems(listID); //update no items

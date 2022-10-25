@@ -376,6 +376,78 @@ AppBar appBar(BuildContext context) {
   );
 }
 
+PopupMenuButton menuButton(BuildContext context) {
+  return PopupMenuButton<int>(
+    onSelected: (result) {
+      if (result == 1) {
+      } else if (result == 2) {}
+    },
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(20.0),
+      ),
+    ),
+    itemBuilder: (context) => [
+      PopupMenuItem(
+          value: 1,
+          child: Row(
+            children: [
+              Text(
+                "1 Day",
+                style: TextStyle(
+                    color: myColors("Purple"),
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500),
+              )
+            ],
+          )),
+      PopupMenuItem(
+          value: 2,
+          child: Row(
+            children: [
+              Text(
+                "2 Day",
+                style: TextStyle(
+                    color: myColors("Purple"),
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500),
+              )
+            ],
+          )),
+      PopupMenuItem(
+          value: 2,
+          child: Row(
+            children: [
+              Text(
+                "3 Day",
+                style: TextStyle(
+                    color: myColors("Purple"),
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500),
+              )
+            ],
+          )),
+      PopupMenuItem(
+          value: 2,
+          child: Row(
+            children: [
+              Text(
+                "4 Day",
+                style: TextStyle(
+                    color: myColors("Purple"),
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500),
+              )
+            ],
+          )),
+    ],
+    padding: const EdgeInsets.fromLTRB(0, 5, 20, 0),
+    offset: const Offset(0, 80),
+    color: myColors("EightyWhite"),
+    elevation: 2,
+  );
+}
+
 Container listHeader(
     String col, String date, int noItems, bool isFamily, BuildContext context) {
   return Container(

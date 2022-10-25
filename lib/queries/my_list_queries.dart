@@ -85,6 +85,19 @@ Future<void> updateNoItems(String listId) async {
 
 Future<void> addListItem(
     {required String itemName, required String listID}) async {
+  final querySnap = await FirebaseFirestore.instance
+      .collection('items') //serch list table //filter to where type is personal
+      .get();
+
+  final Data =
+      querySnap.docs.map((doc) => doc.data()).toList(); //convert to list
+
+  var myObjects = [];
+  for (var item in Data) {
+    myObjects.add(Item.fromJson(item)); //add to list of objects
+  }
+
+  global.pantryitems = myObjects;
   var collection = FirebaseFirestore.instance.collection('items');
   var querySnapshot = await collection.where('name', isEqualTo: itemName).get();
   Map<String, dynamic> data = {};

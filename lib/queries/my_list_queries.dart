@@ -138,7 +138,8 @@ Future<void> addListItem(
       'id': docMyList.id,
       'item_id': itemName, //item id is name of item
       'list_id': listID, //list id is the id of this list
-      'to_buy': true, //default to true
+      'to_buy': true,
+      'quantity': 1;//default to true
       'price': price
     };
     await updateNoItems(listID); //update no items

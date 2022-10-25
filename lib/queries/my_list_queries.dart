@@ -4,6 +4,8 @@ import 'package:shopping_list/main.dart';
 import 'package:shopping_list/model/List.dart';
 import 'package:shopping_list/model/ListItem.dart';
 
+import '../model/Item.dart';
+
 Future<void> getMyListInfo() async {
   //get the list
   final querySnapshot = await FirebaseFirestore.instance
@@ -83,6 +85,15 @@ Future<void> updateNoItems(String listId) async {
 
 Future<void> addListItem(
     {required String itemName, required String listID}) async {
+  var collection = FirebaseFirestore.instance.collection('items');
+  var querySnapshot = await collection.where('name', isEqualTo: itemName).get();
+  Map<String, dynamic> data = {};
+  for (var snapshot in querySnapshot.docs) {
+    data = snapshot.data();
+  }
+  var p = data['estimatedPrice'];
+  String price = p.toStringAsFixed(2);
+
   final docMyList = FirebaseFirestore.instance
       .collection('list_item')
       .doc(); //search list item table in db
@@ -91,11 +102,13 @@ Future<void> addListItem(
     'id': docMyList.id,
     'item_id': itemName, //item id is name of item
     'list_id': listID, //list id is the id of this list
-    'to_buy': true //default to true
+    'to_buy': true, //default to true
+    'price': price
   };
   await updateNoItems(listID); //update no items
   await docMyList.set(json);
   await getMyListInfo(); //get list info again
+  await calculateCost(global.myListId);
 }
 
 Future<void> changeToBuy(bool newVal, String itemId) async {
@@ -116,6 +129,7 @@ Future<void> clearList(String listId) async {
   for (var doc in snapshot.docs) {
     await doc.reference
         .delete(); //delete where the items have this specific list id
+    global.myListCost = "0.00";
   }
 
   FirebaseFirestore.instance
@@ -133,4 +147,23 @@ Future<void> updateDate(String listId) async {
       .collection('list') //go to list tabale in db
       .doc(listId) //filter where list id is correct
       .update({'date': Timestamp.now()}); //update to current date
+}
+
+Future<void> calculateCost(String listId) async {
+  //set new date for list
+  final querySnapshot = await FirebaseFirestore.instance
+      .collection('list_item') //search item table in db
+      .where('list_id',
+          isEqualTo: listId) //filter where name is the same as the items name
+      //.where('to_buy', isEqualTo: false)
+      .get(); //get from db
+  double total = 0;
+  //print(querySnapshot.docs);
+  for (var doc in querySnapshot.docs) {
+    //print(doc);
+    String p = doc.get('price'); //get price
+    print(double.parse(p));
+    total += double.parse(p);
+  }
+  global.myListCost = total.toStringAsFixed(2);
 }

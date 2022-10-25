@@ -237,7 +237,7 @@ Container navBar(BuildContext context, String page) {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         IconButton(
-          enableFeedback: false,
+          enableFeedback: true,
           onPressed: () {
             Navigator.push(
               context,
@@ -249,9 +249,9 @@ Container navBar(BuildContext context, String page) {
           color: page == "myList" ? myColors("Purple") : myColors("FiftyGrey"),
         ),
         IconButton(
-          enableFeedback: false,
+          enableFeedback: true,
           onPressed: () {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                   builder: (context) => global.familyID.isEmpty
@@ -265,7 +265,7 @@ Container navBar(BuildContext context, String page) {
               page == "familyList" ? myColors("Purple") : myColors("FiftyGrey"),
         ),
         IconButton(
-          enableFeedback: false,
+          enableFeedback: true,
           onPressed: () {
             Navigator.push(
               context,

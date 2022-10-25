@@ -52,7 +52,7 @@ Future<void> joinFamily(String familyCode, BuildContext context) async {
   getFamilyListInfo();
 
   // ignore: use_build_context_synchronously
-  Navigator.push(
+  Navigator.pushReplacement(
     context,
     MaterialPageRoute(builder: (context) => const FamilyListScreen()),
   );
@@ -82,7 +82,7 @@ Future<void> createFamily(
   createFamilyList(familyID: global.familyID, userID: global.userId);
   getFamilyListInfo();
   // ignore: use_build_context_synchronously
-  Navigator.push(
+  Navigator.pushReplacement(
     context,
     MaterialPageRoute(builder: (context) => const FamilyListScreen()),
   );

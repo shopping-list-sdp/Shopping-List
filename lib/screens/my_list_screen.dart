@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/custom_icons_icons.dart';
 import 'package:shopping_list/global.dart' as global;
@@ -18,6 +19,7 @@ class MyListScreen extends StatefulWidget {
 
 class _MyListScreenState extends State<MyListScreen> {
   final addTextEditingController = TextEditingController();
+  final priceEditingController = TextEditingController();
   var duplicateItems = global.items;
   var items = [];
   @override
@@ -251,45 +253,114 @@ class _MyListScreenState extends State<MyListScreen> {
                                     ),
                                     for (ListItem entry in global.myList)
                                       if (entry.category == category)
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            const SizedBox(width: 15),
-                                            Checkbox(
-                                                checkColor: Colors.white,
-                                                fillColor: MaterialStateProperty
-                                                    .resolveWith<Color>(
-                                                        (Set<MaterialState>
-                                                            states) {
-                                                  return myColors("Purple");
-                                                }),
-                                                value: !entry.toBuy,
-                                                shape: const CircleBorder(),
-                                                onChanged: (bool? val) {
-                                                  changeToBuy(
-                                                      !entry.toBuy, entry.id);
-                                                  setState(() {
-                                                    entry.toBuy = !val!;
-                                                  });
-                                                }),
-                                            Text(
-                                                entry.itemId[0].toUpperCase() +
-                                                    entry.itemId.substring(
-                                                        1), //make first etter capital
-                                                style: TextStyle(
-                                                    color: myColors("Grey"),
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.normal))
-                                          ],
-                                        ),
+                                        Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  const SizedBox(width: 15),
+                                                  Checkbox(
+                                                      checkColor: Colors.white,
+                                                      fillColor:
+                                                          MaterialStateProperty
+                                                              .resolveWith<
+                                                                  Color>((Set<
+                                                                      MaterialState>
+                                                                  states) {
+                                                        return myColors(
+                                                            "Purple");
+                                                      }),
+                                                      value: !entry.toBuy,
+                                                      shape:
+                                                          const CircleBorder(),
+                                                      onChanged: (bool? val) {
+                                                        changeToBuy(
+                                                            !entry.toBuy,
+                                                            entry.id);
+                                                        setState(() {
+                                                          entry.toBuy = !val!;
+                                                        });
+                                                      }),
+                                                  Text(
+                                                      entry.itemId[0]
+                                                              .toUpperCase() +
+                                                          entry.itemId.substring(
+                                                              1), //make first etter capital
+                                                      style: TextStyle(
+                                                          color:
+                                                              myColors("Grey"),
+                                                          fontSize: 16,
+                                                          fontWeight: FontWeight
+                                                              .normal))
+                                                ],
+                                              ),
+                                              Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(width: 57),
+                                                    TextButton(
+                                                      style:
+                                                          TextButton.styleFrom(
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                        tapTargetSize:
+                                                            MaterialTapTargetSize
+                                                                .shrinkWrap,
+                                                        alignment:
+                                                            Alignment.topCenter,
+                                                      ),
+                                                      onPressed: () async {
+                                                        print("clicked");
+                                                        print(global.myListId);
+                                                        calculateCost(
+                                                            global.myListId);
+                                                      },
+                                                      child: Text(
+                                                        "R ${entry.price.toString()}",
+                                                        style: TextStyle(
+                                                            color: myColors(
+                                                                "Purple"),
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                      ),
+                                                    ),
+                                                    /*SvgPicture.asset(
+                                                      'assets/icons/edit.svg',
+                                                      color: myColors("Grey"),
+                                                    ),*/
+                                                  ])
+                                            ]),
                                     const SizedBox(
                                       height: 20,
-                                    )
+                                    ),
                                   ])
                     ],
                   ),
+                  global.myList.isEmpty
+                      ? Row()
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Total Estimated Cost: R" + global.myListCost,
+                              style: TextStyle(
+                                  color: myColors("Purple"),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                  const SizedBox(
+                    height: 30,
+                  )
                 ]),
               )),
             ]),

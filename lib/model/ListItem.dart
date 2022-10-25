@@ -4,6 +4,7 @@ class ListItem {
   late String listId; // list id of list item belongs to
   late bool toBuy; //false when item has not been marked off list
   String category = ""; //category item belongs to
+  late String price;
 
   ListItem(
       //required to force these paras
@@ -11,7 +12,8 @@ class ListItem {
       required this.itemId,
       required this.listId,
       required this.toBuy,
-      required this.category});
+      required this.category,
+      required this.price});
 
   ListItem.fromJson(Map<String, dynamic> json) {
     //to get item from db
@@ -19,6 +21,7 @@ class ListItem {
     itemId = json['item_id'];
     listId = json['list_id'];
     toBuy = json['to_buy'];
+    price = json['price'];
   }
 
   Map<String, dynamic> toJson() {
@@ -28,6 +31,7 @@ class ListItem {
     data['item_id'] = itemId;
     data['list_id'] = listId;
     data['to_buy'] = toBuy;
+    data['price'] = price;
     return data;
   }
 }

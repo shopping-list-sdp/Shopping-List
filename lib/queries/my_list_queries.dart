@@ -35,7 +35,7 @@ Future<void> getMyListInfo() async {
   //print("list date: " + global.myListDate.toString());
   //print("no items: " + global.myListNoItems.toString());
   await getMyListItems(); //get the items in the list
-  //await calculateCost(global.myListId);
+  await calculateCost(global.myListId);
 }
 
 Future<void> getMyListItems() async {

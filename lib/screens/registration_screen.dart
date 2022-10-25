@@ -423,7 +423,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     await getFamilyID(global.userId);
     await createMyList(uid: global.userId);
     getMyListInfo();
-    calculateCost(global.myListId);
     createMyPantry(uid: global.userId);
     createMySchedule(uid: global.userId);
     getMyScheduleInfo();

@@ -294,7 +294,7 @@ class _FamilyListScreenState extends State<FamilyListScreen> {
                   TextButton(
                       onPressed: () async {
                         await leaveFamily(context);
-                        print(global.familyID);
+                        //print(global.familyID);
                         setState(() {
                           //global.familyID = "";
                         });

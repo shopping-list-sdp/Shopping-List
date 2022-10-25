@@ -60,6 +60,7 @@ void resetGlobal() {
   familyID = '';
   myPantryId = '';
   pantryCategory = '';
+  myListCost = "";
   myListNoItems = 0;
   familyListNoItems = 0;
   myListDate = Timestamp.now();

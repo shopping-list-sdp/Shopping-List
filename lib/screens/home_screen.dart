@@ -79,248 +79,282 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              const Image(image: AssetImage('assets/homeText.png')),
-              const SizedBox(
-                height: 60,
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  InkWell(
-                    onTap: () {}, // Image tapped
-                    splashColor: Colors.white10, // Splash color over image
-                    child: Ink.image(
-                      fit: BoxFit.cover, // Fixes border issues
-                      width: 80,
-                      height: 80,
-                      image: const AssetImage(
-                        'assets/List.jpg',
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Image(image: AssetImage('assets/mylist.png'))
-                ]),
-                const SizedBox(
-                  width: 100,
-                ),
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  InkWell(
-                    onTap: () {}, // Image tapped
-                    splashColor: Colors.white10, // Splash color over image
-                    child: Ink.image(
-                      fit: BoxFit.cover, // Fixes border issues
-                      width: 80,
-                      height: 80,
-                      image: const AssetImage(
-                        'assets/Family.png',
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Image(image: AssetImage('assets/familylist.png'))
-                ])
-              ]),
-              const SizedBox(
-                height: 50,
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  InkWell(
-                    onTap: () {}, // Image tapped
-                    splashColor: Colors.white10, // Splash color over image
-                    child: Ink.image(
-                      fit: BoxFit.cover, // Fixes border issues
-                      width: 80,
-                      height: 80,
-                      image: const AssetImage(
-                        'assets/Concept_List.png',
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Image(image: AssetImage('assets/conceptlist.png'))
-                ]),
-                const SizedBox(
-                  width: 99,
-                ),
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const PantryScreen()));
-                    }, // Image tapped
-                    splashColor: Colors.white10, // Splash color over image
-                    child: Ink.image(
-                      fit: BoxFit.cover, // Fixes border issues
-                      width: 80,
-                      height: 80,
-                      image: const AssetImage(
-                        'assets/Pantry1.png',
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Image(image: AssetImage('assets/pantry.png'))
-                ])
-              ]),
-              const SizedBox(
-                height: 50,
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  InkWell(
-                    onTap: () {}, // Image tapped
-                    splashColor: Colors.white10, // Splash color over image
-                    child: Ink.image(
-                      fit: BoxFit.cover, // Fixes border issues
-                      width: 80,
-                      height: 80,
-                      image: const AssetImage(
-                        'assets/Expenses1.png',
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Image(image: AssetImage('assets/expenses.png'))
-                ]),
-                const SizedBox(
-                  width: 100,
-                ),
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  InkWell(
-                    onTap: () {}, // Image tapped
-                    splashColor: Colors.white10, // Splash color over image
-                    child: Ink.image(
-                      fit: BoxFit.cover, // Fixes border issues
-                      width: 80,
-                      height: 80,
-                      image: const AssetImage(
-                        'assets/Scheduled1.png',
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Image(image: AssetImage('assets/scheduled.png'))
-                ])
-              ]),
-            ],
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/essentials/background.png"),
+            fit: BoxFit.cover,
           ),
-        ), //BodyLayout(context, elements),
-        appBar: AppBar(
-          title: Column(children: [
-            const SizedBox(height: 40),
-            SizedBox(
-              height: 20,
-              width: 100,
-              child: Image.asset('assets/The_Pantry.png', fit: BoxFit.fill),
-            )
-          ]), //Image.asset('assets/The_Pantry.png'),
-          toolbarHeight: 80,
-          centerTitle: false,
-          shadowColor: Colors.black, //Color.fromARGB(255, 102, 102, 102),
-          elevation: 1.0,
-          bottomOpacity: 0.0,
-          backgroundColor: Colors.white,
-          actions: [
-            PopupMenuButton<int>(
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                    value: 1,
-                    child: Row(
-                      children: const [
-                        Icon(Icons.list_alt),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text("Create a List")
-                      ],
-                    )),
-                PopupMenuItem(
-                    value: 2,
-                    child: Row(
-                      children: const [
-                        Icon(Icons.folder),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text("Create a Folder")
-                      ],
-                    )),
-              ],
-              icon: Column(children: [
-                const SizedBox(height: 30),
-                SizedBox(
-                  child: Image.asset('assets/Setting.png'),
-                )
-              ]),
-              onSelected: (value) async {
-                final name;
-
-                if (value == 1) {
-                  name = await openDialogList();
-                  postDetailsToFirestore(name);
-                  if (name == null || name.isEmpty()) return;
-                } else if (value == 2) {
-                  name = await openDialogFolder();
-                  add(name);
-                  if (name == null || name.isEmpty()) return;
-                }
-              },
-              offset: const Offset(0, 100),
-              color: const Color.fromARGB(176, 42, 159, 255),
-              elevation: 2,
-            )
-          ],
         ),
-        bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black,
+        child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Image(image: AssetImage('assets/homeText.png')),
+                  const SizedBox(
+                    height: 60,
+                  ),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {}, // Image tapped
+                            splashColor:
+                                Colors.white10, // Splash color over image
+                            child: Ink.image(
+                              fit: BoxFit.cover, // Fixes border issues
+                              width: 80,
+                              height: 80,
+                              image: const AssetImage(
+                                'assets/List.jpg',
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Image(image: AssetImage('assets/mylist.png'))
+                        ]),
+                    const SizedBox(
+                      width: 100,
+                    ),
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {}, // Image tapped
+                            splashColor:
+                                Colors.white10, // Splash color over image
+                            child: Ink.image(
+                              fit: BoxFit.cover, // Fixes border issues
+                              width: 80,
+                              height: 80,
+                              image: const AssetImage(
+                                'assets/Family.png',
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Image(
+                              image: AssetImage('assets/familylist.png'))
+                        ])
+                  ]),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {}, // Image tapped
+                            splashColor:
+                                Colors.white10, // Splash color over image
+                            child: Ink.image(
+                              fit: BoxFit.cover, // Fixes border issues
+                              width: 80,
+                              height: 80,
+                              image: const AssetImage(
+                                'assets/Concept_List.png',
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Image(
+                              image: AssetImage('assets/conceptlist.png'))
+                        ]),
+                    const SizedBox(
+                      width: 99,
+                    ),
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const PantryScreen()));
+                            }, // Image tapped
+                            splashColor:
+                                Colors.white10, // Splash color over image
+                            child: Ink.image(
+                              fit: BoxFit.cover, // Fixes border issues
+                              width: 80,
+                              height: 80,
+                              image: const AssetImage(
+                                'assets/Pantry1.png',
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Image(image: AssetImage('assets/pantry.png'))
+                        ])
+                  ]),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {}, // Image tapped
+                            splashColor:
+                                Colors.white10, // Splash color over image
+                            child: Ink.image(
+                              fit: BoxFit.cover, // Fixes border issues
+                              width: 80,
+                              height: 80,
+                              image: const AssetImage(
+                                'assets/Expenses1.png',
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Image(image: AssetImage('assets/expenses.png'))
+                        ]),
+                    const SizedBox(
+                      width: 100,
+                    ),
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {}, // Image tapped
+                            splashColor:
+                                Colors.white10, // Splash color over image
+                            child: Ink.image(
+                              fit: BoxFit.cover, // Fixes border issues
+                              width: 80,
+                              height: 80,
+                              image: const AssetImage(
+                                'assets/Scheduled1.png',
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Image(image: AssetImage('assets/scheduled.png'))
+                        ])
+                  ]),
+                ],
               ),
-            ],
-          ),
-          child: BottomNavigationBar(
-            items: <BottomNavigationBarItem>[
-              //backgroundColor: Colors.white),
-              BottomNavigationBarItem(
-                  icon: Image.asset('assets/bottomBar/Frame.png'), label: ''),
-              //backgroundColor: Colors.white),
-              BottomNavigationBarItem(
-                  icon: Image.asset('assets/bottomBar/Frame-1.png'), label: ''),
-              //backgroundColor: Colors.white),
-              BottomNavigationBarItem(
-                  icon: Image.asset('assets/bottomBar/Frame-2.png'), label: ''),
-              //backgroundColor: Colors.white)
-            ],
-            elevation: 1.0,
-          ),
-        ));
+            ), //BodyLayout(context, elements),
+            appBar: AppBar(
+              title: Column(children: [
+                const SizedBox(height: 40),
+                SizedBox(
+                  height: 20,
+                  width: 100,
+                  child: Image.asset('assets/The_Pantry.png', fit: BoxFit.fill),
+                )
+              ]), //Image.asset('assets/The_Pantry.png'),
+              toolbarHeight: 80,
+              centerTitle: false,
+              shadowColor: Colors.black, //Color.fromARGB(255, 102, 102, 102),
+              elevation: 1.0,
+              bottomOpacity: 0.0,
+              backgroundColor: Colors.white,
+              actions: [
+                PopupMenuButton<int>(
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                        value: 1,
+                        child: Row(
+                          children: const [
+                            Icon(Icons.list_alt),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text("Create a List")
+                          ],
+                        )),
+                    PopupMenuItem(
+                        value: 2,
+                        child: Row(
+                          children: const [
+                            Icon(Icons.folder),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text("Create a Folder")
+                          ],
+                        )),
+                  ],
+                  icon: Column(children: [
+                    const SizedBox(height: 30),
+                    SizedBox(
+                      child: Image.asset('assets/Setting.png'),
+                    )
+                  ]),
+                  onSelected: (value) async {
+                    final name;
+
+                    if (value == 1) {
+                      name = await openDialogList();
+                      postDetailsToFirestore(name);
+                      if (name == null || name.isEmpty()) return;
+                    } else if (value == 2) {
+                      name = await openDialogFolder();
+                      add(name);
+                      if (name == null || name.isEmpty()) return;
+                    }
+                  },
+                  offset: const Offset(0, 100),
+                  color: const Color.fromARGB(176, 42, 159, 255),
+                  elevation: 2,
+                )
+              ],
+            ),
+            bottomNavigationBar: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black,
+                  ),
+                ],
+              ),
+              child: BottomNavigationBar(
+                items: <BottomNavigationBarItem>[
+                  //backgroundColor: Colors.white),
+                  BottomNavigationBarItem(
+                      icon: Image.asset('assets/bottomBar/Frame.png'),
+                      label: ''),
+                  //backgroundColor: Colors.white),
+                  BottomNavigationBarItem(
+                      icon: Image.asset('assets/bottomBar/Frame-1.png'),
+                      label: ''),
+                  //backgroundColor: Colors.white),
+                  BottomNavigationBarItem(
+                      icon: Image.asset('assets/bottomBar/Frame-2.png'),
+                      label: ''),
+                  //backgroundColor: Colors.white)
+                ],
+                elevation: 1.0,
+              ),
+            )));
   }
 
   Future<String?> openDialogList() => showDialog<String>(

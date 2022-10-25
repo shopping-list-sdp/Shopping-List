@@ -97,43 +97,55 @@ Future<void> updateItemPrice(String id, String price) async {
 
 Future<void> addListItem(
     {required String itemName, required String listID}) async {
-  final querySnap = await FirebaseFirestore.instance
-      .collection('items') //serch list table //filter to where type is personal
-      .get();
-
-  final Data =
-      querySnap.docs.map((doc) => doc.data()).toList(); //convert to list
-
-  var myObjects = [];
-  for (var item in Data) {
-    myObjects.add(Item.fromJson(item)); //add to list of objects
+  bool flag = false;
+  for (ListItem listitems in global.myList) {
+    if (listitems.itemId.compareTo(itemName) == 0) {
+      flag = true;
+      break;
+    }
   }
 
-  global.pantryitems = myObjects;
-  var collection = FirebaseFirestore.instance.collection('items');
-  var querySnapshot = await collection.where('name', isEqualTo: itemName).get();
-  Map<String, dynamic> data = {};
-  for (var snapshot in querySnapshot.docs) {
-    data = snapshot.data();
+  if (flag == false) {
+    final querySnap = await FirebaseFirestore.instance
+        .collection(
+            'items') //serch list table //filter to where type is personal
+        .get();
+
+    final Data =
+        querySnap.docs.map((doc) => doc.data()).toList(); //convert to list
+
+    var myObjects = [];
+    for (var item in Data) {
+      myObjects.add(Item.fromJson(item)); //add to list of objects
+    }
+
+    global.pantryitems = myObjects;
+    var collection = FirebaseFirestore.instance.collection('items');
+    var querySnapshot =
+        await collection.where('name', isEqualTo: itemName).get();
+    Map<String, dynamic> data = {};
+    for (var snapshot in querySnapshot.docs) {
+      data = snapshot.data();
+    }
+    var p = data['estimatedPrice'];
+    String price = p.toStringAsFixed(2);
+
+    final docMyList = FirebaseFirestore.instance
+        .collection('list_item')
+        .doc(); //search list item table in db
+
+    final json = {
+      'id': docMyList.id,
+      'item_id': itemName, //item id is name of item
+      'list_id': listID, //list id is the id of this list
+      'to_buy': true, //default to true
+      'price': price
+    };
+    await updateNoItems(listID); //update no items
+    await docMyList.set(json);
+    await getMyListInfo(); //get list info again
+    await calculateCost(global.myListId);
   }
-  var p = data['estimatedPrice'];
-  String price = p.toStringAsFixed(2);
-
-  final docMyList = FirebaseFirestore.instance
-      .collection('list_item')
-      .doc(); //search list item table in db
-
-  final json = {
-    'id': docMyList.id,
-    'item_id': itemName, //item id is name of item
-    'list_id': listID, //list id is the id of this list
-    'to_buy': true, //default to true
-    'price': price
-  };
-  await updateNoItems(listID); //update no items
-  await docMyList.set(json);
-  await getMyListInfo(); //get list info again
-  await calculateCost(global.myListId);
 }
 
 Future<void> changeToBuy(bool newVal, String itemId) async {

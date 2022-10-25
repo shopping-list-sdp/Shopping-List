@@ -70,8 +70,14 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
     return Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/essentials/background.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Scaffold(
-            backgroundColor: myColors("White"),
+            backgroundColor: Colors.transparent,
             body: ListView(children: <Widget>[
               SingleChildScrollView(
                   child: Padding(

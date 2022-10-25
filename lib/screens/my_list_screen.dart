@@ -194,14 +194,34 @@ class _MyListScreenState extends State<MyListScreen> {
                               FocusManager.instance.primaryFocus?.unfocus();
                               addTextEditingController.text = '';
                               String item = items[index];
-                              setState(() {
-                                items = [];
-                              });
-                              await addListItem(
-                                  itemName: item, listID: global.myListId);
-                              setState(() {
-                                noItems = noItems + 1;
-                              });
+                              bool flag = false;
+                              for (ListItem listitems in global.myList) {
+                                if (listitems.itemId.compareTo(item) == 0) {
+                                  flag = true;
+                                  break;
+                                }
+                                if (flag) {
+                                  await updateQuantity(listitems.id, 1);
+                                  setState(() {
+                                    items = [];
+                                    listitems.quantity += 1;
+                                  });
+                                  break;
+                                }
+                              }
+
+                              if (flag == false) {
+                                await addListItem(
+                                    itemName: item, listID: global.myListId);
+                                setState(() {
+                                  noItems = noItems + 1;
+                                });
+                              }
+                              //setState(() {
+                              //items = [];
+                              //});
+                              //await addListItem(
+                              //itemName: item, listID: global.myListId);
                               Fluttertoast.showToast(msg: "Item Added");
                             },
                           );

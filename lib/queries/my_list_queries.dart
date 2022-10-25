@@ -187,6 +187,15 @@ Future<void> updateDate(String listId) async {
       .update({'date': Timestamp.now()}); //update to current date
 }
 
+Future<void> updateQuantityOfItems(String itemId, int number) async {
+  //increment no items
+  FirebaseFirestore.instance
+      .collection('list_item') //search list table
+      .doc(itemId)
+      //.doc(itemId) //get specific doc from list table
+      .update({'quantity': FieldValue.increment(number)}); //increment no items
+}
+
 Future<void> calculateCost(String listId) async {
   //set new date for list
   final querySnapshot = await FirebaseFirestore.instance
@@ -204,4 +213,19 @@ Future<void> calculateCost(String listId) async {
     total += double.parse(p);
   }
   global.myListCost = total.toStringAsFixed(2);
+}
+
+Future<void> removeList(String itemId) async {
+  //clear entire list
+  var collection = FirebaseFirestore.instance
+      .collection('list_item'); //search list item collection
+  var snapshot = await collection
+      .where('id', isEqualTo: itemId)
+      .get(); //where list id is this list
+  for (var doc in snapshot.docs) {
+    await doc.reference
+        .delete(); //delete where the items have this specific list id
+  }
+
+  await getMyListInfo(); //get list info again
 }

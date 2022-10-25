@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/custom_icons_icons.dart';
 import 'package:shopping_list/global.dart' as global;
 import 'package:flutter/material.dart';
+import 'package:shopping_list/queries/pantry_queries.dart';
 import 'package:shopping_list/reusable_widgets/list_view_widgets.dart';
 import '../model/ListItem.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
@@ -68,7 +69,7 @@ class _MyListScreenState extends State<MyListScreen> {
               SingleChildScrollView(
                   child: Padding(
                 padding: EdgeInsets.fromLTRB(
-                    0, MediaQuery.of(context).size.height * 0.05, 0, 0),
+                    10, MediaQuery.of(context).size.height * 0.05, 0, 0),
                 child: Column(children: <Widget>[
                   Text("My List",
                       style: TextStyle(
@@ -297,7 +298,103 @@ class _MyListScreenState extends State<MyListScreen> {
                                                               myColors("Grey"),
                                                           fontSize: 16,
                                                           fontWeight: FontWeight
-                                                              .normal))
+                                                              .normal)),
+                                                  //const SizedBox(width: 180),
+                                                  Column(children: [
+                                                    Row(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  180,
+                                                                  5,
+                                                                  0,
+                                                                  10),
+                                                          child: Row(children: [
+                                                            InkWell(
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                'assets/icons/plus.svg',
+                                                              ),
+                                                              onTap: () {
+                                                                int number = 1;
+                                                                updateQuantityOfItems(
+                                                                    entry.id,
+                                                                    number);
+                                                                setState(() {
+                                                                  entry.quantity +=
+                                                                      number;
+                                                                });
+                                                              },
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 10),
+                                                            Text(
+                                                                entry.quantity
+                                                                    .toString(), //make first etter capital
+                                                                style: TextStyle(
+                                                                    color: myColors(
+                                                                        "Purple"),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontSize:
+                                                                        18)),
+                                                            const SizedBox(
+                                                                width: 10),
+                                                            InkWell(
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                'assets/icons/minus.svg',
+                                                              ),
+                                                              onTap: () async {
+                                                                if (entry
+                                                                        .quantity >
+                                                                    1) {
+                                                                  int number =
+                                                                      -1;
+                                                                  updateQuantityOfItems(
+                                                                      entry.id,
+                                                                      number);
+                                                                  setState(() {
+                                                                    entry.quantity +=
+                                                                        number;
+                                                                  });
+                                                                } else if (entry
+                                                                        .quantity ==
+                                                                    1) {
+                                                                  //print("Q = " +
+                                                                  //entry.quantity.toString());
+                                                                  await removeList(
+                                                                      entry.id);
+                                                                  setState(() {
+                                                                    entry.quantity =
+                                                                        0;
+                                                                  });
+                                                                  /*updateQuantityItems(
+                                                    entry.id, 0);*/
+                                                                  addPantryItem(
+                                                                      itemName:
+                                                                          entry
+                                                                              .itemId,
+                                                                      pantryID:
+                                                                          global
+                                                                              .myPantryId);
+                                                                  Fluttertoast
+                                                                      .showToast(
+                                                                          msg:
+                                                                              "Item Added to My List");
+                                                                }
+                                                              },
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 25),
+                                                          ]),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ]),
                                                 ],
                                               ),
                                               Row(

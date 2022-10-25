@@ -201,7 +201,7 @@ class _MyListScreenState extends State<MyListScreen> {
                                   flag = true;
                                 }
                                 if (flag) {
-                                  await updateQuantity(listitems.id, 1);
+                                  await updateQuantityOfItems(listitems.id, 1);
                                   
                                   setState(() {
                                     items = [];

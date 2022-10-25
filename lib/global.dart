@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shopping_list/model/ListItem.dart';
+import 'package:shopping_list/model/pantryItem.dart';
 
 String? userId = '';
 String myListId = '';
@@ -21,6 +22,8 @@ var myList = [];
 var familyList = [];
 var myPantry = [];
 var mySchedule = [];
+
+var pantryitems = [];
 
 final categories = [
   'bakery',

@@ -68,14 +68,6 @@ Future<dynamic> getMyPantryItems() async {
       } //update category of object in list
     }
   }
-
-  print("size = " + global.myPantry.length.toString());
-  for (pantryItem item in global.myPantry) {
-    print("name = " + item.itemId);
-    print("category = " + item.category);
-  }
-
-  //return true;
 }
 
 Future<void> updateQuantityItems(String itemId, int number) async {

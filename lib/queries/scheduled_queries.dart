@@ -118,7 +118,7 @@ Future<void> updateDate(String itemId) async {
 Future<void> clearSchedule(String scheduleId) async {
   //clear entire list
   var collection = FirebaseFirestore.instance
-      .collection('Scheduled_items'); //search list item collection
+      .collection('scheduled_items'); //search list item collection
   var snapshot = await collection
       .where('schedule_id', isEqualTo: scheduleId)
       .get(); //where list id is this list

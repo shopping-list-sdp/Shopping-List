@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shopping_list/model/Item.dart';
 import 'package:shopping_list/queries/my_list_queries.dart';
 import 'package:shopping_list/reusable_widgets/list_view_widgets.dart';
 import 'package:shopping_list/global.dart' as global;
@@ -25,18 +26,18 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
   final searchTextEditingController = TextEditingController();
   final addTextEditingController = TextEditingController();
 
-  var duplicateItems = global.items;
+  var duplicateItems = global.pantryitems;
   var items = [];
 
   void filterSearchResults(String query) {
     var dummySearchList = [];
-    dummySearchList.addAll(global.myPantry);
+    dummySearchList.addAll(global.pantryitems);
     if (query.isNotEmpty) {
       var dummyListData = [];
-      for (pantryItem item in dummySearchList) {
-        String id = item.itemId.toString();
+      for (Item item in dummySearchList) {
+        String id = item.name.toString();
         if (id.contains(query)) {
-          dummyListData.add(item.itemId);
+          dummyListData.add(item.name);
         }
       }
       setState(() {
@@ -204,8 +205,26 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                 )),
                             onTap: () async {
                               String item = items[index];
-                              await addPantryItem(
-                                  itemName: item, pantryID: global.myPantryId);
+                              bool flag = false;
+                              for (pantryItem pantryitems in global.myPantry) {
+                                if (pantryitems.itemId.compareTo(item) == 0) {
+                                  flag = true;
+                                }
+                                if (flag) {
+                                  await updateQuantityItems(pantryitems.id, 1);
+                                  setState(() {
+                                    items = [];
+                                    pantryitems.quantity += 1;
+                                  });
+                                  break;
+                                }
+                              }
+
+                              if (flag == false) {
+                                await addPantryItem(
+                                    itemName: item,
+                                    pantryID: global.myPantryId);
+                              }
                               FocusManager.instance.primaryFocus?.unfocus();
                               addTextEditingController.text = '';
                               setState(() {
@@ -283,59 +302,69 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                     Column(children: [
                                       Row(
                                         children: [
-                                          InkWell(
-                                            child: SvgPicture.asset(
-                                              'assets/icons/plus.svg',
-                                            ),
-                                            onTap: () {
-                                              int number = 1;
-                                              updateQuantityItems(
-                                                  entry.id, number);
-                                              setState(() {
-                                                entry.quantity += number;
-                                              });
-                                            },
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Text(
-                                              entry.quantity
-                                                  .toString(), //make first etter capital
-                                              style: TextStyle(
-                                                  color: myColors("Purple"),
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 18)),
-                                          const SizedBox(width: 10),
-                                          InkWell(
-                                            child: SvgPicture.asset(
-                                              'assets/icons/minus.svg',
-                                            ),
-                                            onTap: () async {
-                                              if (entry.quantity > 1) {
-                                                int number = -1;
-                                                updateQuantityItems(
-                                                    entry.id, number);
-                                                setState(() {
-                                                  entry.quantity += number;
-                                                });
-                                              } else if (entry.quantity == 1) {
-                                                //print("Q = " +
-                                                //entry.quantity.toString());
-                                                await removeFromList(entry.id);
-                                                setState(() {
-                                                  entry.quantity = 0;
-                                                });
-                                                /*updateQuantityItems(
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 0, 0, 15),
+                                            child: Row(children: [
+                                              InkWell(
+                                                child: SvgPicture.asset(
+                                                  'assets/icons/plus.svg',
+                                                ),
+                                                onTap: () {
+                                                  int number = 1;
+                                                  updateQuantityItems(
+                                                      entry.id, number);
+                                                  setState(() {
+                                                    entry.quantity += number;
+                                                  });
+                                                },
+                                              ),
+                                              const SizedBox(width: 10),
+                                              Text(
+                                                  entry.quantity
+                                                      .toString(), //make first etter capital
+                                                  style: TextStyle(
+                                                      color: myColors("Purple"),
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 18)),
+                                              const SizedBox(width: 10),
+                                              InkWell(
+                                                child: SvgPicture.asset(
+                                                  'assets/icons/minus.svg',
+                                                ),
+                                                onTap: () async {
+                                                  if (entry.quantity > 1) {
+                                                    int number = -1;
+                                                    updateQuantityItems(
+                                                        entry.id, number);
+                                                    setState(() {
+                                                      entry.quantity += number;
+                                                    });
+                                                  } else if (entry.quantity ==
+                                                      1) {
+                                                    //print("Q = " +
+                                                    //entry.quantity.toString());
+                                                    await removeFromList(
+                                                        entry.id);
+                                                    setState(() {
+                                                      entry.quantity = 0;
+                                                    });
+                                                    /*updateQuantityItems(
                                                     entry.id, 0);*/
-                                                addListItem(
-                                                    itemName: entry.itemId,
-                                                    listID: global.myListId);
-                                                Fluttertoast.showToast(
-                                                    msg:
-                                                        "Item Added to My List");
-                                              }
-                                            },
+                                                    addListItem(
+                                                        itemName: entry.itemId,
+                                                        listID:
+                                                            global.myListId);
+                                                    Fluttertoast.showToast(
+                                                        msg:
+                                                            "Item Added to My List");
+                                                  }
+                                                },
+                                              ),
+                                              const SizedBox(width: 25),
+                                            ]),
                                           ),
-                                          const SizedBox(width: 25),
                                         ],
                                       )
                                     ]),

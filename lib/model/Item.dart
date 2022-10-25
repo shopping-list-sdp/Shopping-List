@@ -6,8 +6,8 @@ class Item {
   //a list item has these properties
   late String category; //cat it belongs to
   late String name; //name
-  late String price; //price of item
-  late String shelfLife; //shelf life
+  late double price; //price of item
+  late int shelfLife; //shelf life
 
   Item(
       {required this.category, //required to force these paras

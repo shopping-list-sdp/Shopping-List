@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shopping_list/global.dart' as global;
 import 'package:shopping_list/main.dart';
+import 'package:shopping_list/model/Item.dart';
 import 'package:shopping_list/model/pantry.dart';
 import 'package:shopping_list/model/pantryItem.dart';
 
@@ -30,6 +31,7 @@ Future<dynamic> getMyPantryInfo() async {
   //print("list id: " + global.myListId);
   //print("list date: " + global.myListDate.toString());
   //print("no items: " + global.myListNoItems.toString());
+  //await getCategoryItems();
   await getMyPantryItems(); //get the items in the list
   return true;
 }
@@ -68,6 +70,25 @@ Future<dynamic> getMyPantryItems() async {
       } //update category of object in list
     }
   }
+
+  await getCategoryItems();
+}
+
+Future<dynamic> getCategoryItems() async {
+  final querySnapshot = await FirebaseFirestore.instance
+      .collection('items') //search item table in db)
+      .where('category', isEqualTo: global.pantryCategory)
+      .get(); //get from db
+
+  final data =
+      querySnapshot.docs.map((doc) => doc.data()).toList(); //convert to list
+
+  var myObjects = [];
+  for (var item in data) {
+    myObjects.add(Item.fromJson(item)); //add objects to list
+  }
+
+  global.pantryitems = myObjects;
 }
 
 Future<void> updateQuantityItems(String itemId, int number) async {

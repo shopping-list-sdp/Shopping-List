@@ -69,7 +69,7 @@ class _MyListScreenState extends State<MyListScreen> {
               SingleChildScrollView(
                   child: Padding(
                 padding: EdgeInsets.fromLTRB(
-                    10, MediaQuery.of(context).size.height * 0.05, 0, 0),
+                    0, MediaQuery.of(context).size.height * 0.05, 0, 0),
                 child: Column(children: <Widget>[
                   Text("My List",
                       style: TextStyle(
@@ -195,14 +195,29 @@ class _MyListScreenState extends State<MyListScreen> {
                               FocusManager.instance.primaryFocus?.unfocus();
                               addTextEditingController.text = '';
                               String item = items[index];
-                              setState(() {
-                                items = [];
-                              });
-                              await addListItem(
-                                  itemName: item, listID: global.myListId);
-                              setState(() {
-                                noItems = noItems + 1;
-                              });
+                              bool flag = false;
+                              for (ListItem listitems in global.myList) {
+                                if (listitems.itemId.compareTo(item) == 0) {
+                                  flag = true;
+                                  //break;
+                                }
+                                if (flag) {
+                                  await updateQuantityOfItems(listitems.id, 1);
+                                  setState(() {
+                                    items = [];
+                                    listitems.quantity += 1;
+                                  });
+                                  break;
+                                }
+                              }
+
+                              if (flag == false) {
+                                await addListItem(
+                                    itemName: item, listID: global.myListId);
+                                setState(() {
+                                  noItems = noItems + 1;
+                                });
+                              }
                               Fluttertoast.showToast(msg: "Item Added");
                             },
                           );
@@ -280,12 +295,17 @@ class _MyListScreenState extends State<MyListScreen> {
                                                       value: !entry.toBuy,
                                                       shape:
                                                           const CircleBorder(),
-                                                      onChanged: (bool? val) {
-                                                        changeToBuy(
+                                                      onChanged:
+                                                          (bool? val) async {
+                                                        await changeToBuy(
                                                             !entry.toBuy,
                                                             entry.id);
+                                                        await calculateCost(
+                                                            global.myListId);
                                                         setState(() {
                                                           entry.toBuy = !val!;
+                                                          global
+                                                              .myListMarkedCost;
                                                         });
                                                       }),
                                                   Text(
@@ -553,12 +573,12 @@ class _MyListScreenState extends State<MyListScreen> {
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                                SizedBox(
+                                                                                const SizedBox(
                                                                                   width: 20,
                                                                                 )
                                                                               ],
                                                                             ),
-                                                                            SizedBox(
+                                                                            const SizedBox(
                                                                               height: 15,
                                                                             )
                                                                           ]),
@@ -637,7 +657,21 @@ class _MyListScreenState extends State<MyListScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Total Estimated Cost: R" + global.myListCost,
+                              "All Items Total: R" + global.myListCost,
+                              style: TextStyle(
+                                  color: myColors("Purple"),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                  global.myList.isEmpty
+                      ? Row()
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Marked Items Total: R" + global.myListMarkedCost,
                               style: TextStyle(
                                   color: myColors("Purple"),
                                   fontSize: 16,

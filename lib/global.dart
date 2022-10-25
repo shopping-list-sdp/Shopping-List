@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shopping_list/model/ListItem.dart';
+import 'package:shopping_list/model/pantryItem.dart';
 
 String? userId = '';
 String myListId = '';
@@ -17,10 +18,13 @@ int familyListNoItems = 0;
 DateTime today = DateTime.now();
 Timestamp myListDate = Timestamp.now();
 Timestamp familyListDate = Timestamp.now();
+String myListCost = "";
 var myList = [];
 var familyList = [];
 var myPantry = [];
 var mySchedule = [];
+
+var pantryitems = [];
 
 final categories = [
   'bakery',
@@ -55,12 +59,18 @@ void resetGlobal() {
   familyListId = '';
   familyID = '';
   myPantryId = '';
+  myScheduleId = '';
   pantryCategory = '';
+  myListCost = "";
   myListNoItems = 0;
   familyListNoItems = 0;
+  today = DateTime.now();
   myListDate = Timestamp.now();
   familyListDate = Timestamp.now();
+  myListCost = "";
   myList = [];
   familyList = [];
   myPantry = [];
+  mySchedule = [];
+  pantryitems = [];
 }

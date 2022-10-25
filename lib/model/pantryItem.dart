@@ -30,4 +30,12 @@ class pantryItem {
     data['quantity'] = quantity;
     return data;
   }
+
+  bool Contains(String value) {
+    if (itemId.contains(value)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

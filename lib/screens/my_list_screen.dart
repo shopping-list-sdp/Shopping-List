@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping_list/custom_icons_icons.dart';
 import 'package:shopping_list/global.dart' as global;
 import 'package:flutter/material.dart';
 import 'package:shopping_list/reusable_widgets/list_view_widgets.dart';
 import '../model/ListItem.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import '../queries/my_list_queries.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 import '../utils/color_utils.dart';
@@ -18,6 +21,7 @@ class MyListScreen extends StatefulWidget {
 
 class _MyListScreenState extends State<MyListScreen> {
   final addTextEditingController = TextEditingController();
+  final _priceTextEditingController = TextEditingController();
   var duplicateItems = global.items;
   var items = [];
   @override
@@ -51,6 +55,7 @@ class _MyListScreenState extends State<MyListScreen> {
 
   int noItems = global.myListNoItems;
   Timestamp date = global.myListDate;
+  String clickedItemPrice = "";
 
   @override
   Widget build(BuildContext context) {
@@ -251,45 +256,301 @@ class _MyListScreenState extends State<MyListScreen> {
                                     ),
                                     for (ListItem entry in global.myList)
                                       if (entry.category == category)
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            const SizedBox(width: 15),
-                                            Checkbox(
-                                                checkColor: Colors.white,
-                                                fillColor: MaterialStateProperty
-                                                    .resolveWith<Color>(
-                                                        (Set<MaterialState>
-                                                            states) {
-                                                  return myColors("Purple");
-                                                }),
-                                                value: !entry.toBuy,
-                                                shape: const CircleBorder(),
-                                                onChanged: (bool? val) {
-                                                  changeToBuy(
-                                                      !entry.toBuy, entry.id);
-                                                  setState(() {
-                                                    entry.toBuy = !val!;
-                                                  });
-                                                }),
-                                            Text(
-                                                entry.itemId[0].toUpperCase() +
-                                                    entry.itemId.substring(
-                                                        1), //make first etter capital
-                                                style: TextStyle(
-                                                    color: myColors("Grey"),
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.normal))
-                                          ],
-                                        ),
+                                        Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  const SizedBox(width: 15),
+                                                  Checkbox(
+                                                      checkColor: Colors.white,
+                                                      fillColor:
+                                                          MaterialStateProperty
+                                                              .resolveWith<
+                                                                  Color>((Set<
+                                                                      MaterialState>
+                                                                  states) {
+                                                        return myColors(
+                                                            "Purple");
+                                                      }),
+                                                      value: !entry.toBuy,
+                                                      shape:
+                                                          const CircleBorder(),
+                                                      onChanged: (bool? val) {
+                                                        changeToBuy(
+                                                            !entry.toBuy,
+                                                            entry.id);
+                                                        setState(() {
+                                                          entry.toBuy = !val!;
+                                                        });
+                                                      }),
+                                                  Text(
+                                                      entry.itemId[0]
+                                                              .toUpperCase() +
+                                                          entry.itemId.substring(
+                                                              1), //make first etter capital
+                                                      style: TextStyle(
+                                                          color:
+                                                              myColors("Grey"),
+                                                          fontSize: 16,
+                                                          fontWeight: FontWeight
+                                                              .normal))
+                                                ],
+                                              ),
+                                              Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(width: 57),
+                                                    TextButton(
+                                                      style:
+                                                          TextButton.styleFrom(
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                        tapTargetSize:
+                                                            MaterialTapTargetSize
+                                                                .shrinkWrap,
+                                                        alignment:
+                                                            Alignment.topCenter,
+                                                      ),
+                                                      onPressed: () async {
+                                                        clickedItemPrice = entry
+                                                            .price
+                                                            .toString()
+                                                            .replaceAll(
+                                                                ",", ".");
+                                                        print(clickedItemPrice);
+                                                        //calculateCost(
+                                                        //global.myListId);
+                                                        showDialog(
+                                                            barrierDismissible:
+                                                                true,
+                                                            context: context,
+                                                            builder:
+                                                                (ctx) =>
+                                                                    AlertDialog(
+                                                                      shape: const RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.all(Radius.circular(20))),
+                                                                      title:
+                                                                          Text(
+                                                                        "Change Cost",
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        style: TextStyle(
+                                                                            color: myColors(
+                                                                                "Purple"),
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.w500),
+                                                                      ),
+                                                                      titlePadding:
+                                                                          const EdgeInsets.fromLTRB(
+                                                                              0,
+                                                                              40,
+                                                                              0,
+                                                                              0),
+                                                                      contentPadding:
+                                                                          const EdgeInsets.fromLTRB(
+                                                                              0,
+                                                                              10,
+                                                                              0,
+                                                                              0),
+                                                                      content: Column(
+                                                                          mainAxisAlignment: MainAxisAlignment
+                                                                              .center,
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.min,
+                                                                          children: [
+                                                                            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                                                              Text(
+                                                                                "R ",
+                                                                                style: TextStyle(color: myColors("Purple"), fontSize: 16, fontWeight: FontWeight.w500),
+                                                                              ),
+                                                                              Container(
+                                                                                  width: 60,
+                                                                                  child: TextField(
+                                                                                    textAlign: TextAlign.center,
+                                                                                    controller: _priceTextEditingController,
+                                                                                    inputFormatters: <TextInputFormatter>[
+                                                                                      CurrencyTextInputFormatter(
+                                                                                        locale: 'en_ZA',
+                                                                                        decimalDigits: 2,
+                                                                                        symbol: '',
+                                                                                      ),
+                                                                                    ],
+                                                                                    maxLines: 1,
+                                                                                    keyboardType: TextInputType.number,
+                                                                                    style: TextStyle(
+                                                                                      color: myColors("Grey"),
+                                                                                      fontSize: 16,
+                                                                                      fontWeight: FontWeight.w500,
+                                                                                    ),
+                                                                                    decoration: InputDecoration(
+                                                                                      //errorText: "hi",
+                                                                                      errorStyle: TextStyle(color: myColors("Grey")),
+                                                                                      hintText: clickedItemPrice,
+                                                                                      focusedErrorBorder: UnderlineInputBorder(
+                                                                                        borderSide: BorderSide(color: myColors("Grey"), width: 1),
+                                                                                      ),
+                                                                                      errorBorder: UnderlineInputBorder(
+                                                                                        borderSide: BorderSide(color: myColors("Purple"), width: 1),
+                                                                                      ),
+                                                                                      enabledBorder: UnderlineInputBorder(
+                                                                                        borderSide: BorderSide(color: myColors("Purple"), width: 1),
+                                                                                      ),
+                                                                                      focusedBorder: UnderlineInputBorder(
+                                                                                        borderSide: BorderSide(color: myColors("Grey"), width: 1),
+                                                                                      ),
+                                                                                      hintStyle: TextStyle(color: myColors("FiftyGrey"), fontSize: 16, fontWeight: FontWeight.w500),
+                                                                                    ),
+                                                                                  ))
+                                                                            ]),
+                                                                            const SizedBox(height: 15),
+                                                                            Row(
+                                                                              mainAxisAlignment: MainAxisAlignment.end,
+                                                                              children: [
+                                                                                TextButton(
+                                                                                  onPressed: () {
+                                                                                    Navigator.of(ctx).pop();
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    decoration: BoxDecoration(color: myColors("Purple"), borderRadius: const BorderRadius.all(Radius.circular(20))),
+                                                                                    padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
+                                                                                    child: Text(
+                                                                                      "Cancel",
+                                                                                      style: TextStyle(
+                                                                                        color: myColors("White"),
+                                                                                        fontSize: 14,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                                TextButton(
+                                                                                  onPressed: () async {
+                                                                                    print(entry.id);
+                                                                                    await updateItemPrice(entry.id, _priceTextEditingController.text);
+                                                                                    setState(() {
+                                                                                      String temp = _priceTextEditingController.text;
+                                                                                      entry.price = temp.replaceAll(",", ".");
+                                                                                      global.myListCost;
+                                                                                    });
+                                                                                    _priceTextEditingController.text = "";
+                                                                                    Navigator.of(ctx).pop();
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    decoration: BoxDecoration(color: myColors("Purple"), borderRadius: const BorderRadius.all(Radius.circular(20))),
+                                                                                    padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
+                                                                                    child: Text(
+                                                                                      "Update",
+                                                                                      style: TextStyle(
+                                                                                        color: myColors("White"),
+                                                                                        fontSize: 14,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                                SizedBox(
+                                                                                  width: 20,
+                                                                                )
+                                                                              ],
+                                                                            ),
+                                                                            SizedBox(
+                                                                              height: 15,
+                                                                            )
+                                                                          ]),
+
+                                                                      /*Text(
+                                                                        "Use this code to share your list.",
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                myColors("Grey"),
+                                                                            fontSize: 16),
+                                                                      ),*/
+                                                                      /*actions: <
+                                                                          Widget>[
+                                                                        TextButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            Navigator.of(ctx).pop();
+                                                                          },
+                                                                          child:
+                                                                              Container(
+                                                                            decoration:
+                                                                                BoxDecoration(color: myColors("Purple"), borderRadius: const BorderRadius.all(Radius.circular(20))),
+                                                                            padding: const EdgeInsets.fromLTRB(
+                                                                                14,
+                                                                                10,
+                                                                                14,
+                                                                                10),
+                                                                            child:
+                                                                                Text(
+                                                                              "Update",
+                                                                              style: TextStyle(
+                                                                                color: myColors("White"),
+                                                                                fontSize: 14,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ],*/
+                                                                    ));
+                                                      },
+                                                      child: Text(
+                                                        "R ${entry.price.toString()}",
+                                                        style: TextStyle(
+                                                            color: myColors(
+                                                                "Purple"),
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                      ),
+                                                    ),
+                                                    SvgPicture.asset(
+                                                      'assets/icons/edit.svg',
+                                                      height: 14,
+                                                      width: 14,
+                                                      color: myColors("Grey"),
+                                                    ),
+                                                    /*Icon(
+                                                      Icons.edit,
+                                                      color: myColors("Purple"),
+                                                      size: 17,
+                                                    ),*/
+                                                  ])
+                                            ]),
                                     const SizedBox(
                                       height: 20,
-                                    )
+                                    ),
                                   ])
                     ],
                   ),
+                  global.myList.isEmpty
+                      ? Row()
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Total Estimated Cost: R" + global.myListCost,
+                              style: TextStyle(
+                                  color: myColors("Purple"),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                  const SizedBox(
+                    height: 30,
+                  )
                 ]),
               )),
             ]),

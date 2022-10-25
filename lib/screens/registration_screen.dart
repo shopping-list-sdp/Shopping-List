@@ -421,7 +421,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     Fluttertoast.showToast(msg: "Account created successfully :) ");
     global.userId = user.uid;
     await getFamilyID(global.userId);
-    createMyList(uid: global.userId);
+    await createMyList(uid: global.userId);
     getMyListInfo();
     createMyPantry(uid: global.userId);
     createMySchedule(uid: global.userId);

@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:shopping_list/global.dart' as global;
 import 'package:shopping_list/main.dart';
 import 'package:shopping_list/model/List.dart';
 import 'package:shopping_list/model/ListItem.dart';
+import 'package:shopping_list/screens/join_family_screen.dart';
 
+import '../screens/dashboard_screen.dart';
 import 'my_list_queries.dart';
 
 Future<void> getFamilyListInfo() async {
@@ -39,7 +42,7 @@ Future<void> getFamilyListInfo() async {
 
 Future<void> getFamilyListItems() async {
   //get the items in the list
-  print(global.familyListId);
+  //print(global.familyListId);
   final querySnapshot = await FirebaseFirestore.instance
       .collection('list_item') //search table list item
       .where('list_id',
@@ -75,6 +78,15 @@ Future<void> getFamilyListItems() async {
 
 Future<void> addFamilyListItem(
     {required String itemName, required String listID}) async {
+  var collection = FirebaseFirestore.instance.collection('items');
+  var querySnapshot = await collection.where('name', isEqualTo: itemName).get();
+  Map<String, dynamic> data = {};
+  for (var snapshot in querySnapshot.docs) {
+    data = snapshot.data();
+  }
+  var p = data['estimatedPrice'];
+  String price = p.toStringAsFixed(2);
+
   final docMyList = FirebaseFirestore.instance
       .collection('list_item')
       .doc(); //search list item table in db
@@ -83,7 +95,8 @@ Future<void> addFamilyListItem(
     'id': docMyList.id,
     'item_id': itemName, //item id is name of item
     'list_id': listID, //list id is the id of this list
-    'to_buy': true //default to true
+    'to_buy': true, //default to true
+    'price': price
   };
   await docMyList.set(json);
   await updateNoItems(listID); //update no items
@@ -117,4 +130,17 @@ Future<void> updateFamilyDate(String listId) async {
       .collection('list') //go to list tabale in db
       .doc(listId) //filter where list id is correct
       .update({'date': Timestamp.now()}); //update to current date
+}
+
+Future<void> leaveFamily(BuildContext context) async {
+  //set new date for list
+  FirebaseFirestore.instance
+      .collection('users') //go to list tabale in db
+      .doc(global.userId) //filter where list id is correct
+      .update({'familyID': ""}); //update to empty
+  global.familyID = "";
+  Navigator.pushAndRemoveUntil(
+      (context),
+      MaterialPageRoute(builder: (context) => const DashboardScreen()),
+      (route) => false);
 }

@@ -39,5 +39,7 @@ myColors(String Colour) {
     return const Color.fromARGB(255, 255, 228, 126);
   } else if (Colour == "Green") {
     return const Color.fromARGB(255, 74, 222, 182);
+  } else if (Colour == "FiftyYellow") {
+    return const Color.fromARGB(204, 255, 228, 126);
   }
 }

@@ -29,13 +29,14 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
   var items = [];
 
   void filterSearchResults(String query) {
-    List<String> dummySearchList = [];
-    dummySearchList.addAll(global.items);
+    var dummySearchList = [];
+    dummySearchList.addAll(global.myPantry);
     if (query.isNotEmpty) {
-      List<String> dummyListData = [];
-      for (var item in dummySearchList) {
-        if (item.contains(query)) {
-          dummyListData.add(item);
+      var dummyListData = [];
+      for (pantryItem item in dummySearchList) {
+        String id = item.itemId.toString();
+        if (id.contains(query)) {
+          dummyListData.add(item.itemId);
         }
       }
       setState(() {

@@ -69,11 +69,11 @@ Future<dynamic> getMyPantryItems() async {
     }
   }
 
-  print("size = " + global.myPantry.length.toString());
-  for (pantryItem item in global.myPantry) {
-    print("name = " + item.itemId);
-    print("category = " + item.category);
-  }
+  //print("size = " + global.myPantry.length.toString());
+  //for (pantryItem item in global.myPantry) {
+  //print("name = " + item.itemId);
+  //print("category = " + item.category);
+  //}
 
   //return true;
 }

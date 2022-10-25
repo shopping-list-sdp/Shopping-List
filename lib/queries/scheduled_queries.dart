@@ -127,7 +127,7 @@ Future<void> clearSchedule(String scheduleId) async {
         .delete(); //delete where the items have this specific list id
   }
 
-  print("working");
+  //print("working");
 
   await getMyScheduleInfo(); //get list info again
 }

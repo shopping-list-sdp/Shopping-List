@@ -35,6 +35,7 @@ Future<void> getMyListInfo() async {
   //print("list date: " + global.myListDate.toString());
   //print("no items: " + global.myListNoItems.toString());
   await getMyListItems(); //get the items in the list
+  //await calculateCost(global.myListId);
 }
 
 Future<void> getMyListItems() async {
@@ -162,7 +163,7 @@ Future<void> calculateCost(String listId) async {
   for (var doc in querySnapshot.docs) {
     //print(doc);
     String p = doc.get('price'); //get price
-    print(double.parse(p));
+    //print(double.parse(p));
     total += double.parse(p);
   }
   global.myListCost = total.toStringAsFixed(2);

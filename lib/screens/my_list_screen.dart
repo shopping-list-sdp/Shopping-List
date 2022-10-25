@@ -318,8 +318,102 @@ class _MyListScreenState extends State<MyListScreen> {
                                                       onPressed: () async {
                                                         print("clicked");
                                                         print(global.myListId);
-                                                        calculateCost(
-                                                            global.myListId);
+                                                        //calculateCost(
+                                                        //global.myListId);
+                                                        /*showDialog(
+                                                            barrierDismissible:
+                                                                true,
+                                                            context: context,
+                                                            builder:
+                                                                (ctx) =>
+                                                                    AlertDialog(
+                                                                      shape: const RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.all(Radius.circular(20))),
+                                                                      title:
+                                                                          Text(
+                                                                        "Change cost",
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        style: TextStyle(
+                                                                            color: myColors(
+                                                                                "Purple"),
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.w500),
+                                                                      ),
+                                                                      titlePadding:
+                                                                          const EdgeInsets.fromLTRB(
+                                                                              0,
+                                                                              40,
+                                                                              0,
+                                                                              0),
+                                                                      contentPadding:
+                                                                          const EdgeInsets.fromLTRB(
+                                                                              0,
+                                                                              20,
+                                                                              0,
+                                                                              0),
+                                                                      actionsPadding:
+                                                                          const EdgeInsets.fromLTRB(
+                                                                              0,
+                                                                              20,
+                                                                              20,
+                                                                              15),
+                                                                      content: Column(
+                                                                          mainAxisAlignment: MainAxisAlignment
+                                                                              .center,
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.min,
+                                                                          children: [
+                                                                            TextField(
+                                                                              onChanged: (value) {},
+                                                                              //controller:
+                                                                              //_textFieldController,
+
+                                                                              keyboardType: TextInputType.number,
+                                                                              decoration: const InputDecoration(hintText: "New Cost"),
+                                                                            ),
+                                                                          ]),
+
+                                                                      /*Text(
+                                                                        "Use this code to share your list.",
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                myColors("Grey"),
+                                                                            fontSize: 16),
+                                                                      ),*/
+                                                                      /*actions: <
+                                                                          Widget>[
+                                                                        TextButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            Navigator.of(ctx).pop();
+                                                                          },
+                                                                          child:
+                                                                              Container(
+                                                                            decoration:
+                                                                                BoxDecoration(color: myColors("Purple"), borderRadius: const BorderRadius.all(Radius.circular(20))),
+                                                                            padding: const EdgeInsets.fromLTRB(
+                                                                                14,
+                                                                                10,
+                                                                                14,
+                                                                                10),
+                                                                            child:
+                                                                                Text(
+                                                                              "Update",
+                                                                              style: TextStyle(
+                                                                                color: myColors("White"),
+                                                                                fontSize: 14,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ],*/
+                                                                    ));*/
                                                       },
                                                       child: Text(
                                                         "R ${entry.price.toString()}",
@@ -332,9 +426,16 @@ class _MyListScreenState extends State<MyListScreen> {
                                                                     .w500),
                                                       ),
                                                     ),
-                                                    /*SvgPicture.asset(
+                                                    SvgPicture.asset(
                                                       'assets/icons/edit.svg',
+                                                      height: 14,
+                                                      width: 14,
                                                       color: myColors("Grey"),
+                                                    ),
+                                                    /*Icon(
+                                                      Icons.edit,
+                                                      color: myColors("Purple"),
+                                                      size: 17,
                                                     ),*/
                                                   ])
                                             ]),

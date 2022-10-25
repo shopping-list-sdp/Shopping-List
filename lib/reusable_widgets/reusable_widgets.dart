@@ -487,6 +487,7 @@ Container listHeader(
                 if (isFamily) {
                   showDialog(
                       context: context,
+                      barrierDismissible: false,
                       builder: (ctx) => AlertDialog(
                             shape: const RoundedRectangleBorder(
                                 borderRadius:

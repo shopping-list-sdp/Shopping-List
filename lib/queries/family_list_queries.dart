@@ -42,7 +42,7 @@ Future<void> getFamilyListInfo() async {
 
 Future<void> getFamilyListItems() async {
   //get the items in the list
-  print(global.familyListId);
+  //print(global.familyListId);
   final querySnapshot = await FirebaseFirestore.instance
       .collection('list_item') //search table list item
       .where('list_id',

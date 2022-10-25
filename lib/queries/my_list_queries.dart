@@ -35,6 +35,7 @@ Future<void> getMyListInfo() async {
   //print("list date: " + global.myListDate.toString());
   //print("no items: " + global.myListNoItems.toString());
   await getMyListItems(); //get the items in the list
+  await calculateCost(global.myListId);
 }
 
 Future<void> getMyListItems() async {
@@ -81,6 +82,17 @@ Future<void> updateNoItems(String listId) async {
       .collection('list') //search list table
       .doc(listId) //get specific doc from list table
       .update({'no_items': FieldValue.increment(1)}); //increment no items
+}
+
+Future<void> updateItemPrice(String id, String price) async {
+  //print(price);
+  price = price.replaceAll(",", ".");
+  //print(price);
+  FirebaseFirestore.instance
+      .collection('list_item') //search list table
+      .doc(id) //get specific doc from list table
+      .update({'price': price}); //increment no items
+  await calculateCost(global.myListId);
 }
 
 Future<void> addListItem(
@@ -187,7 +199,7 @@ Future<void> calculateCost(String listId) async {
   for (var doc in querySnapshot.docs) {
     //print(doc);
     String p = doc.get('price'); //get price
-    print(double.parse(p));
+    //print(double.parse(p));
     total += double.parse(p);
   }
   global.myListCost = total.toStringAsFixed(2);

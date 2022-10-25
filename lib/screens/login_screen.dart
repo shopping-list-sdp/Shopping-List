@@ -241,9 +241,9 @@ class _LoginScreenState extends State<LoginScreen> {
             .then((uid) async => {
                   Fluttertoast.showToast(msg: "Login Successful"),
                   global.userId = uid.user?.uid,
+                  print(global.userId),
                   await getFamilyID(global.userId),
                   await getMyListInfo(),
-                  calculateCost(global.myListId),
                   getFamilyListInfo(),
                   getMyPantryInfo(),
                   getMyScheduleInfo(),

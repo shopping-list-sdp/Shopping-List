@@ -199,17 +199,16 @@ class _MyListScreenState extends State<MyListScreen> {
                               for (ListItem listitems in global.myList) {
                                 if (listitems.itemId.compareTo(item) == 0) {
                                   flag = true;
-                                  //break;
                                 }
                                 if (flag) {
-                                  await updateQuantityOfItems(listitems.id, 1);
+                                  await updateQuantity(listitems.id, 1);
+                                  
                                   setState(() {
                                     items = [];
                                     listitems.quantity += 1;
                                   });
                                   break;
                                 }
-                              }
 
                               if (flag == false) {
                                 await addListItem(

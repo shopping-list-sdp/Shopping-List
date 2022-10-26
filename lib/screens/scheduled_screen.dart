@@ -71,14 +71,14 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
     return Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
+        /*decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/essentials/background.png"),
             fit: BoxFit.cover,
           ),
-        ),
+        ),*/
         child: Scaffold(
-            backgroundColor: Colors.transparent,
+            backgroundColor: myColors("White"),
             body: ListView(children: <Widget>[
               SingleChildScrollView(
                   child: Padding(

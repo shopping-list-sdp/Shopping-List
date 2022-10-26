@@ -3,6 +3,7 @@ import 'package:shopping_list/global.dart' as global;
 import 'package:shopping_list/main.dart';
 import 'package:shopping_list/model/List.dart';
 import 'package:shopping_list/model/ListItem.dart';
+import 'package:shopping_list/queries/pantry_queries.dart';
 
 import '../model/Item.dart';
 
@@ -76,12 +77,12 @@ Future<void> getMyListItems() async {
   //print(global.myList);
 }
 
-Future<void> updateNoItems(String listId) async {
+Future<void> updateNoItems(String listId, int num) async {
   //increment no items
   FirebaseFirestore.instance
       .collection('list') //search list table
       .doc(listId) //get specific doc from list table
-      .update({'no_items': FieldValue.increment(1)}); //increment no items
+      .update({'no_items': FieldValue.increment(num)}); //increment no items
 }
 
 Future<void> updateItemPrice(String id, String price) async {
@@ -97,14 +98,13 @@ Future<void> updateItemPrice(String id, String price) async {
 
 Future<void> addListItem(
     {required String itemName, required String listID}) async {
-  
   final querySnap = await FirebaseFirestore.instance
       .collection('items') //serch list table //filter to where type is personal
       .get();
 
   final Data =
       querySnap.docs.map((doc) => doc.data()).toList(); //convert to list
-  
+
   var collection = FirebaseFirestore.instance.collection('items');
   var querySnapshot = await collection.where('name', isEqualTo: itemName).get();
   Map<String, dynamic> data = {};
@@ -126,7 +126,7 @@ Future<void> addListItem(
     'quantity': 1, //default to true
     'price': price
   };
-  await updateNoItems(listID); //update no items
+  await updateNoItems(listID, 1); //update no items
   await docMyList.set(json);
   await getMyListInfo(); //get list info again
   await calculateCost(global.myListId);
@@ -206,8 +206,27 @@ Future<void> calculateCost(String listId) async {
   global.myListCost = total.toStringAsFixed(2);
 }
 
+Future<void> addToPantry(String listId) async {
+  //set new date for list
+  final querySnapshot = await FirebaseFirestore.instance
+      .collection('list_item') //search item table in db
+      .where('list_id',
+          isEqualTo: listId) //filter where name is the same as the items name
+      //.where('to_buy', isEqualTo: false)
+      .get(); //get from db
+
+  for (var doc in querySnapshot.docs) {
+    if (doc.get('to_buy') == false) {
+      await addPantryItem(
+          itemName: doc.get('item_id'), pantryID: global.myPantryId);
+      await removeList(doc.get('id'));
+      updateNoItems(doc.get('id'), -1);
+    }
+  }
+}
+
 Future<void> removeList(String itemId) async {
-  //clear entire list
+  //clear entry from list
   var collection = FirebaseFirestore.instance
       .collection('list_item'); //search list item collection
   var snapshot = await collection

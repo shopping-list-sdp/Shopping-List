@@ -210,36 +210,58 @@ class _MyListScreenState extends State<MyListScreen> {
                                     });
                                     break;
                                   }
-                                  if (flag == false) {
-                                    await addListItem(
-                                        itemName: item,
-                                        listID: global.myListId);
-                                    setState(() {
-                                      noItems = noItems + 1;
-                                    });
-                                  }
-                                  Fluttertoast.showToast(msg: "Item Added");
                                 }
+                                if (flag == false) {
+                                  await addListItem(
+                                      itemName: item, listID: global.myListId);
+                                  setState(() {
+                                    noItems = noItems + 1;
+                                  });
+                                }
+                                Fluttertoast.showToast(msg: "Item Added");
                               });
                         },
                       )),
-                  Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                          child: Text(
-                            "Clear List     ",
-                            style: TextStyle(
-                                color: myColors("Purple"),
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal),
-                          ),
-                          onPressed: () async {
-                            await clearList(global.myListId);
-                            setState(() {
-                              date = Timestamp.now();
-                              noItems = 0;
-                            });
-                          })),
+                  Row(
+                    children: [
+                      const SizedBox(width: 30),
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: TextButton(
+                              child: Text(
+                                "Add Marked to Pantry",
+                                style: TextStyle(
+                                    color: myColors("Purple"),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                              onPressed: () async {
+                                await addToPantry(global.myListId);
+                                setState(() {
+                                  items = [];
+                                  //noItems = noItems + 1;
+                                });
+                              })),
+                      const SizedBox(width: 135),
+                      Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                              child: Text(
+                                "Clear List",
+                                style: TextStyle(
+                                    color: myColors("Purple"),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                              onPressed: () async {
+                                await clearList(global.myListId);
+                                setState(() {
+                                  date = Timestamp.now();
+                                  noItems = 0;
+                                });
+                              })),
+                    ],
+                  ),
                   Column(
                     key: UniqueKey(),
                     children: [

@@ -100,7 +100,7 @@ Future<void> addFamilyListItem(
     'price': price
   };
   await docMyList.set(json);
-  await updateNoItems(listID); //update no items
+  await updateNoItems(listID, 1); //update no items
   await getFamilyListInfo(); //get list info again
 }
 

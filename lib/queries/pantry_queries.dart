@@ -104,18 +104,31 @@ Future<void> addPantryItem(
     //add item to list
     {required String itemName,
     required String pantryID}) async {
-  final docMyList = FirebaseFirestore.instance
-      .collection('pantry_item')
-      .doc(); //search list item table in db
+  bool flag = false;
+  for (pantryItem pantryitems in global.myPantry) {
+    if (pantryitems.itemId.compareTo(itemName) == 0) {
+      flag = true;
+    }
+    if (flag) {
+      await updateQuantityItems(pantryitems.id, 1);
+      break;
+    }
+  }
 
-  final json = {
-    'id': docMyList.id,
-    'item_id': itemName, //item id is name of item
-    'pantry_id': pantryID, //list id is the id of this list
-    'quantity': 1 //default to true
-  };
-  //await updateNoItems(pantryID, 1); //update no items
-  await docMyList.set(json);
+  if (flag == false) {
+    final docMyList = FirebaseFirestore.instance
+        .collection('pantry_item')
+        .doc(); //search list item table in db
+
+    final json = {
+      'id': docMyList.id,
+      'item_id': itemName, //item id is name of item
+      'pantry_id': pantryID, //list id is the id of this list
+      'quantity': 1 //default to true
+    };
+    //await updateNoItems(pantryID, 1); //update no items
+    await docMyList.set(json);
+  }
   await getMyPantryItems(); //get list info again
 }
 

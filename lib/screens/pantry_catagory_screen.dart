@@ -362,6 +362,8 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                                         itemName: entry.itemId,
                                                         listID:
                                                             global.myListId);
+                                                    updateNoItems(
+                                                        global.myListId, 1);
                                                     Fluttertoast.showToast(
                                                         msg:
                                                             "Item Added to My List");

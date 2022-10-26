@@ -86,10 +86,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     //add space
                     height: 30,
                   ),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(context, "Green", "Expenses",
-                        const MyListScreen()), //take you to spending page
-                  ]),
                 ]),
               )),
             ]),

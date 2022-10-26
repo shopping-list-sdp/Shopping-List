@@ -426,25 +426,21 @@ class _MyListScreenState extends State<MyListScreen> {
                                                                   setState(() {
                                                                     entry.quantity =
                                                                         0;
-                                                                    noItems--;
+                                                                    if (noItems >=
+                                                                        1) {
+                                                                      updateNoItems(
+                                                                          global
+                                                                              .myListId,
+                                                                          -1);
+                                                                      noItems--;
+                                                                    }
                                                                   });
-                                                                  updateNoItems(
-                                                                      global
-                                                                          .myListId,
-                                                                      -1);
                                                                   /*updateQuantityItems(
                                                     entry.id, 0);*/
-                                                                  addPantryItem(
-                                                                      itemName:
-                                                                          entry
-                                                                              .itemId,
-                                                                      pantryID:
-                                                                          global
-                                                                              .myPantryId);
                                                                   Fluttertoast
                                                                       .showToast(
                                                                           msg:
-                                                                              "Item Added to My List");
+                                                                              "Item removed from My List");
                                                                 }
                                                               },
                                                             ),

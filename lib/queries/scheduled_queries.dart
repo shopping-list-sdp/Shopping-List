@@ -60,6 +60,7 @@ Future<void> getMyScheduledItems() async {
     if (global.today.isAfter(dst.add(Duration(days: scheduleItem.days)))) {
       await updateDate(scheduleItem.id);
       addListItem(itemName: scheduleItem.itemId, listID: global.myListId);
+      updateNoItems(global.myListId, 1);
     }
 
     final querySnapshot = await FirebaseFirestore.instance

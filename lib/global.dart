@@ -20,6 +20,8 @@ Timestamp myListDate = Timestamp.now();
 Timestamp familyListDate = Timestamp.now();
 String myListCost = "";
 String myListMarkedCost = "";
+String myFamilyCost = "";
+String myFamilyMarkedCost = "";
 var myList = [];
 var familyList = [];
 var myPantry = [];
@@ -70,6 +72,8 @@ void resetGlobal() {
   familyListDate = Timestamp.now();
   myListCost = "";
   myListMarkedCost = "";
+  myFamilyCost = "";
+  myFamilyMarkedCost = "";
   myList = [];
   familyList = [];
   myPantry = [];

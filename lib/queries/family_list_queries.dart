@@ -104,6 +104,32 @@ Future<void> addFamilyListItem(
   await getFamilyListInfo(); //get list info again
 }
 
+Future<void> calculateFamilyCost(String listId) async {
+  //set new date for list
+  final querySnapshot = await FirebaseFirestore.instance
+      .collection('list_item') //search item table in db
+      .where('list_id',
+          isEqualTo: listId) //filter where name is the same as the items name
+      //.where('to_buy', isEqualTo: false)
+      .get(); //get from db
+  double total = 0;
+  double markedTotal = 0;
+  //print(querySnapshot.docs);
+  for (var doc in querySnapshot.docs) {
+    String p = doc.get('price'); //get price
+    int q = doc.get('quantity');
+    total += double.parse(p) * q;
+
+    if (doc.get('to_buy') == false) {
+      String p2 = doc.get('price'); //get price
+      int q2 = doc.get('quantity');
+      markedTotal += double.parse(p2) * q2;
+    }
+  }
+  global.myFamilyMarkedCost = markedTotal.toStringAsFixed(2);
+  global.myFamilyCost = total.toStringAsFixed(2);
+}
+
 Future<void> clearFamilyList(String listId) async {
   //clear entire list
   var collection = FirebaseFirestore.instance

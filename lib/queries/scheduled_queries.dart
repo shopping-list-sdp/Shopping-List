@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shopping_list/global.dart' as global;
+import 'package:shopping_list/model/ListItem.dart';
 import 'package:shopping_list/model/Schedule.dart';
 import 'package:shopping_list/model/ScheduleItem.dart';
 import 'package:shopping_list/queries/my_list_queries.dart';
@@ -59,7 +60,22 @@ Future<void> getMyScheduledItems() async {
 
     if (global.today.isAfter(dst.add(Duration(days: scheduleItem.days)))) {
       await updateDate(scheduleItem.id);
-      addListItem(itemName: scheduleItem.itemId, listID: global.myListId);
+      bool flag = false;
+      for (ListItem listitems in global.myList) {
+        if (listitems.itemId.compareTo(scheduleItem.itemId) == 0) {
+          flag = true;
+        }
+        if (flag) {
+          await updateQuantityOfItems(listitems.id, 1);
+          break;
+        }
+      }
+      if (flag == false) {
+        await addListItem(
+            itemName: scheduleItem.itemId, listID: global.myListId);
+        updateNoItems(global.myListId, 1);
+        getMyListItems();
+      }
     }
 
     final querySnapshot = await FirebaseFirestore.instance

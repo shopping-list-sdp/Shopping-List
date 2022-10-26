@@ -71,13 +71,13 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
-          image: DecorationImage(
+            /*image: DecorationImage(
             image: AssetImage("assets/essentials/background.png"),
             fit: BoxFit.cover,
-          ),
-        ),
+          ),*/
+            ),
         child: Scaffold(
-            backgroundColor: Colors.transparent,
+            backgroundColor: myColors("White"),
             body: ListView(children: <Widget>[
               SingleChildScrollView(
                   child: Padding(
@@ -362,6 +362,8 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                                         itemName: entry.itemId,
                                                         listID:
                                                             global.myListId);
+                                                    updateNoItems(
+                                                        global.myListId, 1);
                                                     Fluttertoast.showToast(
                                                         msg:
                                                             "Item Added to My List");

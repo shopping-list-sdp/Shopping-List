@@ -53,7 +53,7 @@ class _JoinFamilyScreenState extends State<JoinFamilyScreen> {
                 child: Column(children: <Widget>[
                   Text("Family List", //title of page
                       style: TextStyle(
-                          color: myColors("Red"),
+                          color: myColors("Green"),
                           fontSize: 30,
                           fontWeight: FontWeight.w500)),
                   const SizedBox(
@@ -77,7 +77,7 @@ class _JoinFamilyScreenState extends State<JoinFamilyScreen> {
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
-                        color: myColors("Red")),
+                        color: myColors("Green")),
                   ),
                   const SizedBox(
                     height: 40,

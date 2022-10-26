@@ -30,15 +30,17 @@ myColors(String Colour) {
   } else if (Colour == "TenGrey") {
     return const Color.fromARGB(255, 239, 239, 239);
   } else if (Colour == "Blue") {
-    return const Color.fromARGB(255, 103, 235, 250);
+    return const Color.fromARGB(255, 49, 219, 238);
   } else if (Colour == "FiftyBlue") {
-    return const Color.fromARGB(125, 103, 235, 250);
+    return const Color.fromARGB(125, 49, 219, 238);
   } else if (Colour == "Pink") {
     return const Color.fromARGB(255, 246, 165, 235);
   } else if (Colour == "Yellow") {
     return const Color.fromARGB(255, 255, 228, 126);
   } else if (Colour == "Green") {
-    return const Color.fromARGB(255, 74, 222, 182);
+    return const Color.fromARGB(255, 140, 235, 116);
+  } else if (Colour == "FiftyGreen") {
+    return const Color.fromARGB(125, 140, 235, 116);
   } else if (Colour == "FiftyYellow") {
     return const Color.fromARGB(204, 255, 228, 126);
   }

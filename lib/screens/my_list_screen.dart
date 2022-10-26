@@ -195,19 +195,22 @@ class _MyListScreenState extends State<MyListScreen> {
                                 FocusManager.instance.primaryFocus?.unfocus();
                                 addTextEditingController.text = '';
                                 String item = items[index];
+                                setState(() {
+                                  items = [];
+                                });
                                 bool flag = false;
                                 for (ListItem listitems in global.myList) {
                                   if (listitems.itemId.compareTo(item) == 0) {
                                     flag = true;
                                   }
                                   if (flag) {
+                                    setState(() {
+                                      //items = [];
+                                      listitems.quantity += 1;
+                                      noItems += 1;
+                                    });
                                     await updateQuantityOfItems(
                                         listitems.id, 1);
-
-                                    setState(() {
-                                      items = [];
-                                      listitems.quantity += 1;
-                                    });
                                     break;
                                   }
                                 }
@@ -367,7 +370,12 @@ class _MyListScreenState extends State<MyListScreen> {
                                                                 setState(() {
                                                                   entry.quantity +=
                                                                       number;
+                                                                  noItems++;
                                                                 });
+                                                                updateNoItems(
+                                                                    global
+                                                                        .myListId,
+                                                                    1);
                                                               },
                                                             ),
                                                             const SizedBox(
@@ -402,7 +410,12 @@ class _MyListScreenState extends State<MyListScreen> {
                                                                   setState(() {
                                                                     entry.quantity +=
                                                                         number;
+                                                                    noItems--;
                                                                   });
+                                                                  updateNoItems(
+                                                                      global
+                                                                          .myListId,
+                                                                      -1);
                                                                 } else if (entry
                                                                         .quantity ==
                                                                     1) {
@@ -413,20 +426,21 @@ class _MyListScreenState extends State<MyListScreen> {
                                                                   setState(() {
                                                                     entry.quantity =
                                                                         0;
+                                                                    if (noItems >=
+                                                                        1) {
+                                                                      updateNoItems(
+                                                                          global
+                                                                              .myListId,
+                                                                          -1);
+                                                                      noItems--;
+                                                                    }
                                                                   });
                                                                   /*updateQuantityItems(
                                                     entry.id, 0);*/
-                                                                  addPantryItem(
-                                                                      itemName:
-                                                                          entry
-                                                                              .itemId,
-                                                                      pantryID:
-                                                                          global
-                                                                              .myPantryId);
                                                                   Fluttertoast
                                                                       .showToast(
                                                                           msg:
-                                                                              "Item Added to My List");
+                                                                              "Item removed from My List");
                                                                 }
                                                               },
                                                             ),

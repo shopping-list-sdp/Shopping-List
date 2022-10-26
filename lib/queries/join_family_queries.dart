@@ -48,8 +48,8 @@ Future<void> joinFamily(String familyCode, BuildContext context) async {
     Fluttertoast.showToast(msg: "Joined Family");
   }
 
-  updateUserFamilyID(global.userId, global.familyID);
-  getFamilyListInfo();
+  await updateUserFamilyID(global.userId, global.familyID);
+  await getFamilyListInfo();
 
   // ignore: use_build_context_synchronously
   Navigator.pushReplacement(

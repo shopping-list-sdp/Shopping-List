@@ -68,14 +68,14 @@ class _FamilyListScreenState extends State<FamilyListScreen> {
                 child: Column(children: <Widget>[
                   Text("Family List",
                       style: TextStyle(
-                          color: myColors("Red"),
+                          color: myColors("Green"),
                           fontSize: 30,
                           fontWeight: FontWeight.w500)),
                   const SizedBox(
                     height: 45,
                   ),
                   listHeader(
-                      "Red",
+                      "Green",
                       '${date.toDate().day} - ${date.toDate().month} - ${date.toDate().year.toString()}',
                       noItems,
                       true,
@@ -100,7 +100,7 @@ class _FamilyListScreenState extends State<FamilyListScreen> {
                                   }
                                 },
                                 textInputAction: TextInputAction.done,
-                                cursorColor: myColors("Red"),
+                                cursorColor: myColors("Green"),
                                 style: TextStyle(
                                     color: myColors("Purple"),
                                     fontWeight: FontWeight.w500,
@@ -108,7 +108,7 @@ class _FamilyListScreenState extends State<FamilyListScreen> {
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(
                                     CustomIcons.search,
-                                    color: myColors("Red"),
+                                    color: myColors("Green"),
                                   ),
                                   suffixIcon: IconButton(
                                     onPressed: () {
@@ -126,7 +126,7 @@ class _FamilyListScreenState extends State<FamilyListScreen> {
                                   ),
                                   labelText: "Add Items",
                                   labelStyle: TextStyle(
-                                      color: myColors("FiftyRed"),
+                                      color: myColors("FiftyGreen"),
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500),
                                   filled: true,
@@ -242,7 +242,7 @@ class _FamilyListScreenState extends State<FamilyListScreen> {
                                                 category.substring(
                                                     1), //make first letter capital
                                             style: TextStyle(
-                                                color: myColors("Red"),
+                                                color: myColors("Green"),
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 18)),
                                       ],

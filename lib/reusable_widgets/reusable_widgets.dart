@@ -139,6 +139,70 @@ Container reusableButton(BuildContext context, String text, Function onTap) {
   );
 }
 
+Row dashboardTile(
+    BuildContext context, String colour, String iconName, Widget screen) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Stack(alignment: Alignment.centerLeft, children: [
+        InkWell(
+            onTap: () {
+              if (global.familyID == "" && iconName == "Family List") {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const JoinFamilyScreen()),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => screen),
+                );
+              }
+            },
+            child: SvgPicture.asset(
+              'assets/icons/tile$colour.svg',
+            )),
+        Row(
+          children: [
+            const SizedBox(
+              width: 30,
+            ),
+            SvgPicture.asset(
+              'assets/icons/$iconName.svg',
+              width: 40,
+              height: 40,
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            TextButton(
+                onPressed: (() {
+                  if (global.familyID == "" && iconName == "Family List") {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const JoinFamilyScreen()),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => screen),
+                    );
+                  }
+                }),
+                child: Text(iconName,
+                    style: TextStyle(
+                        color: myColors("White"),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500)))
+          ],
+        )
+      ])
+    ],
+  );
+}
+
 Column dashboardButtons(
     BuildContext context, String colour, String iconName, Widget screen) {
   return Column(
@@ -156,10 +220,17 @@ Column dashboardButtons(
               'assets/icons/$iconName.svg',
             ),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => screen),
-              );
+              if (global.familyID == "" && screen == FamilyListScreen()) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => JoinFamilyScreen()),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => screen),
+                );
+              }
             },
           ),
         ],

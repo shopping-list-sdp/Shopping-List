@@ -150,7 +150,8 @@ Row dashboardTile(
               if (global.familyID == "" && iconName == "Family List") {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => JoinFamilyScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const JoinFamilyScreen()),
                 );
               } else {
                 Navigator.push(
@@ -175,11 +176,26 @@ Row dashboardTile(
             const SizedBox(
               width: 20,
             ),
-            Text(iconName,
-                style: TextStyle(
-                    color: myColors("White"),
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500))
+            TextButton(
+                onPressed: (() {
+                  if (global.familyID == "" && iconName == "Family List") {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const JoinFamilyScreen()),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => screen),
+                    );
+                  }
+                }),
+                child: Text(iconName,
+                    style: TextStyle(
+                        color: myColors("White"),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500)))
           ],
         )
       ])

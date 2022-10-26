@@ -206,7 +206,7 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                               await addScheduleItem(
                                   itemName: item,
                                   scheduleID: global.myScheduleId,
-                                  days: 0,
+                                  days: 1,
                                   dateAdded: Timestamp.now());
                               setState(() {
                                 items = [];

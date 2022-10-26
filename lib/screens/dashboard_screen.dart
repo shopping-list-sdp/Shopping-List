@@ -54,38 +54,65 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   //allow page to scroll
                   child: Padding(
                 padding: EdgeInsets.fromLTRB(
-                    35, MediaQuery.of(context).size.height * 0.1, 35, 0),
+                    0, MediaQuery.of(context).size.height * 0.05, 0, 0),
                 child: Column(children: <Widget>[
-                  Text("Home", //title of page
+                  Text("Home",
                       style: TextStyle(
                           color: myColors("Purple"),
                           fontSize: 30,
                           fontWeight: FontWeight.w500)),
                   const SizedBox(
-                    height: 50,
+                    height: 10,
                   ),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(context, "Blue", "My List",
-                        const MyListScreen()), //my list screen
-                    dashboardButtons(context, "Red", "Family List",
-                        screen) //takes you to family list
-                  ]),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Material(
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const PantryScreen()),
+                                );
+                              },
+                              child: const Image(
+                                  image:
+                                      AssetImage('assets/images/stall.png')))),
+                      Column(children: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const PantryScreen()),
+                              );
+                            },
+                            child: Text("Pantry",
+                                style: TextStyle(
+                                    color: myColors("White"),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600))),
+                      ]),
+                    ],
+                  ),
                   const SizedBox(
-                    height: 30,
+                    height: 60,
                   ),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    dashboardButtons(
-                        context,
-                        "Purple",
-                        "Pantry", //takes you to pantry page
-                        const PantryScreen()),
-                    dashboardButtons(context, "Yellow", "Scheduled",
-                        const ScheduledScreen()),
-                  ]),
+                  dashboardTile(
+                      context, "Blue", "My List", const MyListScreen()),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  dashboardTile(context, "Green", "Family List",
+                      const FamilyListScreen()),
                   const SizedBox(
                     //add space
-                    height: 30,
+                    height: 20,
                   ),
+                  dashboardTile(
+                      context, "Yellow", "Scheduled", const ScheduledScreen()),
                 ]),
               )),
             ]),

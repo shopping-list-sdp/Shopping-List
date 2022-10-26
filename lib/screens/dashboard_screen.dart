@@ -48,7 +48,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
         child: Scaffold(
-            backgroundColor: myColors("White"),
+            backgroundColor: Colors.transparent,
             body: ListView(children: <Widget>[
               SingleChildScrollView(
                   //allow page to scroll

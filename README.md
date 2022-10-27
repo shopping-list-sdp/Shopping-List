@@ -1,6 +1,5 @@
 + **Test/Code Coverage** -  | ![Coverage 88.6%](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/cicirello/jacoco-badge-generator/main/tests/80.json) | - coverage is the measure of how much of the code in a project is tested.  
 ![Githubactions](https://api.travis-ci.org/pixl8/sticker.svg?branch=stable)
-![Coverage 82.0%](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/cicirello/jacoco-badge-generator/main/tests/82.json)
 
 # shopping_list
 

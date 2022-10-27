@@ -2,6 +2,8 @@
 ![Githubactions](https://api.travis-ci.org/pixl8/sticker.svg?branch=stable)
 ![Coverage 82.0%](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/cicirello/jacoco-badge-generator/main/tests/82.json)
 
+[![Actions Status](https://github.com/IbrahimAkoonjee/Shopping-List/workflows/CI/badge.svg)](https://github.com/IbrahimAkoonjee/Shopping-List/actions)
+
 # shopping_list
 
 A new Flutter project.

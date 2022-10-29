@@ -22,7 +22,7 @@ class _PantryScreenState extends State<PantryScreen> {
 
   void filterSearchResults(String query) {
     List<String> dummySearchList = [];
-    dummySearchList.addAll(global.items);
+    dummySearchList.addAll(global.categories);
     if (query.isNotEmpty) {
       List<String> dummyListData = [];
       for (var item in dummySearchList) {
@@ -34,6 +34,7 @@ class _PantryScreenState extends State<PantryScreen> {
         categories.clear();
         categories.addAll(dummyListData);
       });
+      //print(categories);
       return;
     } else {
       setState(() {
@@ -93,6 +94,7 @@ class _PantryScreenState extends State<PantryScreen> {
                               if (global.categories
                                   .contains(val.toLowerCase())) {
                                 global.pantryCategory = val.toLowerCase();
+                                print(global.pantryCategory);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -100,8 +102,8 @@ class _PantryScreenState extends State<PantryScreen> {
                                           PantryCatagoryScreen(catagory: val)),
                                 );
                               } else {
-                                Fluttertoast.showToast(
-                                    msg: "Category not found");
+                                addTextEditingController.text = '';
+                                categories = [];
                               }
                             },
                             textInputAction: TextInputAction.done,
@@ -140,13 +142,73 @@ class _PantryScreenState extends State<PantryScreen> {
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.never,
                               fillColor: myColors("TwentyGrey"),
-                              border: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                  borderSide: BorderSide(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: const Radius.circular(20),
+                                      topRight: const Radius.circular(20),
+                                      bottomLeft:
+                                          addTextEditingController.text == ''
+                                              ? const Radius.circular(20)
+                                              : const Radius.circular(0),
+                                      bottomRight:
+                                          addTextEditingController.text == ''
+                                              ? const Radius.circular(20)
+                                              : const Radius.circular(0)),
+                                  borderSide: const BorderSide(
                                       width: 0, style: BorderStyle.none)),
                             )),
                   ),
+                  Container(
+                      width: 325,
+                      decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20)),
+                          color: myColors("TwentyGrey")),
+                      //border: Border.all(color: Colors.blueAccent)),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount:
+                            categories.length < 5 ? categories.length : 5,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            //tileColor: myColors("TwentyGrey"),
+                            /*shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Colors.black, width: 1),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            */
+                            leading: Transform.translate(
+                                offset: const Offset(-5, 0),
+                                child: Icon(
+                                  Icons.add,
+                                  color: myColors("Purple"),
+                                )),
+                            title: Transform.translate(
+                                offset: const Offset(-22, 0),
+                                child: Text(
+                                  categories[index],
+                                  style: TextStyle(color: myColors("Grey")),
+                                )),
+                            onTap: () async {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              String item = categories[index];
+                              global.pantryCategory = item;
+                              setState(() {
+                                categories = [];
+                              });
+                              item = item[0].toUpperCase() + item.substring(1);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        PantryCatagoryScreen(catagory: item)),
+                              );
+                              addTextEditingController.text = '';
+                            },
+                          );
+                        },
+                      )),
                   const SizedBox(
                     height: 30,
                   ),

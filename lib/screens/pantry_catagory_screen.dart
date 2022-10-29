@@ -229,7 +229,8 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                               if (flag == false) {
                                 await addPantryItem(
                                     itemName: item,
-                                    pantryID: global.myPantryId);
+                                    pantryID: global.myPantryId,
+                                    quantity: 1);
                               }
                               FocusManager.instance.primaryFocus?.unfocus();
                               addTextEditingController.text = '';
@@ -342,15 +343,16 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                                 onTap: () async {
                                                   if (entry.quantity > 1) {
                                                     int number = -1;
-                                                    updateQuantityItems(
-                                                        entry.id, number);
                                                     setState(() {
                                                       entry.quantity += number;
                                                     });
+                                                    updateQuantityItems(
+                                                        entry.id, number);
                                                   } else if (entry.quantity ==
                                                       1) {
                                                     //print("Q = " +
                                                     //entry.quantity.toString());
+
                                                     await removeFromList(
                                                         entry.id);
                                                     setState(() {
@@ -358,15 +360,15 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                                     });
                                                     /*updateQuantityItems(
                                                     entry.id, 0);*/
+                                                    updateNoItems(
+                                                        global.myListId, 1);
                                                     addListItem(
                                                         itemName: entry.itemId,
                                                         listID:
                                                             global.myListId);
-                                                    updateNoItems(
-                                                        global.myListId, 1);
+
                                                     Fluttertoast.showToast(
-                                                        msg:
-                                                            "Item Added to My List");
+                                                        msg: "Item Added List");
                                                   }
                                                 },
                                               ),

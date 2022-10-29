@@ -38,6 +38,7 @@ Future<void> getFamilyListInfo() async {
   //print("list date: " + global.myListDate.toString());
   //print("no items: " + global.myListNoItems.toString());
   await getFamilyListItems(); //get the items in the list
+  await calculateFamilyCost(global.familyListId);
 }
 
 Future<void> getFamilyListItems() async {
@@ -102,6 +103,7 @@ Future<void> addFamilyListItem(
   await docMyList.set(json);
   await updateNoItems(listID, 1); //update no items
   await getFamilyListInfo(); //get list info again
+  await calculateFamilyCost(global.familyListId);
 }
 
 Future<void> calculateFamilyCost(String listId) async {
@@ -141,7 +143,8 @@ Future<void> clearFamilyList(String listId) async {
     await doc.reference
         .delete(); //delete where the items have this specific list id
   }
-
+  global.myFamilyCost = "0.00";
+  global.myFamilyMarkedCost = "0.00";
   FirebaseFirestore.instance
       .collection('list') //get from list table
       .doc(listId) //filter to list id
@@ -170,4 +173,22 @@ Future<void> leaveFamily(BuildContext context) async {
       (context),
       MaterialPageRoute(builder: (context) => const DashboardScreen()),
       (route) => false);
+}
+
+Future<void> removeFamilyList(String itemId) async {
+  //clear entry from list
+  var collection = FirebaseFirestore.instance
+      .collection('list_item'); //search list item collection
+  var snapshot = await collection
+      .where('id', isEqualTo: itemId)
+      .get(); //where list id is this list
+  for (var doc in snapshot.docs) {
+    await doc.reference
+        .delete(); //delete where the items have this specific list id
+  }
+
+  //await getMyListInfo(); //get list info again
+  await getFamilyListInfo(); //get list info again
+  //await calculateCost(global.myListId);
+  await calculateCost(global.familyListId);
 }

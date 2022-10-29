@@ -204,12 +204,12 @@ class _FamilyListScreenState extends State<FamilyListScreen> {
                                   flag = true;
                                 }
                                 if (flag) {
+                                  await updateQuantityOfItems(listitems.id, 1);
                                   setState(() {
                                     //items = [];
                                     listitems.quantity += 1;
                                     noItems += 1;
                                   });
-                                  await updateQuantityOfItems(listitems.id, 1);
                                   break;
                                 }
                               }
@@ -230,7 +230,7 @@ class _FamilyListScreenState extends State<FamilyListScreen> {
                       alignment: Alignment.centerRight,
                       child: TextButton(
                           child: Text(
-                            "Clear List     ",
+                            "Clear List          ",
                             style: TextStyle(
                                 color: myColors("Purple"),
                                 fontSize: 12,
@@ -281,154 +281,154 @@ class _FamilyListScreenState extends State<FamilyListScreen> {
                                             children: [
                                               Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
-                                                  const SizedBox(width: 15),
-                                                  Checkbox(
-                                                      checkColor: Colors.white,
-                                                      fillColor:
-                                                          MaterialStateProperty
-                                                              .resolveWith<
-                                                                  Color>((Set<
-                                                                      MaterialState>
-                                                                  states) {
-                                                        return myColors(
-                                                            "Purple");
-                                                      }),
-                                                      value: !entry.toBuy,
-                                                      shape:
-                                                          const CircleBorder(),
-                                                      onChanged:
-                                                          (bool? val) async {
-                                                        await changeToBuy(
-                                                            !entry.toBuy,
-                                                            entry.id);
-                                                        await calculateFamilyCost(
-                                                            global.familyID);
-                                                        setState(() {
-                                                          entry.toBuy = !val!;
-                                                          global
-                                                              .myFamilyMarkedCost;
-                                                        });
-                                                      }),
-                                                  Text(
-                                                      entry.itemId[0]
-                                                              .toUpperCase() +
-                                                          entry.itemId.substring(
-                                                              1), //make first etter capital
-                                                      style: TextStyle(
-                                                          color:
-                                                              myColors("Grey"),
-                                                          fontSize: 16,
-                                                          fontWeight: FontWeight
-                                                              .normal)),
-                                                  //const SizedBox(width: 180),
-                                                  Column(children: [
-                                                    Row(
+                                                  Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
                                                       children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  180,
-                                                                  5,
-                                                                  0,
-                                                                  10),
-                                                          child: Row(children: [
-                                                            InkWell(
-                                                              child: SvgPicture
-                                                                  .asset(
-                                                                'assets/icons/plus.svg',
-                                                              ),
-                                                              onTap: () {
-                                                                int number = 1;
-                                                                updateQuantityOfItems(
-                                                                    entry.id,
-                                                                    number);
-                                                                setState(() {
-                                                                  entry.quantity +=
-                                                                      number;
-                                                                  noItems++;
-                                                                });
-                                                                updateNoItems(
-                                                                    global
-                                                                        .familyID,
-                                                                    1);
-                                                              },
-                                                            ),
-                                                            const SizedBox(
-                                                                width: 10),
-                                                            Text(
-                                                                entry.quantity
-                                                                    .toString(), //make first etter capital
-                                                                style: TextStyle(
-                                                                    color: myColors(
-                                                                        "Purple"),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontSize:
-                                                                        18)),
-                                                            const SizedBox(
-                                                                width: 10),
-                                                            InkWell(
-                                                              child: SvgPicture
-                                                                  .asset(
-                                                                'assets/icons/minus.svg',
-                                                              ),
-                                                              onTap: () async {
-                                                                if (entry
-                                                                        .quantity >
+                                                        const SizedBox(
+                                                            width: 15),
+                                                        Checkbox(
+                                                            checkColor:
+                                                                Colors.white,
+                                                            fillColor: MaterialStateProperty
+                                                                .resolveWith<
+                                                                    Color>((Set<
+                                                                        MaterialState>
+                                                                    states) {
+                                                              return myColors(
+                                                                  "Purple");
+                                                            }),
+                                                            value: !entry.toBuy,
+                                                            shape:
+                                                                const CircleBorder(),
+                                                            onChanged: (bool?
+                                                                val) async {
+                                                              await changeToBuy(
+                                                                  !entry.toBuy,
+                                                                  entry.id);
+                                                              await calculateFamilyCost(
+                                                                  global
+                                                                      .familyListId);
+                                                              setState(() {
+                                                                entry.toBuy =
+                                                                    !val!;
+                                                                global
+                                                                    .myFamilyMarkedCost;
+                                                              });
+                                                            }),
+                                                        Text(
+                                                            entry.itemId[0]
+                                                                    .toUpperCase() +
+                                                                entry.itemId
+                                                                    .substring(
+                                                                        1), //make first etter capital
+                                                            style: TextStyle(
+                                                                color: myColors(
+                                                                    "Grey"),
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal))
+                                                      ]),
+                                                  //const SizedBox(width: 180),
+                                                  Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Row(children: [
+                                                        InkWell(
+                                                          child:
+                                                              SvgPicture.asset(
+                                                            'assets/icons/plus.svg',
+                                                          ),
+                                                          onTap: () async {
+                                                            int number = 1;
+                                                            await updateQuantityOfItems(
+                                                                entry.id,
+                                                                number);
+                                                            setState(() {
+                                                              entry.quantity +=
+                                                                  number;
+                                                              noItems++;
+                                                              global
+                                                                  .myFamilyCost;
+                                                            });
+                                                            updateNoItems(
+                                                                global.familyID,
+                                                                1);
+                                                          },
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 10),
+                                                        Text(
+                                                            entry.quantity
+                                                                .toString(), //make first etter capital
+                                                            style: TextStyle(
+                                                                color: myColors(
+                                                                    "Purple"),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontSize: 18)),
+                                                        const SizedBox(
+                                                            width: 10),
+                                                        InkWell(
+                                                          child:
+                                                              SvgPicture.asset(
+                                                            'assets/icons/minus.svg',
+                                                          ),
+                                                          onTap: () async {
+                                                            if (entry.quantity >
+                                                                1) {
+                                                              int number = -1;
+                                                              await updateQuantityOfItems(
+                                                                  entry.id,
+                                                                  number);
+                                                              setState(() {
+                                                                entry.quantity +=
+                                                                    number;
+                                                                noItems--;
+                                                                global
+                                                                    .myFamilyCost;
+                                                              });
+                                                              updateNoItems(
+                                                                  global
+                                                                      .familyID,
+                                                                  -1);
+                                                            } else if (entry
+                                                                    .quantity ==
+                                                                1) {
+                                                              //print("Q = " +
+                                                              //entry.quantity.toString());
+                                                              await removeFamilyList(
+                                                                  entry.id);
+                                                              setState(() {
+                                                                entry.quantity =
+                                                                    0;
+                                                                if (noItems >=
                                                                     1) {
-                                                                  int number =
-                                                                      -1;
-                                                                  updateQuantityOfItems(
-                                                                      entry.id,
-                                                                      number);
-                                                                  setState(() {
-                                                                    entry.quantity +=
-                                                                        number;
-                                                                    noItems--;
-                                                                  });
                                                                   updateNoItems(
                                                                       global
                                                                           .familyID,
                                                                       -1);
-                                                                } else if (entry
-                                                                        .quantity ==
-                                                                    1) {
-                                                                  //print("Q = " +
-                                                                  //entry.quantity.toString());
-                                                                  await removeList(
-                                                                      entry.id);
-                                                                  setState(() {
-                                                                    entry.quantity =
-                                                                        0;
-                                                                    if (noItems >=
-                                                                        1) {
-                                                                      updateNoItems(
-                                                                          global
-                                                                              .familyID,
-                                                                          -1);
-                                                                      noItems--;
-                                                                    }
-                                                                  });
-                                                                  /*updateQuantityItems(
-                                                    entry.id, 0);*/
-                                                                  Fluttertoast
-                                                                      .showToast(
-                                                                          msg:
-                                                                              "Item removed from My List");
+                                                                  noItems--;
                                                                 }
-                                                              },
-                                                            ),
-                                                            const SizedBox(
-                                                                width: 25),
-                                                          ]),
+                                                              });
+                                                              /*updateQuantityItems(
+                                                    entry.id, 0);*/
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          "Item removed from My List");
+                                                            }
+                                                          },
                                                         ),
-                                                      ],
-                                                    )
-                                                  ]),
+                                                        const SizedBox(
+                                                            width: 25),
+                                                      ])),
                                                 ],
                                               ),
                                               Row(
@@ -679,6 +679,9 @@ class _FamilyListScreenState extends State<FamilyListScreen> {
                             )
                           ],
                         ),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   global.familyList.isEmpty
                       ? Row()
                       : Row(
@@ -694,6 +697,9 @@ class _FamilyListScreenState extends State<FamilyListScreen> {
                             )
                           ],
                         ),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   TextButton(
                       onPressed: () async {
                         await leaveFamily(context);

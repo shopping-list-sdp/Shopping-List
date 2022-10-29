@@ -70,7 +70,6 @@ void resetGlobal() {
   today = DateTime.now();
   myListDate = Timestamp.now();
   familyListDate = Timestamp.now();
-  myListCost = "";
   myListMarkedCost = "";
   myFamilyCost = "";
   myFamilyMarkedCost = "";

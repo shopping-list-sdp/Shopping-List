@@ -6,6 +6,7 @@ import 'package:shopping_list/model/ListItem.dart';
 import 'package:shopping_list/queries/pantry_queries.dart';
 
 import '../model/Item.dart';
+import 'family_list_queries.dart';
 
 Future<void> getMyListInfo() async {
   //get the list
@@ -36,7 +37,7 @@ Future<void> getMyListInfo() async {
   //print("list date: " + global.myListDate.toString());
   //print("no items: " + global.myListNoItems.toString());
   await getMyListItems(); //get the items in the list
-  await calculateCost(global.myListId);
+  await calculateCost(global.familyListId);
 }
 
 Future<void> getMyListItems() async {
@@ -94,6 +95,7 @@ Future<void> updateItemPrice(String id, String price) async {
       .doc(id) //get specific doc from list table
       .update({'price': price}); //increment no items
   await calculateCost(global.myListId);
+  await calculateFamilyCost(global.familyListId);
 }
 
 Future<void> addListItem(
@@ -113,21 +115,32 @@ Future<void> addListItem(
   }
   var p = data['estimatedPrice'];
   String price = p.toStringAsFixed(2);
+  bool flag = false;
+  for (ListItem listitems in global.myList) {
+    if (listitems.itemId.compareTo(itemName) == 0) {
+      flag = true;
+    }
+    if (flag) {
+      await updateQuantityOfItems(listitems.id, 1);
+      break;
+    }
+  }
+  if (flag == false) {
+    final docMyList = FirebaseFirestore.instance
+        .collection('list_item')
+        .doc(); //search list item table in db
 
-  final docMyList = FirebaseFirestore.instance
-      .collection('list_item')
-      .doc(); //search list item table in db
-
-  final json = {
-    'id': docMyList.id,
-    'item_id': itemName, //item id is name of item
-    'list_id': listID, //list id is the id of this list
-    'to_buy': true,
-    'quantity': 1, //default to true
-    'price': price
-  };
-  await updateNoItems(listID, 1); //update no items
-  await docMyList.set(json);
+    final json = {
+      'id': docMyList.id,
+      'item_id': itemName, //item id is name of item
+      'list_id': listID, //list id is the id of this list
+      'to_buy': true,
+      'quantity': 1, //default to true
+      'price': price
+    };
+    await updateNoItems(listID, 1); //update no items
+    await docMyList.set(json);
+  }
   await getMyListInfo(); //get list info again
   await calculateCost(global.myListId);
 }
@@ -150,10 +163,9 @@ Future<void> clearList(String listId) async {
   for (var doc in snapshot.docs) {
     await doc.reference
         .delete(); //delete where the items have this specific list id
-    global.myListCost = "0.00";
-    global.myListMarkedCost = "0.00";
   }
-
+  global.myListCost = "0.00";
+  global.myListMarkedCost = "0.00";
   FirebaseFirestore.instance
       .collection('list') //get from list table
       .doc(listId) //filter to list id
@@ -178,6 +190,8 @@ Future<void> updateQuantityOfItems(String itemId, int number) async {
       .doc(itemId)
       //.doc(itemId) //get specific doc from list table
       .update({'quantity': FieldValue.increment(number)}); //increment no items
+  await calculateCost(global.myListId);
+  await calculateFamilyCost(global.familyListId);
 }
 
 Future<void> calculateCost(String listId) async {
@@ -218,9 +232,12 @@ Future<void> addToPantry(String listId) async {
   for (var doc in querySnapshot.docs) {
     if (doc.get('to_buy') == false) {
       await addPantryItem(
-          itemName: doc.get('item_id'), pantryID: global.myPantryId);
+          itemName: doc.get('item_id'),
+          pantryID: global.myPantryId,
+          quantity: doc.get('quantity'));
       await removeList(doc.get('id'));
-      updateNoItems(doc.get('id'), -1);
+      await updateNoItems(doc.get('id'), -1);
+      //print(doc.get('item_id'));
     }
   }
 }
@@ -238,4 +255,7 @@ Future<void> removeList(String itemId) async {
   }
 
   await getMyListInfo(); //get list info again
+  //await getFamilyListInfo(); //get list info again
+  await calculateCost(global.myListId);
+  //await calculateCost(global.familyListId);
 }

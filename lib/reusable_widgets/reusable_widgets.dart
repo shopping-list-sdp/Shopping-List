@@ -544,7 +544,8 @@ Container listHeader(
             flex: 6,
           ),
           Text(
-            noItems.toString(),
+            //noItems.toString(),
+            "",
             style: TextStyle(
                 color: myColors("White"),
                 fontSize: 12,

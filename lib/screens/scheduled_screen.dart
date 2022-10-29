@@ -23,6 +23,7 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
   final editDaysController = TextEditingController();
   var duplicateItems = global.items;
   var items = [];
+  String d = "";
   late FocusNode myFocusNode;
   @override
   void initState() {
@@ -93,6 +94,7 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                   const SizedBox(
                     height: 45,
                   ),
+                  listHeader("Yellow", "", 1, false, context),
                   const SizedBox(
                     height: 35,
                   ),
@@ -203,15 +205,15 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                               FocusManager.instance.primaryFocus?.unfocus();
                               addTextEditingController.text = '';
                               String item = items[index];
+
                               await addScheduleItem(
                                   itemName: item,
                                   scheduleID: global.myScheduleId,
-                                  days: 1,
+                                  days: 7,
                                   dateAdded: Timestamp.now());
                               setState(() {
                                 items = [];
                               });
-                              Fluttertoast.showToast(msg: "Item Added");
                             },
                           );
                         },
@@ -222,7 +224,7 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                         children: [
                           TextButton(
                               child: Text(
-                                "Clear List     ",
+                                "Clear List          ",
                                 style: TextStyle(
                                     color: myColors("Purple"),
                                     fontSize: 12,
@@ -278,248 +280,282 @@ class _ScheduledScreenState extends State<ScheduledScreen> {
                                       ],
                                     ),
                                     const SizedBox(
-                                      height: 0,
+                                      height: 10,
                                     ),
                                     for (ScheduleItem entry
                                         in global.mySchedule)
                                       if (entry.category == category)
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      50, 10, 0, 0),
-                                              child: Text(
-                                                  entry.itemId[0]
-                                                          .toUpperCase() +
-                                                      entry.itemId.substring(
-                                                          1), //make first etter capital
-                                                  //textAlign: TextAlign.start,
-                                                  style: TextStyle(
-                                                      color: myColors("Grey"),
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.normal)),
-                                            ),
-                                            //const SizedBox(width: 10),
-                                            PopupMenuButton<int>(
-                                              icon: const Icon(
-                                                  Icons.edit_note_sharp,
-                                                  color: Color.fromARGB(
-                                                      255, 139, 106, 255)),
-                                              onSelected: (result) async {
-                                                if (result == 1) {
-                                                  entry.days = 1;
-                                                } else if (result == 2) {
-                                                  entry.days = 2;
-                                                } else if (result == 3) {
-                                                  entry.days = 3;
-                                                } else if (result == 4) {
-                                                  entry.days = 4;
-                                                } else if (result == 5) {
-                                                  entry.days = 5;
-                                                } else if (result == 6) {
-                                                  entry.days = 6;
-                                                } else if (result == 7) {
-                                                  entry.days = 7;
-                                                } else if (result == 8) {
-                                                  entry.days = 14;
-                                                } else if (result == 9) {
-                                                  entry.days = 21;
-                                                } else if (result == 10) {
-                                                  entry.days = 28;
-                                                }
-                                                await changeFrequency(
-                                                    entry.days, entry.id);
-                                              },
-                                              constraints: const BoxConstraints(
-                                                  minWidth: 100,
-                                                  maxHeight: 100),
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(20.0),
+                                        Column(children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(children: [
+                                                const SizedBox(
+                                                  width: 30,
                                                 ),
+                                                Icon(
+                                                  Icons.circle,
+                                                  size: 10,
+                                                  color: myColors("Purple"),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          15, 0, 0, 0),
+                                                  child: Text(
+                                                      entry.itemId[0]
+                                                              .toUpperCase() +
+                                                          entry.itemId.substring(
+                                                              1), //make first etter capital
+                                                      //textAlign: TextAlign.start,
+                                                      style: TextStyle(
+                                                          color:
+                                                              myColors("Grey"),
+                                                          fontSize: 16,
+                                                          fontWeight: FontWeight
+                                                              .normal)),
+                                                )
+                                              ]),
+                                              //const SizedBox(width: 10),
+                                              PopupMenuButton<int>(
+                                                icon: Icon(
+                                                    Icons.edit_note_sharp,
+                                                    color: myColors("Purple")),
+                                                onSelected: (result) async {
+                                                  if (result == 1) {
+                                                    entry.days = 1;
+                                                  } else if (result == 2) {
+                                                    entry.days = 2;
+                                                  } else if (result == 3) {
+                                                    entry.days = 3;
+                                                  } else if (result == 4) {
+                                                    entry.days = 4;
+                                                  } else if (result == 5) {
+                                                    entry.days = 5;
+                                                  } else if (result == 6) {
+                                                    entry.days = 6;
+                                                  } else if (result == 7) {
+                                                    entry.days = 7;
+                                                  } else if (result == 8) {
+                                                    entry.days = 14;
+                                                  } else if (result == 9) {
+                                                    entry.days = 21;
+                                                  } else if (result == 10) {
+                                                    entry.days = 28;
+                                                  }
+                                                  await changeFrequency(
+                                                      entry.days, entry.id);
+                                                  Fluttertoast.showToast(
+                                                      msg: "Frequency Changed");
+                                                  setState(() {
+                                                    d = d;
+                                                  });
+                                                },
+                                                constraints:
+                                                    const BoxConstraints(
+                                                        minWidth: 120,
+                                                        maxHeight: 100),
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(20.0),
+                                                  ),
+                                                ),
+                                                itemBuilder: (context) => [
+                                                  PopupMenuItem(
+                                                      value: 1,
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            "1 Days",
+                                                            style: TextStyle(
+                                                                color: myColors(
+                                                                    "Purple"),
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          )
+                                                        ],
+                                                      )),
+                                                  PopupMenuItem(
+                                                      value: 2,
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            "2 Days",
+                                                            style: TextStyle(
+                                                                color: myColors(
+                                                                    "Purple"),
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          )
+                                                        ],
+                                                      )),
+                                                  PopupMenuItem(
+                                                      value: 3,
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            "3 Days",
+                                                            style: TextStyle(
+                                                                color: myColors(
+                                                                    "Purple"),
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          )
+                                                        ],
+                                                      )),
+                                                  PopupMenuItem(
+                                                      value: 4,
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            "4 Days",
+                                                            style: TextStyle(
+                                                                color: myColors(
+                                                                    "Purple"),
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          )
+                                                        ],
+                                                      )),
+                                                  PopupMenuItem(
+                                                      value: 5,
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            "5 Days",
+                                                            style: TextStyle(
+                                                                color: myColors(
+                                                                    "Purple"),
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          )
+                                                        ],
+                                                      )),
+                                                  PopupMenuItem(
+                                                      value: 6,
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            "6 Days",
+                                                            style: TextStyle(
+                                                                color: myColors(
+                                                                    "Purple"),
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          )
+                                                        ],
+                                                      )),
+                                                  PopupMenuItem(
+                                                      value: 7,
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            "1 Week",
+                                                            style: TextStyle(
+                                                                color: myColors(
+                                                                    "Purple"),
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          )
+                                                        ],
+                                                      )),
+                                                  PopupMenuItem(
+                                                      value: 8,
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            "2 Weeks",
+                                                            style: TextStyle(
+                                                                color: myColors(
+                                                                    "Purple"),
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          )
+                                                        ],
+                                                      )),
+                                                  PopupMenuItem(
+                                                      value: 9,
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            "3 Weeks",
+                                                            style: TextStyle(
+                                                                color: myColors(
+                                                                    "Purple"),
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          )
+                                                        ],
+                                                      )),
+                                                  PopupMenuItem(
+                                                      value: 10,
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            "4 Weeks",
+                                                            style: TextStyle(
+                                                                color: myColors(
+                                                                    "Purple"),
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          )
+                                                        ],
+                                                      )),
+                                                ],
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 0, 30, 0),
+                                                offset: const Offset(-30, 40),
+                                                color: myColors("EightyWhite"),
+                                                elevation: 2,
                                               ),
-                                              itemBuilder: (context) => [
-                                                PopupMenuItem(
-                                                    value: 1,
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          "1 Days",
-                                                          style: TextStyle(
-                                                              color: myColors(
-                                                                  "Purple"),
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        )
-                                                      ],
-                                                    )),
-                                                PopupMenuItem(
-                                                    value: 2,
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          "2 Days",
-                                                          style: TextStyle(
-                                                              color: myColors(
-                                                                  "Purple"),
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        )
-                                                      ],
-                                                    )),
-                                                PopupMenuItem(
-                                                    value: 3,
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          "3 Days",
-                                                          style: TextStyle(
-                                                              color: myColors(
-                                                                  "Purple"),
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        )
-                                                      ],
-                                                    )),
-                                                PopupMenuItem(
-                                                    value: 4,
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          "4 Days",
-                                                          style: TextStyle(
-                                                              color: myColors(
-                                                                  "Purple"),
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        )
-                                                      ],
-                                                    )),
-                                                PopupMenuItem(
-                                                    value: 5,
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          "5 Days",
-                                                          style: TextStyle(
-                                                              color: myColors(
-                                                                  "Purple"),
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        )
-                                                      ],
-                                                    )),
-                                                PopupMenuItem(
-                                                    value: 6,
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          "6 Days",
-                                                          style: TextStyle(
-                                                              color: myColors(
-                                                                  "Purple"),
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        )
-                                                      ],
-                                                    )),
-                                                PopupMenuItem(
-                                                    value: 7,
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          "1 Week",
-                                                          style: TextStyle(
-                                                              color: myColors(
-                                                                  "Purple"),
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        )
-                                                      ],
-                                                    )),
-                                                PopupMenuItem(
-                                                    value: 8,
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          "2 Weeks",
-                                                          style: TextStyle(
-                                                              color: myColors(
-                                                                  "Purple"),
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        )
-                                                      ],
-                                                    )),
-                                                PopupMenuItem(
-                                                    value: 9,
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          "3 Weeks",
-                                                          style: TextStyle(
-                                                              color: myColors(
-                                                                  "Purple"),
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        )
-                                                      ],
-                                                    )),
-                                                PopupMenuItem(
-                                                    value: 10,
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          "4 Weeks",
-                                                          style: TextStyle(
-                                                              color: myColors(
-                                                                  "Purple"),
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        )
-                                                      ],
-                                                    )),
-                                              ],
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      0, 5, 20, 0),
-                                              offset: const Offset(0, 40),
-                                              color: myColors("EightyWhite"),
-                                              elevation: 2,
-                                            ),
 
-                                            //const SizedBox(width: 180),
-                                            //SizedBox(
-                                            //height: 50,
-                                          ],
-                                        ),
+                                              //SizedBox(
+                                              //height: 50,
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              const SizedBox(
+                                                width: 55,
+                                              ),
+                                              Text(
+                                                d = getStr(entry.days),
+                                                style: TextStyle(
+                                                    color: myColors("Purple"),
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              )
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          )
+                                        ]),
                                     const SizedBox(
                                       height: 20,
                                     ),

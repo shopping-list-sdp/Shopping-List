@@ -365,6 +365,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                                         global.myListId, 1);
 
                                                     if (count < 1) {
+                                                      count++;
                                                       addListItem(
                                                           itemName:
                                                               entry.itemId,

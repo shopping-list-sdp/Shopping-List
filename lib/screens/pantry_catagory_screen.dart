@@ -55,6 +55,7 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
 
   String catagory;
   _PantryCatagoryScreenState(this.catagory);
+  int count = 0;
 
   @override
   void initState() {
@@ -362,10 +363,16 @@ class _PantryCatagoryScreenState extends State<PantryCatagoryScreen> {
                                                     entry.id, 0);*/
                                                     updateNoItems(
                                                         global.myListId, 1);
-                                                    addListItem(
-                                                        itemName: entry.itemId,
-                                                        listID:
-                                                            global.myListId);
+
+                                                    if (count < 1) {
+                                                      addListItem(
+                                                          itemName:
+                                                              entry.itemId,
+                                                          listID:
+                                                              global.myListId);
+                                                    } else {
+                                                      count = 0;
+                                                    }
 
                                                     Fluttertoast.showToast(
                                                         msg: "Item Added List");

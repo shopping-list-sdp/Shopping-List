@@ -7,7 +7,7 @@ void main() {
     Map<String, dynamic> json = {};
     json['id'] = "id";
     json['item_id'] = "itemId";
-    json['item_id'] = "listId";
+    json['list_id'] = "listId";
     json['to_buy'] = false;
     json['price'] = "price";
     json['quantity'] = 1;

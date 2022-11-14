@@ -6,8 +6,8 @@ void main() {
     Map<String, dynamic> json = {};
     json['category'] = 'Test';
     json['name'] = 'Test';
-    json['price'] = 1.0;
-    json['shelf life'] = 'Test';
+    json['estimatedPrice'] = 1.0;
+    json['shelf life'] = 1;
     var item = Item.fromJson(json);
     expect(item.category, 'Test');
   });

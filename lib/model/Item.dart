@@ -22,14 +22,4 @@ class Item {
     price = json['estimatedPrice'];
     shelfLife = json['shelf life'];
   }
-
-  Map<String, dynamic> toJson() {
-    //when posting items to db
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['category'] = category;
-    data['name'] = name;
-    data['estimatedPrice'] = price;
-    data['shelf life'] = shelfLife;
-    return data;
-  }
 }

@@ -1,4 +1,6 @@
-+ **Test/Code Coverage** -  | ![Coverage 88.6%](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/cicirello/jacoco-badge-generator/main/tests/80.json) | - coverage is the measure of how much of the code in a project is tested.  
+<a href="https://codecov.io/gh/shopping-list-sdp/Shopping-List" > 
+ <img src="https://codecov.io/gh/shopping-list-sdp/Shopping-List/branch/master/graph/badge.svg?token=T2M0HQKFSC"/> 
+ </a>
 ![Githubactions](https://api.travis-ci.org/pixl8/sticker.svg?branch=stable)
 [![codecov](https://codecov.io/gh/shopping-list-sdp/Shopping-List/branch/master/graph/badge.svg?token=T2M0HQKFSC)](https://codecov.io/gh/shopping-list-sdp/Shopping-List)
 # shopping_list

@@ -1,6 +1,4 @@
-<a href="https://codecov.io/gh/shopping-list-sdp/Shopping-List" > 
- <img src="https://codecov.io/gh/shopping-list-sdp/Shopping-List/branch/master/graph/badge.svg?token=T2M0HQKFSC"/> 
- </a>
+
 ![Githubactions](https://api.travis-ci.org/pixl8/sticker.svg?branch=stable)
 [![codecov](https://codecov.io/gh/shopping-list-sdp/Shopping-List/branch/master/graph/badge.svg?token=T2M0HQKFSC)](https://codecov.io/gh/shopping-list-sdp/Shopping-List)
 # shopping_list

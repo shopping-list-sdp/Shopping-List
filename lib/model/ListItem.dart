@@ -26,16 +26,4 @@ class ListItem {
     price = json['price'];
     quantity = json['quantity'];
   }
-
-  Map<String, dynamic> toJson() {
-    //to post item to db
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['item_id'] = itemId;
-    data['list_id'] = listId;
-    data['to_buy'] = toBuy;
-    data['price'] = price;
-    data['quantity'] = quantity;
-    return data;
-  }
 }

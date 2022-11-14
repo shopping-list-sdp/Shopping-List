@@ -12,12 +12,4 @@ class Schedule {
     id = json['id'];
     user = json['user'];
   }
-
-  Map<String, dynamic> toJson() {
-    //to post list to db
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['user'] = user;
-    return data;
-  }
 }

@@ -18,13 +18,4 @@ class Family {
     familyCode = json['familyCode'];
     name = json['name'];
   }
-
-  Map<String, dynamic> toJson() {
-    //when posting items to db
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['familyCode'] = familyCode;
-    data['name'] = name;
-    return data;
-  }
 }

@@ -25,15 +25,4 @@ class ScheduleItem {
     days = json['days'];
     dateAdded = json['date_added'];
   }
-
-  Map<String, dynamic> toJson() {
-    //to post item to db
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['item_id'] = itemId;
-    data['schedule_id'] = scheduleId;
-    data['days'] = days;
-    data['date_added'] = dateAdded;
-    return data;
-  }
 }

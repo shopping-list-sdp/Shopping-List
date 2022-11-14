@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">0</td>
             <td class="headerCovTableEntry">10</td>
-            <td class="headerCovTableEntryLo">0.0 %</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-11-14 20:06:50</td>
+            <td class="headerValue">2022-11-14 22:31:57</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -63,24 +63,24 @@
 <a name="1"><span class="lineNum">       1 </span>            : import 'package:flutter/material.dart';</a>
 <a name="2"><span class="lineNum">       2 </span>            : </a>
 <a name="3"><span class="lineNum">       3 </span>            : class BodyLayout extends StatelessWidget {</a>
-<a name="4"><span class="lineNum">       4 </span><span class="lineNoCov">          0 :   const BodyLayout(BuildContext context, List&lt;String&gt; elements, {super.key});</span></a>
+<a name="4"><span class="lineNum">       4 </span><span class="lineCov">          1 :   const BodyLayout(BuildContext context, List&lt;String&gt; elements, {super.key});</span></a>
 <a name="5"><span class="lineNum">       5 </span>            : </a>
-<a name="6"><span class="lineNum">       6 </span><span class="lineNoCov">          0 :   List&lt;String&gt;? get elements =&gt; null;</span></a>
+<a name="6"><span class="lineNum">       6 </span><span class="lineCov">          1 :   List&lt;String&gt;? get elements =&gt; null;</span></a>
 <a name="7"><span class="lineNum">       7 </span>            : </a>
-<a name="8"><span class="lineNum">       8 </span><span class="lineNoCov">          0 :   @override</span></a>
+<a name="8"><span class="lineNum">       8 </span><span class="lineCov">          1 :   @override</span></a>
 <a name="9"><span class="lineNum">       9 </span>            :   Widget build(BuildContext context) {</a>
-<a name="10"><span class="lineNum">      10 </span><span class="lineNoCov">          0 :     return _myListView(context, elements!);</span></a>
-<a name="11"><span class="lineNum">      11 </span>            :   }</a>
+<a name="10"><span class="lineNum">      10 </span>            :     return _myListView(context, elements!);</a>
+<a name="11"><span class="lineNum">      11 </span><span class="lineCov">          1 :   }</span></a>
 <a name="12"><span class="lineNum">      12 </span>            : }</a>
 <a name="13"><span class="lineNum">      13 </span>            : </a>
-<a name="14"><span class="lineNum">      14 </span><span class="lineNoCov">          0 : Widget _myListView(BuildContext context, List&lt;String&gt; elements) {</span></a>
-<a name="15"><span class="lineNum">      15 </span><span class="lineNoCov">          0 :   return ListView.builder(</span></a>
-<a name="16"><span class="lineNum">      16 </span><span class="lineNoCov">          0 :       itemCount: elements.length,</span></a>
-<a name="17"><span class="lineNum">      17 </span><span class="lineNoCov">          0 :       itemBuilder: ((context, index) {</span></a>
-<a name="18"><span class="lineNum">      18 </span><span class="lineNoCov">          0 :         return ListTile(</span></a>
+<a name="14"><span class="lineNum">      14 </span><span class="lineCov">          1 : Widget _myListView(BuildContext context, List&lt;String&gt; elements) {</span></a>
+<a name="15"><span class="lineNum">      15 </span><span class="lineCov">          1 :   return ListView.builder(</span></a>
+<a name="16"><span class="lineNum">      16 </span><span class="lineCov">          1 :       itemCount: elements.length,</span></a>
+<a name="17"><span class="lineNum">      17 </span><span class="lineCov">          1 :       itemBuilder: ((context, index) {</span></a>
+<a name="18"><span class="lineNum">      18 </span><span class="lineCov">          1 :         return ListTile(</span></a>
 <a name="19"><span class="lineNum">      19 </span>            :             leading: const Icon(Icons.list_alt),</a>
-<a name="20"><span class="lineNum">      20 </span><span class="lineNoCov">          0 :             title: Text(elements[index]),</span></a>
-<a name="21"><span class="lineNum">      21 </span>            :             subtitle: const Text(&quot;Number of Items in List&quot;));</a>
+<a name="20"><span class="lineNum">      20 </span>            :             title: Text(elements[index]),</a>
+<a name="21"><span class="lineNum">      21 </span><span class="lineCov">          1 :             subtitle: const Text(&quot;Number of Items in List&quot;));</span></a>
 <a name="22"><span class="lineNum">      22 </span>            :       }));</a>
 <a name="23"><span class="lineNum">      23 </span>            : }</a>
 </pre>
@@ -91,7 +91,7 @@
 
   <table width="100%" border=0 cellspacing=0 cellpadding=0>
     <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
-    <tr><td class="versionInfo">Generated by: <a href="https://github.com/linux-test-project/lcov" target="_parent">LCOV version 1.16</a></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.14</a></td></tr>
   </table>
   <br>
 

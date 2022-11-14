@@ -21,16 +21,6 @@ class pantryItem {
     quantity = json['quantity'];
   }
 
-  Map<String, dynamic> toJson() {
-    //to post item to db
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['item_id'] = itemId;
-    data['pantry_id'] = pantryId;
-    data['quantity'] = quantity;
-    return data;
-  }
-
   bool Contains(String value) {
     if (itemId.contains(value)) {
       return true;

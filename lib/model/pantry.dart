@@ -15,12 +15,4 @@ class Pantry {
     id = json['id'];
     user = json['user'];
   }
-
-  Map<String, dynamic> toJson() {
-    //when posting items to db
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['user'] = user;
-    return data;
-  }
 }

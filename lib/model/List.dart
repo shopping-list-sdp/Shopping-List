@@ -29,17 +29,4 @@ class List {
     type = json['type'];
     user = json['user'];
   }
-
-  Map<String, dynamic> toJson() {
-    //to post list to db
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['date'] = date;
-    data['family'] = family;
-    data['id'] = id;
-    data['name'] = name;
-    data['no_items'] = noItems;
-    data['type'] = type;
-    data['user'] = user;
-    return data;
-  }
 }

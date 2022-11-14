@@ -4,8 +4,9 @@ import 'package:shopping_list/model/List.dart';
 
 void main() {
   test('fromJson returns  a valid object', () {
+    Timestamp date = Timestamp.now();
     Map<String, dynamic> json = {};
-    json['date'] = Timestamp.now();
+    json['date'] = date;
     json['family'] = "family";
     json['id'] = "id";
     json['name'] = "name";
@@ -13,7 +14,7 @@ void main() {
     json['type'] = "type";
     json['user'] = "user";
     var list = List.fromJson(json);
-    expect(list.date, Timestamp);
+    expect(list.date, date);
     expect(list.family, 'family');
     expect(list.id, 'id');
     expect(list.name, 'name');
